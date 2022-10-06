@@ -1,0 +1,26 @@
+{
+    "workflow": {
+        "interpreter": "/home/niyiyu/anaconda3/envs/seisml/bin/python",
+        "mseed_path": "/fd1/yiyu_data/Endeavour/data/",
+        "jobs_path": "jobs/",
+        "picks_path": "picks/"  
+    },
+    "logs": {
+            "verbose": 0, 
+            "appendlog": -1,
+            "logs_path": "logs/"
+    },
+    "models": {
+        "pretrained": "pnw",
+        "max_gap": 10,
+        "default_args": {
+            "overlap": 1000, 
+            "blinding": [1000, 1000]
+        }
+    },
+    "environment": {
+        "STATION_NPROC": 4,
+        "CUDA_VISIBLE_DEVICES": [0, 1, 2, 3],
+        "OPENBLAS_NUM_THREADS": "1"
+    }
+}
