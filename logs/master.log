@@ -1,0 +1,13 @@
+Job description
+Network:            NV
+Year:               2017
+#Station:           4
+Submission time:    PDT 10/06/22 11:46:30
+Verbose:            0
+Cores:              4
+Total jobs:         4
+-----------------------------------
+master | 	submit NV.ENWF.2017 by rank 0 	| 1/4 	| PDT 10/06/22 11:46:30
+master | 	submit NV.KEMO.2017 by rank 2 	| 3/4 	| PDT 10/06/22 11:46:30
+master | 	submit NV.NCHR.2017 by rank 3 	| 4/4 	| PDT 10/06/22 11:46:30
+master | 	submit NV.KEMF.2017 by rank 1 	| 2/4 	| PDT 10/06/22 11:46:30
