@@ -46,11 +46,14 @@ assert os.path.exists(mseed_path)
 jobs_path = config["workflow"]["jobs_path"]
 os.makedirs(jobs_path, exist_ok=True)
 
-logs_path = config["logs"]["logs_path"]
+logs_path = config["log"]["logs_path"]
 os.makedirs(logs_path, exist_ok=True)
 
 picks_path = config["workflow"]["picks_path"]
 os.makedirs(picks_path, exist_ok=True)
+
+nproc = config["environment"]["NPROC"]
+gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
 
 
 ## assuming a data archive
@@ -69,7 +72,14 @@ for n in nets:
         for d in doys:
             stas = os.listdir("/".join([mseed_path, n, y, d]))
             for s in stas:
-                df.append([s.split('.')[0], n, y, d, "/".join([mseed_path, n, y, d, s])])
+                df.append(
+                    [s.split(".")[0], n, y, d, "/".join([mseed_path, n, y, d, s])]
+                )
 
         df = pd.DataFrame(df, columns=["station", "network", "year", "doy", "fpath"])
+        df = df.sort_values(by=["station", "doy"])
+        df.reset_index(drop=True, inplace=True)
+        njobs = int(len(df) / nproc)
+        df["rank"] = df.index.map(lambda x: int(x / njobs))
+
         df.to_csv("/".join([jobs_path, f"{n}_{y}_joblist.csv"]), index=False)

@@ -19,15 +19,16 @@ import pandas as pd
 
 parser = argparse.ArgumentParser(description="Picking on PNW continuous data.")
 parser.add_argument("-n", "--network", required=True)
-parser.add_argument("-s", "--station", default=None)
+# parser.add_argument("-s", "--station", default=None)
 parser.add_argument("-y", "--year", type=int, required=True)
 parser.add_argument("-c", "--config", required=True)
-parser.add_argument("--appendlog", default=0, type=int)
+parser.add_argument("--appendlog", default=False, type=int)
 
 args = parser.parse_args()
 network = args.network
-station = args.station
+# station = args.station
 year = args.year
+
 fconfig = args.config
 appendlog = args.appendlog
 
@@ -40,23 +41,19 @@ pid = os.getpid()
 fconfig = args.config
 with open(fconfig, "r") as f:
     config = json.load(f)
-verbose = config['logs']["verbose"]
+verbose = config["log"]["verbose"]
 
 jobs_path = config["workflow"]["jobs_path"]
-logs_path = config["logs"]["logs_path"]
+logs_path = config["log"]["logs_path"]
 picks_path = config["workflow"]["picks_path"]
-gpus = config['environment']['CUDA_VISIBLE_DEVICES']
+nproc = config["environment"]["NPROC"]
+gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
 
 jobs = pd.read_csv(f"{jobs_path}/{network}_{year}_joblist.csv")
-if station:
-    jobs = jobs[jobs["station"] == station].reset_index(drop=True)
-jobs = jobs["station"].unique()
-jobs = sorted(jobs)
+
 
 if rank == 0:
-    current_time = time.strftime("%Z %x %X")
-
-    if config["logs"]['appendlog'] > 0:
+    if config["log"]["appendlog"]:
         logs = open(f"{logs_path}/master.log", "a")
     else:
         os.system(f"rm {logs_path}/*")
@@ -66,27 +63,34 @@ if rank == 0:
     print(f"Job description", flush=True)
     print(f"Network:            {network}", flush=True)
     print(f"Year:               {year}", flush=True)
-    print(f"#Station:           {len(jobs)}", flush=True)
-    print(f"Submission time:    {current_time}", flush=True)
+    print(f"#Station:           {len(jobs['station'].unique())}", flush=True)
+    print(f"#Cores:             {nproc}", flush=True)
+    print(f"#GPU:               {len(gpus)}", flush=True)
+    print(f"Submission time:    {time.strftime('%Z %x %X')}", flush=True)
     print(f"Verbose:            {verbose}", flush=True)
-    print(f"Cores:              {size}", flush=True)
-    print(f"Total jobs:         {len(jobs)}", flush=True)
     print(f"-----------------------------------", flush=True)
-
+    t0 = time.time()
 
 comm.Barrier()
-for idx, station in enumerate(jobs):
-    if idx % size == rank:
-        gpuid = idx % len(gpus)
-        current_time = time.strftime("%Z %x %X")
-        os.system(
-            f"echo 'master | \tsubmit {network}.{station}.{year} by rank {rank} \t| {idx + 1}/{len(jobs)} \t| {current_time}' >> {logs_path}/master.log"
-        )
-        os.system(
-            f"{config['workflow']['interpreter']} scripts/single_station_detection.py"
-            + f" -n {network} -s {station} -y {year} -r {rank} -v {verbose} -c {fconfig} --pid {pid} --gpuid {gpuid}"
-        )
+
+jobs = jobs[jobs["rank"] == rank]
+
+for station in jobs["station"].unique():
+    gpuid = rank % len(gpus)
+    current_time = time.strftime("%Z %x %X")
+    os.system(
+        f"echo 'master | \tsubmit {network}.{station}.{year} to C{rank}|G{gpuid} \t| {current_time}' >> {logs_path}/master.log"
+    )
+    os.system(
+        f"{config['workflow']['interpreter']} scripts/single_station_detection.py"
+        + f" -n {network} -s {station} -y {year} -r {rank} --gpuid {gpuid} -v {verbose} -c {fconfig} --pid {pid} "
+    )
 
 comm.Barrier()
 if rank == 0:
+    os.system(f"echo '-----------------------------------' >> {logs_path}/master.log")
+    os.system(f"echo 'End of detection' >> {logs_path}/master.log")
+    os.system(
+        f"echo 'Run time:           {'%.3f' % (time.time() - t0)} seconds' >> {logs_path}/master.log"
+    )
     logs.close()
