@@ -1,35 +1,25 @@
---------------NV.KEMO.2017-----------------
-2 | 	master PID 60301
-2 | 	PID 60545
+--------------NV.ENWF.2017-----------------
+2 | 	master PID 2064915
+2 | 	PID 2065458
 2 | 	loaded model (PNW) to GPU:2
-2 | 	total 29 days of data
-2 | 	2017.152.NV.KEMO 	| Finish, found 12 picks 	 | 10.740 sec
-2 | 	2017.153.NV.KEMO 	| Finish, found 6 picks 	 | 10.647 sec
-2 | 	2017.154.NV.KEMO 	| Finish, found 12 picks 	 | 9.434 sec
-2 | 	2017.155.NV.KEMO 	| Finish, found 30 picks 	 | 7.470 sec
-2 | 	2017.156.NV.KEMO 	| Finish, found 10 picks 	 | 9.627 sec
-2 | 	2017.157.NV.KEMO 	| Error
-2 | 	2017.158.NV.KEMO 	| Error
-2 | 	2017.159.NV.KEMO 	| Error
-2 | 	2017.160.NV.KEMO 	| Error
-2 | 	2017.161.NV.KEMO 	| Finish, found 60 picks 	 | 7.478 sec
-2 | 	2017.162.NV.KEMO 	| Finish, found 16 picks 	 | 11.091 sec
-2 | 	2017.163.NV.KEMO 	| Error
-2 | 	2017.164.NV.KEMO 	| Error
-2 | 	2017.165.NV.KEMO 	| Error
-2 | 	2017.166.NV.KEMO 	| Error
-2 | 	2017.167.NV.KEMO 	| Error
-2 | 	2017.168.NV.KEMO 	| Error
-2 | 	2017.169.NV.KEMO 	| Finish, found 11 picks 	 | 11.519 sec
-2 | 	2017.170.NV.KEMO 	| Finish, found 0 picks 	 | 5.207 sec
-2 | 	2017.172.NV.KEMO 	| Finish, found 4 picks 	 | 8.665 sec
-2 | 	2017.173.NV.KEMO 	| Error
-2 | 	2017.174.NV.KEMO 	| Error
-2 | 	2017.175.NV.KEMO 	| Skip: too many gaps
-2 | 	2017.176.NV.KEMO 	| Finish, found 40 picks 	 | 10.420 sec
-2 | 	2017.177.NV.KEMO 	| Error
-2 | 	2017.178.NV.KEMO 	| Error
-2 | 	2017.179.NV.KEMO 	| Finish, found 9 picks 	 | 10.312 sec
-2 | 	2017.180.NV.KEMO 	| Error
-2 | 	2017.181.NV.KEMO 	| Finish, found 5 picks 	 | 10.308 sec
---------------NV.KEMO.2017-----------------
+2 | 	total 4 days of data
+2 | 	2017.178.NV.ENWF 	| Error
+2 | 	2017.179.NV.ENWF 	| Finish, found 3454 picks 	 | 11.865 sec
+2 | 	2017.180.NV.ENWF 	| Error
+2 | 	2017.181.NV.ENWF 	| Error
+--------------NV.ENWF.2017-----------------
+--------------NV.KEMF.2017-----------------
+2 | 	master PID 2064915
+2 | 	PID 2065881
+2 | 	loaded model (PNW) to GPU:2
+2 | 	total 9 days of data
+2 | 	2017.152.NV.KEMF 	| Finish, found 3454 picks 	 | 12.521 sec
+2 | 	2017.153.NV.KEMF 	| Finish, found 3454 picks 	 | 12.016 sec
+2 | 	2017.154.NV.KEMF 	| Finish, found 3456 picks 	 | 10.623 sec
+2 | 	2017.155.NV.KEMF 	| Finish, found 3456 picks 	 | 14.095 sec
+2 | 	2017.156.NV.KEMF 	| Finish, found 1122 picks 	 | 9.481 sec
+2 | 	2017.157.NV.KEMF 	| Error
+2 | 	2017.158.NV.KEMF 	| Error
+2 | 	2017.159.NV.KEMF 	| Error
+2 | 	2017.160.NV.KEMF 	| Error
+--------------NV.KEMF.2017-----------------
