@@ -1,0 +1,24 @@
+Job description
+Network:            NV
+Year:               2017
+#Station:           4
+#Cores:             9
+#GPU:               4
+Submission time:    PDT 10/11/22 12:16:45
+Verbose:            0
+-----------------------------------
+master | 	submit NV.ENWF.2017 to C0|G0 	| PDT 10/11/22 12:16:45
+master | 	submit NV.NCHR.2017 to C8|G0 	| PDT 10/11/22 12:16:45
+master | 	submit NV.KEMF.2017 to C4|G0 	| PDT 10/11/22 12:16:45
+master | 	submit NV.KEMO.2017 to C6|G2 	| PDT 10/11/22 12:16:45
+master | 	submit NV.ENWF.2017 to C2|G2 	| PDT 10/11/22 12:16:45
+master | 	submit NV.ENWF.2017 to C1|G1 	| PDT 10/11/22 12:16:45
+master | 	submit NV.NCHR.2017 to C7|G3 	| PDT 10/11/22 12:16:45
+master | 	submit NV.KEMO.2017 to C5|G1 	| PDT 10/11/22 12:16:45
+master | 	submit NV.KEMF.2017 to C3|G3 	| PDT 10/11/22 12:16:45
+master | 	submit NV.KEMF.2017 to C2|G2 	| PDT 10/11/22 12:18:16
+master | 	submit NV.KEMO.2017 to C4|G0 	| PDT 10/11/22 12:18:50
+master | 	submit NV.NCHR.2017 to C6|G2 	| PDT 10/11/22 12:20:02
+-----------------------------------
+End of detection
+Run time:           271.250 seconds
