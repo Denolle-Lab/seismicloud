@@ -12,6 +12,3 @@ Workflow for template matching and ML picking with cloud capabilities
     ```
     mpirun -np 4 python scripts/network_detection.py -c configs/myconfig.json -n NV -y 2017
     ```
-
-## Performance test
-![](./benchmark.png "Performance test")

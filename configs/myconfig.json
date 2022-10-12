@@ -5,22 +5,26 @@
         "jobs_path": "jobs/",
         "picks_path": "picks/"  
     },
-    "logs": {
+    "log": {
             "verbose": 0, 
-            "appendlog": -1,
+            "appendlog": false,
             "logs_path": "logs/"
     },
-    "models": {
+    "model": {
         "pretrained": "pnw",
         "max_gap": 10,
         "default_args": {
             "overlap": 1000, 
             "blinding": [1000, 1000]
+        },
+        "detection_args":{
+            "P_threshold": 0.0,
+            "S_threshold": 0.0
         }
     },
     "environment": {
-        "STATION_NPROC": 4,
-        "CUDA_VISIBLE_DEVICES": [0, 1, 2, 3],
+        "NPROC": 9,
+        "CUDA_VISIBLE_DEVICES": [0,1,2,3],
         "OPENBLAS_NUM_THREADS": "1"
     }
 }
