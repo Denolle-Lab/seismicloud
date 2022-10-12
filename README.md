@@ -3,6 +3,11 @@ Workflow for template matching and ML picking with cloud capabilities
 
 
 ## Usage
+
+### Template Matching
+TODO
+
+### Machine Learning Event Detection
 1. Setting up data archive and configure file.
 2. Create job list.
     ```
