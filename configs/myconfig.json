@@ -11,15 +11,21 @@
             "logs_path": "logs/"
     },
     "model": {
-        "pretrained": "pnw",
-        "max_gap": 10,
-        "default_args": {
-            "overlap": 1000, 
-            "blinding": [1000, 1000]
+        "detection":{
+            "hourly_detection": false,
+            "pretrained": "pnw",
+            "max_gap": 10,
+            "default_args": {
+                "overlap": 1000, 
+                "blinding": [1000, 1000]
+            },
+            "detection_args":{
+                "P_threshold": 0.1,
+                "S_threshold": 0.1
+            }
         },
-        "detection_args":{
-            "P_threshold": 0.0,
-            "S_threshold": 0.0
+        "association":{
+
         }
     },
     "environment": {

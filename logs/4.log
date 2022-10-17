@@ -1,25 +1,26 @@
 --------------NV.KEMF.2017-----------------
-4 | 	master PID 2064917
-4 | 	PID 2065457
+4 | 	master PID 365833
+4 | 	PID 366439
 4 | 	loaded model (PNW) to GPU:0
 4 | 	total 7 days of data
-4 | 	2017.175.NV.KEMF 	| Skip: too many gaps
-4 | 	2017.176.NV.KEMF 	| Finish, found 3454 picks 	 | 12.131 sec
-4 | 	2017.177.NV.KEMF 	| Error
-4 | 	2017.178.NV.KEMF 	| Error
-4 | 	2017.179.NV.KEMF 	| Finish, found 3456 picks 	 | 13.068 sec
-4 | 	2017.180.NV.KEMF 	| Error
-4 | 	2017.181.NV.KEMF 	| Finish, found 3454 picks 	 | 12.888 sec
+4 | 	2017.175.NV.KEMF.0 	| Skip: too many gaps
+4 | 	2017.175.NV.KEMF 	| Finish, found 0 picks 	 | 0.628 sec
+4 | 	2017.176.NV.KEMF 	| Finish, found 14 picks 	 | 12.284 sec
+4 | 	2017.177.NV.KEMF 	| Finish, found 4 picks 	 | 34.093 sec
+4 | 	2017.178.NV.KEMF 	| Finish, found 44 picks 	 | 23.220 sec
+4 | 	2017.179.NV.KEMF 	| Finish, found 8 picks 	 | 13.145 sec
+4 | 	2017.180.NV.KEMF 	| Finish, found 9 picks 	 | 26.169 sec
+4 | 	2017.181.NV.KEMF 	| Finish, found 6 picks 	 | 13.059 sec
 --------------NV.KEMF.2017-----------------
 --------------NV.KEMO.2017-----------------
-4 | 	master PID 2064917
-4 | 	PID 2065969
+4 | 	master PID 365833
+4 | 	PID 366816
 4 | 	loaded model (PNW) to GPU:0
 4 | 	total 6 days of data
-4 | 	2017.152.NV.KEMO 	| Finish, found 3456 picks 	 | 12.450 sec
-4 | 	2017.153.NV.KEMO 	| Finish, found 3454 picks 	 | 11.991 sec
-4 | 	2017.154.NV.KEMO 	| Finish, found 3454 picks 	 | 10.996 sec
-4 | 	2017.155.NV.KEMO 	| Finish, found 3454 picks 	 | 8.699 sec
-4 | 	2017.156.NV.KEMO 	| Finish, found 1122 picks 	 | 11.556 sec
-4 | 	2017.157.NV.KEMO 	| Error
+4 | 	2017.152.NV.KEMO 	| Finish, found 12 picks 	 | 12.172 sec
+4 | 	2017.153.NV.KEMO 	| Finish, found 6 picks 	 | 12.061 sec
+4 | 	2017.154.NV.KEMO 	| Finish, found 9 picks 	 | 10.851 sec
+4 | 	2017.155.NV.KEMO 	| Finish, found 24 picks 	 | 8.575 sec
+4 | 	2017.156.NV.KEMO 	| Finish, found 6 picks 	 | 11.930 sec
+4 | 	2017.157.NV.KEMO 	| Finish, found 1 picks 	 | 21.975 sec
 --------------NV.KEMO.2017-----------------

@@ -1,19 +1,19 @@
 --------------NV.KEMF.2017-----------------
-3 | 	master PID 2064916
-3 | 	PID 2065462
+3 | 	master PID 365832
+3 | 	PID 366441
 3 | 	loaded model (PNW) to GPU:3
 3 | 	total 13 days of data
-3 | 	2017.161.NV.KEMF 	| Finish, found 3454 picks 	 | 9.690 sec
-3 | 	2017.162.NV.KEMF 	| Finish, found 3456 picks 	 | 10.338 sec
-3 | 	2017.163.NV.KEMF 	| Error
-3 | 	2017.164.NV.KEMF 	| Error
-3 | 	2017.165.NV.KEMF 	| Error
-3 | 	2017.166.NV.KEMF 	| Error
-3 | 	2017.167.NV.KEMF 	| Error
-3 | 	2017.168.NV.KEMF 	| Error
-3 | 	2017.169.NV.KEMF 	| Finish, found 3456 picks 	 | 13.590 sec
-3 | 	2017.170.NV.KEMF 	| Finish, found 978 picks 	 | 7.302 sec
-3 | 	2017.172.NV.KEMF 	| Finish, found 1194 picks 	 | 9.378 sec
-3 | 	2017.173.NV.KEMF 	| Error
-3 | 	2017.174.NV.KEMF 	| Error
+3 | 	2017.161.NV.KEMF 	| Finish, found 41 picks 	 | 9.782 sec
+3 | 	2017.162.NV.KEMF 	| Finish, found 11 picks 	 | 10.078 sec
+3 | 	2017.163.NV.KEMF 	| Finish, found 6 picks 	 | 27.830 sec
+3 | 	2017.164.NV.KEMF 	| Finish, found 16 picks 	 | 28.133 sec
+3 | 	2017.165.NV.KEMF 	| Finish, found 7 picks 	 | 30.202 sec
+3 | 	2017.166.NV.KEMF 	| Finish, found 3 picks 	 | 21.078 sec
+3 | 	2017.167.NV.KEMF 	| Finish, found 0 picks 	 | 26.661 sec
+3 | 	2017.168.NV.KEMF 	| Finish, found 11 picks 	 | 27.068 sec
+3 | 	2017.169.NV.KEMF 	| Finish, found 5 picks 	 | 13.205 sec
+3 | 	2017.170.NV.KEMF 	| Finish, found 0 picks 	 | 7.119 sec
+3 | 	2017.172.NV.KEMF 	| Finish, found 3 picks 	 | 9.522 sec
+3 | 	2017.173.NV.KEMF 	| Finish, found 6 picks 	 | 24.263 sec
+3 | 	2017.174.NV.KEMF 	| Finish, found 8 picks 	 | 23.825 sec
 --------------NV.KEMF.2017-----------------

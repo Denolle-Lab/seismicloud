@@ -1,19 +1,20 @@
 --------------NV.NCHR.2017-----------------
-8 | 	master PID 2064921
-8 | 	PID 2065455
+8 | 	master PID 365837
+8 | 	PID 366437
 8 | 	loaded model (PNW) to GPU:0
 8 | 	total 13 days of data
-8 | 	2017.168.NV.NCHR 	| Error
-8 | 	2017.169.NV.NCHR 	| Finish, found 3454 picks 	 | 8.727 sec
-8 | 	2017.170.NV.NCHR 	| Error
-8 | 	2017.171.NV.NCHR 	| Finish, found 384 picks 	 | 1.989 sec
-8 | 	2017.172.NV.NCHR 	| Error
-8 | 	2017.173.NV.NCHR 	| Error
-8 | 	2017.174.NV.NCHR 	| Error
-8 | 	2017.175.NV.NCHR 	| Skip: too many gaps
-8 | 	2017.176.NV.NCHR 	| Finish, found 3456 picks 	 | 13.013 sec
-8 | 	2017.177.NV.NCHR 	| Error
-8 | 	2017.178.NV.NCHR 	| Error
-8 | 	2017.179.NV.NCHR 	| Finish, found 3456 picks 	 | 12.495 sec
-8 | 	2017.180.NV.NCHR 	| Error
+8 | 	2017.168.NV.NCHR 	| Finish, found 38 picks 	 | 29.866 sec
+8 | 	2017.169.NV.NCHR 	| Finish, found 18 picks 	 | 8.324 sec
+8 | 	2017.170.NV.NCHR 	| Finish, found 3 picks 	 | 7.419 sec
+8 | 	2017.171.NV.NCHR 	| Finish, found 0 picks 	 | 1.851 sec
+8 | 	2017.172.NV.NCHR 	| Finish, found 11 picks 	 | 24.236 sec
+8 | 	2017.173.NV.NCHR 	| Finish, found 31 picks 	 | 24.106 sec
+8 | 	2017.174.NV.NCHR 	| Finish, found 38 picks 	 | 26.480 sec
+8 | 	2017.175.NV.NCHR.0 	| Skip: too many gaps
+8 | 	2017.175.NV.NCHR 	| Finish, found 0 picks 	 | 0.403 sec
+8 | 	2017.176.NV.NCHR 	| Finish, found 51 picks 	 | 12.603 sec
+8 | 	2017.177.NV.NCHR 	| Finish, found 87 picks 	 | 25.960 sec
+8 | 	2017.178.NV.NCHR 	| Finish, found 320 picks 	 | 28.413 sec
+8 | 	2017.179.NV.NCHR 	| Finish, found 91 picks 	 | 12.997 sec
+8 | 	2017.180.NV.NCHR 	| Finish, found 75 picks 	 | 34.311 sec
 --------------NV.NCHR.2017-----------------
