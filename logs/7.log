@@ -1,19 +1,23 @@
---------------NV.NCHR.2017-----------------
-7 | 	master PID 1604741
-7 | 	PID 1605340
-7 | 	loaded model (ORIGINAL) to GPU:3
-7 | 	total 13 days of data
-7 | 	2017.155.NV.NCHR 	| Finish, found 35 picks 	 | 16.639 sec
-7 | 	2017.156.NV.NCHR 	| Finish, found 4 picks 	 | 9.654 sec
-7 | 	2017.157.NV.NCHR 	| Finish, found 7 picks 	 | 29.538 sec
-7 | 	2017.158.NV.NCHR 	| Finish, found 3 picks 	 | 22.316 sec
-7 | 	2017.159.NV.NCHR 	| Finish, found 30 picks 	 | 17.115 sec
-7 | 	2017.160.NV.NCHR 	| Finish, found 13 picks 	 | 16.317 sec
-7 | 	2017.161.NV.NCHR 	| Finish, found 57 picks 	 | 9.954 sec
-7 | 	2017.162.NV.NCHR 	| Finish, found 21 picks 	 | 15.111 sec
-7 | 	2017.163.NV.NCHR 	| Finish, found 8 picks 	 | 27.128 sec
-7 | 	2017.164.NV.NCHR 	| Finish, found 29 picks 	 | 28.531 sec
-7 | 	2017.165.NV.NCHR 	| Finish, found 5 picks 	 | 8.099 sec
-7 | 	2017.166.NV.NCHR 	| Finish, found 20 picks 	 | 29.075 sec
-7 | 	2017.167.NV.NCHR 	| Finish, found 17 picks 	 | 31.099 sec
---------------NV.NCHR.2017-----------------
+--------------NV.2017-----------------
+7 | 	master PID 1179289
+7 | 	PID 1179402
+7 | 	loaded templates (data/templates/sep2017_templates.tgz)
+7 | 	total 3 days of data
+Data is too short for day 173, skipping detection
+Data is too short for day 174, skipping detection
+Data is too short for day 175, skipping detection
+--------------NV.2017-----------------
+--------------NV.2017-----------------
+7 | 	master PID 1179289
+7 | 	PID 1179541
+7 | 	loaded templates (data/templates/sep2017_templates.tgz)
+7 | 	total 3 days of data
+Data is too short for day 173, skipping detection
+Data is too short for day 174, skipping detection
+Data is too short for day 175, skipping detection
+--------------NV.2017-----------------
+--------------NV.2017-----------------
+7 | 	master PID 1179289
+7 | 	PID 1179621
+7 | 	loaded templates (data/templates/sep2017_templates.tgz)
+7 | 	total 3 days of data

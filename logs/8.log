@@ -1,19 +1,5 @@
---------------NV.NCHR.2017-----------------
-8 | 	master PID 1604742
-8 | 	PID 1605338
-8 | 	loaded model (ORIGINAL) to GPU:0
-8 | 	total 13 days of data
-8 | 	2017.168.NV.NCHR 	| Finish, found 35 picks 	 | 32.677 sec
-8 | 	2017.169.NV.NCHR 	| Finish, found 17 picks 	 | 10.310 sec
-8 | 	2017.170.NV.NCHR 	| Finish, found 4 picks 	 | 8.244 sec
-8 | 	2017.171.NV.NCHR 	| Finish, found 0 picks 	 | 2.080 sec
-8 | 	2017.172.NV.NCHR 	| Finish, found 10 picks 	 | 25.146 sec
-8 | 	2017.173.NV.NCHR 	| Finish, found 18 picks 	 | 25.872 sec
-8 | 	2017.174.NV.NCHR 	| Finish, found 21 picks 	 | 28.030 sec
-8 | 	2017.175.NV.NCHR 	| Finish, found 13 picks 	 | 23.952 sec
-8 | 	2017.176.NV.NCHR 	| Finish, found 56 picks 	 | 14.471 sec
-8 | 	2017.177.NV.NCHR 	| Finish, found 83 picks 	 | 28.038 sec
-8 | 	2017.178.NV.NCHR 	| Finish, found 268 picks 	 | 30.170 sec
-8 | 	2017.179.NV.NCHR 	| Finish, found 77 picks 	 | 14.403 sec
-8 | 	2017.180.NV.NCHR 	| Finish, found 72 picks 	 | 35.761 sec
---------------NV.NCHR.2017-----------------
+--------------NV.2017-----------------
+8 | 	master PID 1179290
+8 | 	PID 1179407
+8 | 	loaded templates (data/templates/sep2017_templates.tgz)
+8 | 	total 3 days of data

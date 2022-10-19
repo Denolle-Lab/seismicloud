@@ -1,20 +1,5 @@
---------------NV.ENWF.2017-----------------
-1 | 	master PID 1604734
-1 | 	PID 1605344
-1 | 	loaded model (ORIGINAL) to GPU:1
-1 | 	total 13 days of data
-1 | 	2017.165.NV.ENWF 	| Finish, found 4 picks 	 | 10.411 sec
-1 | 	2017.166.NV.ENWF 	| Finish, found 21 picks 	 | 22.160 sec
-1 | 	2017.167.NV.ENWF 	| Finish, found 9 picks 	 | 21.677 sec
-1 | 	2017.168.NV.ENWF.0 	| Skip: too many gaps
-1 | 	2017.168.NV.ENWF 	| Finish, found 0 picks 	 | 0.434 sec
-1 | 	2017.169.NV.ENWF 	| Finish, found 24 picks 	 | 12.203 sec
-1 | 	2017.170.NV.ENWF 	| Finish, found 2 picks 	 | 7.841 sec
-1 | 	2017.171.NV.ENWF 	| Finish, found 0 picks 	 | 2.599 sec
-1 | 	2017.172.NV.ENWF 	| Finish, found 20 picks 	 | 26.144 sec
-1 | 	2017.173.NV.ENWF 	| Finish, found 37 picks 	 | 24.492 sec
-1 | 	2017.174.NV.ENWF 	| Finish, found 43 picks 	 | 29.629 sec
-1 | 	2017.175.NV.ENWF 	| Finish, found 18 picks 	 | 22.571 sec
-1 | 	2017.176.NV.ENWF 	| Finish, found 37 picks 	 | 12.126 sec
-1 | 	2017.177.NV.ENWF 	| Finish, found 38 picks 	 | 31.323 sec
---------------NV.ENWF.2017-----------------
+--------------NV.2017-----------------
+1 | 	master PID 1179283
+1 | 	PID 1179401
+1 | 	loaded templates (data/templates/sep2017_templates.tgz)
+1 | 	total 3 days of data
