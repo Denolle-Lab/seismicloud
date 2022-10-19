@@ -3,7 +3,7 @@
         "interpreter": "/home/niyiyu/anaconda3/envs/seisml/bin/python",
         "mseed_path": "/fd1/yiyu_data/Endeavour/data/",
         "jobs_path": "jobs/",
-        "picks_path": "picks/"  
+        "picks_path": "data/picks/"  
     },
     "log": {
             "verbose": 0, 
@@ -11,15 +11,36 @@
             "logs_path": "logs/"
     },
     "model": {
-        "pretrained": "pnw",
-        "max_gap": 10,
-        "default_args": {
-            "overlap": 1000, 
-            "blinding": [1000, 1000]
+        "picking":{
+            "hourly_detection": false,
+            "pretrained": "original",
+            "max_gap": 20,
+            "default_args": {
+                "overlap": 1000, 
+                "blinding": [1000, 1000]
+            },
+            "detection_args":{
+                "P_threshold": 0.1,
+                "S_threshold": 0.1
+            }
         },
-        "detection_args":{
-            "P_threshold": 0.0,
-            "S_threshold": 0.0
+        "association":{
+            "dims": ["x(km)", "y(km)", "z(km)"],
+            "use_dbscan": false,
+            "use_amplitude": false,
+            "x(km)": [-3800, -3600],
+            "y(km)": [17200, 17400],
+            "z(km)": [-20, 20],
+            "center": [-120, 47.5],
+            "vel": {
+                "p": 7.0,
+                "s": 4.0
+            },
+            "method": "GMM",
+            "min_picks_per_eq": 1,
+            "max_sigma11": 2.0,
+            "max_sigma22": 1.0,
+            "max_sigma12": 1.0
         }
     },
     "environment": {

@@ -54,6 +54,7 @@ picks_path = config["workflow"]["picks_path"]
 os.environ["OPENBLAS_NUM_THREADS"] = config["environment"]["OPENBLAS_NUM_THREADS"]
 
 import obspy
+from obspy.core.utcdatetime import UTCDateTime as utc
 import numpy as np
 import pandas as pd
 
@@ -71,11 +72,11 @@ print(f"--------------{network}.{station}.{year}-----------------", flush=True)
 print(f"{rank} | \tmaster PID {pid}", flush=True)
 print(f"{rank} | \tPID {mypid}", flush=True)
 
-model_pnw = sbm.EQTransformer.from_pretrained(config["model"]["pretrained"])
+model_pnw = sbm.EQTransformer.from_pretrained(config["model"]['picking']["pretrained"])
 model_pnw.to(torch.device("cuda"))
-model_pnw.default_args = config["model"]["default_args"]
+model_pnw.default_args = config["model"]['picking']["default_args"]
 print(
-    f"{rank} | \tloaded model ({config['model']['pretrained'].upper()}) to GPU:{gpuid}",
+    f"{rank} | \tloaded model ({config['model']['picking']['pretrained'].upper()}) to GPU:{gpuid}",
     flush=True,
 )
 
@@ -91,67 +92,69 @@ for idx, i in jobs.iterrows():
     doy = i["doy"]
     fpath = i["fpath"]
     sdoy = str(doy).zfill(3)
-    s = obspy.read(fpath)
-
-    if len(s) > 0:
-        if len(s.get_gaps()) > config["model"]["max_gap"]:
-            print(
-                f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Skip: too many gaps",
-                flush=True,
-            )
-        else:
-            if verbose > 1:
-                print(
-                    f"{rank} | \t{year}.{sdoy}.{network}.{station} \t|", s, flush=True
-                )
-            elif verbose > 0:
-                current_time = time.strftime("%Z %x %X")
-                print(
-                    f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| {current_time}",
-                    flush=True,
-                )
-            try:
-                picks = []
-                s.resample(100)
-                s.merge()
-                s.normalize()
-                for tr in s:
-                    if isinstance(tr.data, np.ma.core.MaskedArray):
-                        tr.data = np.array(tr.data)
-                picks, _ = model_pnw.classify(
-                    s, strict=False, **config["model"]["detection_args"]
-                )
-                print(
-                    f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Finish, found {len(picks)} picks \t | {'%.3f' % (time.time() - t0)} sec",
-                    flush=True,
-                )
-
-                if len(picks) > 0:
-                    # dumping day detection
-                    os.makedirs(f"{picks_path}/{network}/{year}/{sdoy}", exist_ok=True)
-                    with open(
-                        f"{picks_path}/{network}/{year}/{sdoy}/{station}.{network}.{year}.{sdoy}",
-                        "wb",
-                    ) as f:
-                        pickle.dump(picks, f)
-                    if verbose > 1:
-                        print(
-                            f"{rank} | \tdump catalog to {picks_path}/{network}/{year}/{sdoy}/{station}.{network}.{year}.{sdoy}"
-                        )
-                del picks, s
-                gc.collect()
-
-            except:
-                print(
-                    f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Error",
-                    flush=True,
-                )
+    ss = []
+    picks = []
+    if config['model']['picking']['hourly_detection']:
+        for h in range(24):
+            stime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:00:00.000000")
+            etime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:59:59.999999")
+            ss += [obspy.read(fpath, starttime = stime, endtime = etime)]
     else:
-        if verbose > 0:
+        ss = [obspy.read(fpath)]
+
+    for ih, s in enumerate(ss):
+        if len(s) > 0:
+            if len(s.get_gaps()) > config["model"]['picking']["max_gap"]:
+                print(
+                    f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: too many gaps",
+                    flush=True,
+                )
+            else:
+                if verbose > 1:
+                    print(
+                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t|", s, flush=True
+                    )
+                elif verbose > 0:
+                    current_time = time.strftime("%Z %x %X")
+                    print(
+                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| {current_time}",
+                        flush=True,
+                    )
+                s.resample(100)
+                s.detrend()
+                s.normalize()
+                s.filter("highpass", freq = 2)
+                p, _ = model_pnw.classify(
+                    s, strict=False, **config["model"]['picking']["detection_args"]
+                )
+                picks += p
+
+        else:
+            if verbose > 0:
+                print(
+                    f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Skip: no data",
+                    flush=True,
+                )
+
+    if len(picks) > 0:
+        os.makedirs(f"{picks_path}/{network}/{year}/{sdoy}", exist_ok=True)
+        with open(
+            f"{picks_path}/{network}/{year}/{sdoy}/{station}.{network}.{year}.{sdoy}",
+            "wb",
+        ) as f:
+            pickle.dump(picks, f)
+        if verbose > 1:
             print(
-                f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Skip: no data",
-                flush=True,
+                f"{rank} | \tdump picks to {picks_path}/{network}/{year}/{sdoy}/{station}.{network}.{year}.{sdoy}"
             )
+    
+    gc.collect()
+    print(
+        f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Finish, found {len(picks)} picks \t | {'%.3f' % (time.time() - t0)} sec",
+        flush=True,
+    )
+
+    del picks, s
 
 print(f"--------------{network}.{station}.{year}-----------------", flush=True)
 logs.close()
