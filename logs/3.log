@@ -1,19 +1,5 @@
---------------NV.KEMF.2017-----------------
-3 | 	master PID 2064916
-3 | 	PID 2065462
-3 | 	loaded model (PNW) to GPU:3
-3 | 	total 13 days of data
-3 | 	2017.161.NV.KEMF 	| Finish, found 3454 picks 	 | 9.690 sec
-3 | 	2017.162.NV.KEMF 	| Finish, found 3456 picks 	 | 10.338 sec
-3 | 	2017.163.NV.KEMF 	| Error
-3 | 	2017.164.NV.KEMF 	| Error
-3 | 	2017.165.NV.KEMF 	| Error
-3 | 	2017.166.NV.KEMF 	| Error
-3 | 	2017.167.NV.KEMF 	| Error
-3 | 	2017.168.NV.KEMF 	| Error
-3 | 	2017.169.NV.KEMF 	| Finish, found 3456 picks 	 | 13.590 sec
-3 | 	2017.170.NV.KEMF 	| Finish, found 978 picks 	 | 7.302 sec
-3 | 	2017.172.NV.KEMF 	| Finish, found 1194 picks 	 | 9.378 sec
-3 | 	2017.173.NV.KEMF 	| Error
-3 | 	2017.174.NV.KEMF 	| Error
---------------NV.KEMF.2017-----------------
+--------------NV.2017-----------------
+3 | 	master PID 1179285
+3 | 	PID 1179408
+3 | 	loaded templates (data/templates/sep2017_templates.tgz)
+3 | 	total 3 days of data

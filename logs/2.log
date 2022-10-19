@@ -1,25 +1,23 @@
---------------NV.ENWF.2017-----------------
-2 | 	master PID 2064915
-2 | 	PID 2065458
-2 | 	loaded model (PNW) to GPU:2
-2 | 	total 4 days of data
-2 | 	2017.178.NV.ENWF 	| Error
-2 | 	2017.179.NV.ENWF 	| Finish, found 3454 picks 	 | 11.865 sec
-2 | 	2017.180.NV.ENWF 	| Error
-2 | 	2017.181.NV.ENWF 	| Error
---------------NV.ENWF.2017-----------------
---------------NV.KEMF.2017-----------------
-2 | 	master PID 2064915
-2 | 	PID 2065881
-2 | 	loaded model (PNW) to GPU:2
-2 | 	total 9 days of data
-2 | 	2017.152.NV.KEMF 	| Finish, found 3454 picks 	 | 12.521 sec
-2 | 	2017.153.NV.KEMF 	| Finish, found 3454 picks 	 | 12.016 sec
-2 | 	2017.154.NV.KEMF 	| Finish, found 3456 picks 	 | 10.623 sec
-2 | 	2017.155.NV.KEMF 	| Finish, found 3456 picks 	 | 14.095 sec
-2 | 	2017.156.NV.KEMF 	| Finish, found 1122 picks 	 | 9.481 sec
-2 | 	2017.157.NV.KEMF 	| Error
-2 | 	2017.158.NV.KEMF 	| Error
-2 | 	2017.159.NV.KEMF 	| Error
-2 | 	2017.160.NV.KEMF 	| Error
---------------NV.KEMF.2017-----------------
+--------------NV.2017-----------------
+2 | 	master PID 1179284
+2 | 	PID 1179404
+2 | 	loaded templates (data/templates/sep2017_templates.tgz)
+2 | 	total 3 days of data
+Data is too short for day 158, skipping detection
+Data is too short for day 159, skipping detection
+Data is too short for day 160, skipping detection
+--------------NV.2017-----------------
+--------------NV.2017-----------------
+2 | 	master PID 1179284
+2 | 	PID 1179523
+2 | 	loaded templates (data/templates/sep2017_templates.tgz)
+2 | 	total 3 days of data
+Data is too short for day 158, skipping detection
+Data is too short for day 159, skipping detection
+Data is too short for day 160, skipping detection
+--------------NV.2017-----------------
+--------------NV.2017-----------------
+2 | 	master PID 1179284
+2 | 	PID 1179596
+2 | 	loaded templates (data/templates/sep2017_templates.tgz)
+2 | 	total 3 days of data

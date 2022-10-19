@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<q:quakeml xmlns="http://quakeml.org/xmlns/bed/1.2" xmlns:q="http://quakeml.org/xmlns/quakeml/1.2">
+  <eventParameters publicID="smi:local/1bd48563-be50-4dae-addb-fea4acf0d104">
+    <event publicID="smi:local/515146_20170604T065434.655000">
+      <comment id="smi:local/c23bab78-de3d-4210-8a67-2dfc4f2c2a02">
+        <text>Template: 515146</text>
+      </comment>
+      <comment id="smi:local/3bf7e006-6ba4-4752-ab81-fef6d887c32a">
+        <text>threshold=3.0</text>
+      </comment>
+      <comment id="smi:local/b3638ebf-12db-4068-bb12-10262a8c929b">
+        <text>detect_val=-3.00173282623291</text>
+      </comment>
+      <comment id="smi:local/70c4298e-ba1c-4013-a2dc-fb025ab2e35d">
+        <text>channels used: ('ENWF', 'HHE') ('ENWF', 'HHZ') ('KEMF', 'EHE') ('KEMF', 'EHZ') ('NCHR', 'EHE') ('NCHR', 'EHZ')</text>
+      </comment>
+      <creationInfo>
+        <author>EQcorrscan</author>
+        <creationTime>2022-10-17T20:02:58.578072Z</creationTime>
+      </creationInfo>
+      <pick publicID="smi:local/f1112a7b-b2ca-4235-908b-b8f63cece1b1">
+        <time>
+          <value>2017-06-04T06:54:36.560000Z</value>
+        </time>
+        <waveformID networkCode="NV" stationCode="ENWF" locationCode="" channelCode="HHE"></waveformID>
+      </pick>
+      <pick publicID="smi:local/82c5ca7c-c334-4a70-9ef7-b735c0ecc07e">
+        <time>
+          <value>2017-06-04T06:54:35.070000Z</value>
+        </time>
+        <waveformID networkCode="NV" stationCode="ENWF" locationCode="" channelCode="HHZ"></waveformID>
+      </pick>
+      <pick publicID="smi:local/c8724476-0da9-4a40-974b-649b31f409b7">
+        <time>
+          <value>2017-06-04T06:54:36.590000Z</value>
+        </time>
+        <waveformID networkCode="NV" stationCode="KEMF" locationCode="" channelCode="EHE"></waveformID>
+      </pick>
+      <pick publicID="smi:local/006aff46-7e62-4f04-b997-8022b19b9d74">
+        <time>
+          <value>2017-06-04T06:54:35.165000Z</value>
+        </time>
+        <waveformID networkCode="NV" stationCode="KEMF" locationCode="" channelCode="EHZ"></waveformID>
+      </pick>
+      <pick publicID="smi:local/048938af-851f-47ca-a188-bc1ee79f09a7">
+        <time>
+          <value>2017-06-04T06:54:35.935000Z</value>
+        </time>
+        <waveformID networkCode="NV" stationCode="NCHR" locationCode="" channelCode="EHE"></waveformID>
+      </pick>
+      <pick publicID="smi:local/f9a6e86f-ae5e-490b-ab8b-86f1641a92c8">
+        <time>
+          <value>2017-06-04T06:54:34.705000Z</value>
+        </time>
+        <waveformID networkCode="NV" stationCode="NCHR" locationCode="" channelCode="EHZ"></waveformID>
+      </pick>
+    </event>
+  </eventParameters>
+</q:quakeml>

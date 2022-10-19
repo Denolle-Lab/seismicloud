@@ -1,19 +1,21 @@
---------------NV.KEMO.2017-----------------
-5 | 	master PID 2064918
-5 | 	PID 2065459
-5 | 	loaded model (PNW) to GPU:1
-5 | 	total 13 days of data
-5 | 	2017.158.NV.KEMO 	| Error
-5 | 	2017.159.NV.KEMO 	| Error
-5 | 	2017.160.NV.KEMO 	| Error
-5 | 	2017.161.NV.KEMO 	| Finish, found 3454 picks 	 | 8.252 sec
-5 | 	2017.162.NV.KEMO 	| Finish, found 3454 picks 	 | 12.350 sec
-5 | 	2017.163.NV.KEMO 	| Error
-5 | 	2017.164.NV.KEMO 	| Error
-5 | 	2017.165.NV.KEMO 	| Error
-5 | 	2017.166.NV.KEMO 	| Error
-5 | 	2017.167.NV.KEMO 	| Error
-5 | 	2017.168.NV.KEMO 	| Error
-5 | 	2017.169.NV.KEMO 	| Finish, found 3454 picks 	 | 12.159 sec
-5 | 	2017.170.NV.KEMO 	| Finish, found 978 picks 	 | 5.552 sec
---------------NV.KEMO.2017-----------------
+--------------NV.2017-----------------
+5 | 	master PID 1179287
+5 | 	PID 1179400
+5 | 	loaded templates (data/templates/sep2017_templates.tgz)
+5 | 	total 3 days of data
+Data is too short for day 167, skipping detection
+Data is too short for day 168, skipping detection
+Data is too short for day 169, skipping detection
+--------------NV.2017-----------------
+--------------NV.2017-----------------
+5 | 	master PID 1179287
+5 | 	PID 1179567
+5 | 	loaded templates (data/templates/sep2017_templates.tgz)
+5 | 	total 3 days of data
+Data is too short for day 167, skipping detection
+Data is too short for day 168, skipping detection
+Data is too short for day 169, skipping detection
+--------------NV.2017-----------------
+--------------NV.2017-----------------
+5 | 	master PID 1179287
+5 | 	PID 1179635

@@ -1,24 +1,26 @@
 Job description
 Network:            NV
 Year:               2017
-#Station:           4
 #Cores:             9
-#GPU:               4
-Submission time:    PDT 10/11/22 12:16:45
+Submission time:    PDT 10/18/22 17:02:55
 Verbose:            0
 -----------------------------------
-master | 	submit NV.ENWF.2017 to C0|G0 	| PDT 10/11/22 12:16:45
-master | 	submit NV.NCHR.2017 to C8|G0 	| PDT 10/11/22 12:16:45
-master | 	submit NV.KEMF.2017 to C4|G0 	| PDT 10/11/22 12:16:45
-master | 	submit NV.KEMO.2017 to C6|G2 	| PDT 10/11/22 12:16:45
-master | 	submit NV.ENWF.2017 to C2|G2 	| PDT 10/11/22 12:16:45
-master | 	submit NV.ENWF.2017 to C1|G1 	| PDT 10/11/22 12:16:45
-master | 	submit NV.NCHR.2017 to C7|G3 	| PDT 10/11/22 12:16:45
-master | 	submit NV.KEMO.2017 to C5|G1 	| PDT 10/11/22 12:16:45
-master | 	submit NV.KEMF.2017 to C3|G3 	| PDT 10/11/22 12:16:45
-master | 	submit NV.KEMF.2017 to C2|G2 	| PDT 10/11/22 12:18:16
-master | 	submit NV.KEMO.2017 to C4|G0 	| PDT 10/11/22 12:18:50
-master | 	submit NV.NCHR.2017 to C6|G2 	| PDT 10/11/22 12:20:02
------------------------------------
-End of detection
-Run time:           271.250 seconds
+master | 	submit NV.167.2017 to C5 	| PDT 10/18/22 17:02:55
+master | 	submit NV.155.2017 to C1 	| PDT 10/18/22 17:02:55
+master | 	submit NV.173.2017 to C7 	| PDT 10/18/22 17:02:55
+master | 	submit NV.161.2017 to C3 	| PDT 10/18/22 17:02:55
+master | 	submit NV.152.2017 to C0 	| PDT 10/18/22 17:02:55
+master | 	submit NV.158.2017 to C2 	| PDT 10/18/22 17:02:55
+master | 	submit NV.170.2017 to C6 	| PDT 10/18/22 17:02:55
+master | 	submit NV.164.2017 to C4 	| PDT 10/18/22 17:02:55
+master | 	submit NV.176.2017 to C8 	| PDT 10/18/22 17:02:55
+master | 	submit NV.171.2017 to C6 	| PDT 10/18/22 17:03:02
+master | 	submit NV.159.2017 to C2 	| PDT 10/18/22 17:03:05
+master | 	submit NV.165.2017 to C4 	| PDT 10/18/22 17:03:06
+master | 	submit NV.174.2017 to C7 	| PDT 10/18/22 17:03:06
+master | 	submit NV.172.2017 to C6 	| PDT 10/18/22 17:03:06
+master | 	submit NV.168.2017 to C5 	| PDT 10/18/22 17:03:07
+master | 	submit NV.160.2017 to C2 	| PDT 10/18/22 17:03:12
+master | 	submit NV.166.2017 to C4 	| PDT 10/18/22 17:03:14
+master | 	submit NV.175.2017 to C7 	| PDT 10/18/22 17:03:15
+master | 	submit NV.169.2017 to C5 	| PDT 10/18/22 17:03:16

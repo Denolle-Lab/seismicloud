@@ -1,19 +1,5 @@
---------------NV.ENWF.2017-----------------
-1 | 	master PID 2064914
-1 | 	PID 2065461
-1 | 	loaded model (PNW) to GPU:1
-1 | 	total 13 days of data
-1 | 	2017.165.NV.ENWF 	| Error
-1 | 	2017.166.NV.ENWF 	| Error
-1 | 	2017.167.NV.ENWF 	| Error
-1 | 	2017.168.NV.ENWF 	| Skip: too many gaps
-1 | 	2017.169.NV.ENWF 	| Finish, found 3454 picks 	 | 10.632 sec
-1 | 	2017.170.NV.ENWF 	| Error
-1 | 	2017.171.NV.ENWF 	| Finish, found 384 picks 	 | 2.631 sec
-1 | 	2017.172.NV.ENWF 	| Error
-1 | 	2017.173.NV.ENWF 	| Error
-1 | 	2017.174.NV.ENWF 	| Error
-1 | 	2017.175.NV.ENWF 	| Skip: too many gaps
-1 | 	2017.176.NV.ENWF 	| Finish, found 3454 picks 	 | 10.503 sec
-1 | 	2017.177.NV.ENWF 	| Error
---------------NV.ENWF.2017-----------------
+--------------NV.2017-----------------
+1 | 	master PID 1179283
+1 | 	PID 1179401
+1 | 	loaded templates (data/templates/sep2017_templates.tgz)
+1 | 	total 3 days of data
