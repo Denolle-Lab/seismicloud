@@ -1,25 +1,25 @@
 --------------NV.ENWF.2017-----------------
-2 | 	master PID 365831
-2 | 	PID 366438
-2 | 	loaded model (PNW) to GPU:2
+2 | 	master PID 1604735
+2 | 	PID 1605337
+2 | 	loaded model (ORIGINAL) to GPU:2
 2 | 	total 4 days of data
-2 | 	2017.178.NV.ENWF 	| Finish, found 237 picks 	 | 28.985 sec
-2 | 	2017.179.NV.ENWF 	| Finish, found 50 picks 	 | 11.700 sec
-2 | 	2017.180.NV.ENWF 	| Finish, found 92 picks 	 | 23.889 sec
-2 | 	2017.181.NV.ENWF 	| Finish, found 37 picks 	 | 20.752 sec
+2 | 	2017.178.NV.ENWF 	| Finish, found 187 picks 	 | 32.563 sec
+2 | 	2017.179.NV.ENWF 	| Finish, found 43 picks 	 | 13.749 sec
+2 | 	2017.180.NV.ENWF 	| Finish, found 65 picks 	 | 26.594 sec
+2 | 	2017.181.NV.ENWF 	| Finish, found 19 picks 	 | 23.465 sec
 --------------NV.ENWF.2017-----------------
 --------------NV.KEMF.2017-----------------
-2 | 	master PID 365831
-2 | 	PID 366682
-2 | 	loaded model (PNW) to GPU:2
+2 | 	master PID 1604735
+2 | 	PID 1607354
+2 | 	loaded model (ORIGINAL) to GPU:2
 2 | 	total 9 days of data
-2 | 	2017.152.NV.KEMF 	| Finish, found 17 picks 	 | 12.254 sec
-2 | 	2017.153.NV.KEMF 	| Finish, found 4 picks 	 | 12.122 sec
-2 | 	2017.154.NV.KEMF 	| Finish, found 4 picks 	 | 10.612 sec
-2 | 	2017.155.NV.KEMF 	| Finish, found 17 picks 	 | 13.773 sec
-2 | 	2017.156.NV.KEMF 	| Finish, found 1 picks 	 | 9.461 sec
-2 | 	2017.157.NV.KEMF 	| Finish, found 0 picks 	 | 22.379 sec
-2 | 	2017.158.NV.KEMF 	| Finish, found 3 picks 	 | 20.120 sec
-2 | 	2017.159.NV.KEMF 	| Finish, found 24 picks 	 | 12.865 sec
-2 | 	2017.160.NV.KEMF 	| Finish, found 2 picks 	 | 12.614 sec
+2 | 	2017.152.NV.KEMF 	| Finish, found 14 picks 	 | 14.684 sec
+2 | 	2017.153.NV.KEMF 	| Finish, found 6 picks 	 | 14.148 sec
+2 | 	2017.154.NV.KEMF 	| Finish, found 6 picks 	 | 12.338 sec
+2 | 	2017.155.NV.KEMF 	| Finish, found 15 picks 	 | 15.559 sec
+2 | 	2017.156.NV.KEMF 	| Finish, found 4 picks 	 | 10.068 sec
+2 | 	2017.157.NV.KEMF 	| Finish, found 0 picks 	 | 23.580 sec
+2 | 	2017.158.NV.KEMF 	| Finish, found 2 picks 	 | 21.674 sec
+2 | 	2017.159.NV.KEMF 	| Finish, found 20 picks 	 | 13.922 sec
+2 | 	2017.160.NV.KEMF 	| Finish, found 2 picks 	 | 13.998 sec
 --------------NV.KEMF.2017-----------------

@@ -4,22 +4,22 @@ Year:               2017
 #Station:           4
 #Cores:             9
 #GPU:               4
-Submission time:    PDT 10/17/22 13:06:15
+Submission time:    PDT 10/18/22 13:52:08
 Verbose:            0
 -----------------------------------
-master | 	submit NV.ENWF.2017 to C0|G0 	| PDT 10/17/22 13:06:15
-master | 	submit NV.ENWF.2017 to C2|G2 	| PDT 10/17/22 13:06:15
-master | 	submit NV.NCHR.2017 to C8|G0 	| PDT 10/17/22 13:06:15
-master | 	submit NV.KEMO.2017 to C6|G2 	| PDT 10/17/22 13:06:15
-master | 	submit NV.KEMF.2017 to C4|G0 	| PDT 10/17/22 13:06:15
-master | 	submit NV.KEMF.2017 to C3|G3 	| PDT 10/17/22 13:06:15
-master | 	submit NV.KEMO.2017 to C5|G1 	| PDT 10/17/22 13:06:15
-master | 	submit NV.ENWF.2017 to C1|G1 	| PDT 10/17/22 13:06:15
-master | 	submit NV.NCHR.2017 to C7|G3 	| PDT 10/17/22 13:06:15
-master | 	submit NV.NCHR.2017 to C9|G1 	| PDT 10/17/22 13:06:15
-master | 	submit NV.KEMF.2017 to C2|G2 	| PDT 10/17/22 13:07:46
-master | 	submit NV.KEMO.2017 to C4|G0 	| PDT 10/17/22 13:08:23
-master | 	submit NV.NCHR.2017 to C6|G2 	| PDT 10/17/22 13:09:31
+master | 	submit NV.ENWF.2017 to C0|G0 	| PDT 10/18/22 13:52:08
+master | 	submit NV.ENWF.2017 to C2|G2 	| PDT 10/18/22 13:52:08
+master | 	submit NV.KEMO.2017 to C6|G2 	| PDT 10/18/22 13:52:08
+master | 	submit NV.NCHR.2017 to C8|G0 	| PDT 10/18/22 13:52:08
+master | 	submit NV.KEMF.2017 to C4|G0 	| PDT 10/18/22 13:52:08
+master | 	submit NV.NCHR.2017 to C7|G3 	| PDT 10/18/22 13:52:08
+master | 	submit NV.KEMO.2017 to C5|G1 	| PDT 10/18/22 13:52:08
+master | 	submit NV.NCHR.2017 to C9|G1 	| PDT 10/18/22 13:52:08
+master | 	submit NV.ENWF.2017 to C1|G1 	| PDT 10/18/22 13:52:08
+master | 	submit NV.KEMF.2017 to C3|G3 	| PDT 10/18/22 13:52:08
+master | 	submit NV.KEMF.2017 to C2|G2 	| PDT 10/18/22 13:53:49
+master | 	submit NV.KEMO.2017 to C4|G0 	| PDT 10/18/22 13:54:43
+master | 	submit NV.NCHR.2017 to C6|G2 	| PDT 10/18/22 13:56:01
 -----------------------------------
 End of detection
-Run time:           264.204 seconds
+Run time:           284.553 seconds

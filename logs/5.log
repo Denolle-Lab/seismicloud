@@ -1,19 +1,19 @@
 --------------NV.KEMO.2017-----------------
-5 | 	master PID 365834
-5 | 	PID 366442
-5 | 	loaded model (PNW) to GPU:1
+5 | 	master PID 1604739
+5 | 	PID 1605342
+5 | 	loaded model (ORIGINAL) to GPU:1
 5 | 	total 13 days of data
-5 | 	2017.158.NV.KEMO 	| Finish, found 5 picks 	 | 23.008 sec
-5 | 	2017.159.NV.KEMO 	| Finish, found 51 picks 	 | 14.788 sec
-5 | 	2017.160.NV.KEMO 	| Finish, found 6 picks 	 | 12.843 sec
-5 | 	2017.161.NV.KEMO 	| Finish, found 63 picks 	 | 8.165 sec
-5 | 	2017.162.NV.KEMO 	| Finish, found 16 picks 	 | 12.174 sec
-5 | 	2017.163.NV.KEMO 	| Finish, found 13 picks 	 | 25.114 sec
-5 | 	2017.164.NV.KEMO 	| Finish, found 14 picks 	 | 21.964 sec
-5 | 	2017.165.NV.KEMO 	| Finish, found 7 picks 	 | 24.208 sec
-5 | 	2017.166.NV.KEMO 	| Finish, found 6 picks 	 | 20.668 sec
-5 | 	2017.167.NV.KEMO 	| Finish, found 6 picks 	 | 26.492 sec
-5 | 	2017.168.NV.KEMO 	| Finish, found 27 picks 	 | 23.525 sec
-5 | 	2017.169.NV.KEMO 	| Finish, found 10 picks 	 | 12.051 sec
-5 | 	2017.170.NV.KEMO 	| Finish, found 0 picks 	 | 5.529 sec
+5 | 	2017.158.NV.KEMO 	| Finish, found 3 picks 	 | 25.737 sec
+5 | 	2017.159.NV.KEMO 	| Finish, found 41 picks 	 | 15.969 sec
+5 | 	2017.160.NV.KEMO 	| Finish, found 2 picks 	 | 13.902 sec
+5 | 	2017.161.NV.KEMO 	| Finish, found 36 picks 	 | 10.017 sec
+5 | 	2017.162.NV.KEMO 	| Finish, found 9 picks 	 | 14.102 sec
+5 | 	2017.163.NV.KEMO 	| Finish, found 3 picks 	 | 27.053 sec
+5 | 	2017.164.NV.KEMO 	| Finish, found 14 picks 	 | 23.755 sec
+5 | 	2017.165.NV.KEMO 	| Finish, found 4 picks 	 | 26.504 sec
+5 | 	2017.166.NV.KEMO 	| Finish, found 12 picks 	 | 22.773 sec
+5 | 	2017.167.NV.KEMO 	| Finish, found 7 picks 	 | 28.427 sec
+5 | 	2017.168.NV.KEMO 	| Finish, found 14 picks 	 | 25.875 sec
+5 | 	2017.169.NV.KEMO 	| Finish, found 6 picks 	 | 13.969 sec
+5 | 	2017.170.NV.KEMO 	| Finish, found 0 picks 	 | 5.935 sec
 --------------NV.KEMO.2017-----------------

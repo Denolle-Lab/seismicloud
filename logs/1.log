@@ -1,21 +1,20 @@
 --------------NV.ENWF.2017-----------------
-1 | 	master PID 365830
-1 | 	PID 366444
-1 | 	loaded model (PNW) to GPU:1
+1 | 	master PID 1604734
+1 | 	PID 1605344
+1 | 	loaded model (ORIGINAL) to GPU:1
 1 | 	total 13 days of data
-1 | 	2017.165.NV.ENWF 	| Finish, found 9 picks 	 | 9.111 sec
-1 | 	2017.166.NV.ENWF 	| Finish, found 30 picks 	 | 21.267 sec
-1 | 	2017.167.NV.ENWF 	| Finish, found 23 picks 	 | 20.175 sec
+1 | 	2017.165.NV.ENWF 	| Finish, found 4 picks 	 | 10.411 sec
+1 | 	2017.166.NV.ENWF 	| Finish, found 21 picks 	 | 22.160 sec
+1 | 	2017.167.NV.ENWF 	| Finish, found 9 picks 	 | 21.677 sec
 1 | 	2017.168.NV.ENWF.0 	| Skip: too many gaps
-1 | 	2017.168.NV.ENWF 	| Finish, found 0 picks 	 | 0.431 sec
-1 | 	2017.169.NV.ENWF 	| Finish, found 27 picks 	 | 10.399 sec
-1 | 	2017.170.NV.ENWF 	| Finish, found 6 picks 	 | 7.360 sec
-1 | 	2017.171.NV.ENWF 	| Finish, found 1 picks 	 | 2.546 sec
-1 | 	2017.172.NV.ENWF 	| Finish, found 26 picks 	 | 25.330 sec
-1 | 	2017.173.NV.ENWF 	| Finish, found 60 picks 	 | 23.653 sec
-1 | 	2017.174.NV.ENWF 	| Finish, found 74 picks 	 | 29.081 sec
-1 | 	2017.175.NV.ENWF.0 	| Skip: too many gaps
-1 | 	2017.175.NV.ENWF 	| Finish, found 0 picks 	 | 0.363 sec
-1 | 	2017.176.NV.ENWF 	| Finish, found 36 picks 	 | 10.329 sec
-1 | 	2017.177.NV.ENWF 	| Finish, found 83 picks 	 | 30.974 sec
+1 | 	2017.168.NV.ENWF 	| Finish, found 0 picks 	 | 0.434 sec
+1 | 	2017.169.NV.ENWF 	| Finish, found 24 picks 	 | 12.203 sec
+1 | 	2017.170.NV.ENWF 	| Finish, found 2 picks 	 | 7.841 sec
+1 | 	2017.171.NV.ENWF 	| Finish, found 0 picks 	 | 2.599 sec
+1 | 	2017.172.NV.ENWF 	| Finish, found 20 picks 	 | 26.144 sec
+1 | 	2017.173.NV.ENWF 	| Finish, found 37 picks 	 | 24.492 sec
+1 | 	2017.174.NV.ENWF 	| Finish, found 43 picks 	 | 29.629 sec
+1 | 	2017.175.NV.ENWF 	| Finish, found 18 picks 	 | 22.571 sec
+1 | 	2017.176.NV.ENWF 	| Finish, found 37 picks 	 | 12.126 sec
+1 | 	2017.177.NV.ENWF 	| Finish, found 38 picks 	 | 31.323 sec
 --------------NV.ENWF.2017-----------------

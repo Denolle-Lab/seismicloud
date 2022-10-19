@@ -72,11 +72,11 @@ print(f"--------------{network}.{station}.{year}-----------------", flush=True)
 print(f"{rank} | \tmaster PID {pid}", flush=True)
 print(f"{rank} | \tPID {mypid}", flush=True)
 
-model_pnw = sbm.EQTransformer.from_pretrained(config["model"]['detection']["pretrained"])
+model_pnw = sbm.EQTransformer.from_pretrained(config["model"]['picking']["pretrained"])
 model_pnw.to(torch.device("cuda"))
-model_pnw.default_args = config["model"]['detection']["default_args"]
+model_pnw.default_args = config["model"]['picking']["default_args"]
 print(
-    f"{rank} | \tloaded model ({config['model']['detection']['pretrained'].upper()}) to GPU:{gpuid}",
+    f"{rank} | \tloaded model ({config['model']['picking']['pretrained'].upper()}) to GPU:{gpuid}",
     flush=True,
 )
 
@@ -94,7 +94,7 @@ for idx, i in jobs.iterrows():
     sdoy = str(doy).zfill(3)
     ss = []
     picks = []
-    if config['model']['detection']['hourly_detection']:
+    if config['model']['picking']['hourly_detection']:
         for h in range(24):
             stime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:00:00.000000")
             etime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:59:59.999999")
@@ -104,7 +104,7 @@ for idx, i in jobs.iterrows():
 
     for ih, s in enumerate(ss):
         if len(s) > 0:
-            if len(s.get_gaps()) > config["model"]['detection']["max_gap"]:
+            if len(s.get_gaps()) > config["model"]['picking']["max_gap"]:
                 print(
                     f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: too many gaps",
                     flush=True,
@@ -123,8 +123,9 @@ for idx, i in jobs.iterrows():
                 s.resample(100)
                 s.detrend()
                 s.normalize()
+                s.filter("highpass", freq = 2)
                 p, _ = model_pnw.classify(
-                    s, strict=False, **config["model"]['detection']["detection_args"]
+                    s, strict=False, **config["model"]['picking']["detection_args"]
                 )
                 picks += p
 
