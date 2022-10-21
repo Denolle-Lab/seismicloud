@@ -22,3 +22,8 @@ TODO
    ```
     mpirun -np 9 python scripts/template_matching/distributed_detection.py -c configs/myconfig_zoe.json -n NV -y 2017
     ```
+
+### Run with Docker
+```
+docker run -it --rm ghcr.io/denolle-lab/seismicloud:latest python --version
+```

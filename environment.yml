@@ -1,0 +1,13 @@
+name: seismicloud
+channels:
+  - conda-forge
+dependencies:
+  - mpi4py
+  - obspy
+  - pandas
+  - pip
+  - python=3.9
+  # - pytorch>=1.12.0=*cuda112*
+  - tqdm
+  - pip:
+    - seisbench
