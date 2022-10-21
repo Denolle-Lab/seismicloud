@@ -18,5 +18,5 @@ RUN --mount=type=cache,target=/opt/conda/pkgs <<eot
     micromamba clean --all --yes
 eot
 
-# Copy repository files
+# Copy all repository files
 COPY --link --chown=1000:1000 ./ /tmp

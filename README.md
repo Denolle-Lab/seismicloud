@@ -1,4 +1,6 @@
 # seismicloud
+[![build-and-push](https://github.com/Denolle-Lab/seismicloud/actions/workflows/docker.yml/badge.svg)](https://github.com/Denolle-Lab/seismicloud/actions/workflows/docker.yml)
+
 Workflow for template matching and ML picking with cloud capabilities
 
 
@@ -35,3 +37,11 @@ Note: this currently happens automatically with GitHub Actions with every commit
 ```
 docker buildx build . -t seismicloud:latest
 ```
+
+### Run on AWS
+
+TODO
+
+### Run on Azure
+
+TODO
