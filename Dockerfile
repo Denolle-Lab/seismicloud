@@ -10,12 +10,13 @@ ENV SHELL=/bin/bash \
     # NOTE: this is needed to build on non-GPU machine
     CONDA_OVERRIDE_CUDA="11.2"
 
-COPY --link environment.yml* /tmp/env.yml
+# chown for default 'mambauser' permissions
+COPY --link --chown=1000:1000 environment.yml* /tmp/env.yml
 
 RUN --mount=type=cache,target=/opt/conda/pkgs <<eot
     micromamba install -y -n base -f /tmp/env.yml
     micromamba clean --all --yes
 eot
 
-# TODO: Copy relevant scripts & add to path / CMD / ENTRYPOINT
-# e.g. docker run ghcr.io/seismicloud:latest create_joblist.py
+# Copy repository files
+COPY --link --chown=1000:1000 ./ /tmp

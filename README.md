@@ -26,6 +26,7 @@ TODO
 ### Run with Docker
 ```
 docker run -it --rm ghcr.io/denolle-lab/seismicloud:latest python --version
+docker run -it --rm ghcr.io/denolle-lab/seismicloud:latest python /tmp/scripts/picking/create_joblist.py -c /tmp/configs/myconfig.json
 ```
 
 
