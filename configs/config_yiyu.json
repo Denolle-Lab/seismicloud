@@ -16,7 +16,7 @@
             "pretrained": "original",
             "max_gap": 20,
             "default_args": {
-                "overlap": 1000, 
+                "overlap": 5000, 
                 "blinding": [1000, 1000]
             },
             "detection_args":{
@@ -44,8 +44,8 @@
         }
     },
     "environment": {
-        "NPROC": 9,
-        "CUDA_VISIBLE_DEVICES": [0,1,2,3],
+        "NPROC": 10,
+        "CUDA_VISIBLE_DEVICES": [0,1],
         "OPENBLAS_NUM_THREADS": "1"
     }
 }

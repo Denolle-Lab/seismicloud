@@ -19,14 +19,12 @@ import pandas as pd
 
 parser = argparse.ArgumentParser(description="Picking on PNW continuous data.")
 parser.add_argument("-n", "--network", required=True)
-# parser.add_argument("-s", "--station", default=None)
 parser.add_argument("-y", "--year", type=int, required=True)
 parser.add_argument("-c", "--config", required=True)
 parser.add_argument("--appendlog", default=False, type=int)
 
 args = parser.parse_args()
 network = args.network
-# station = args.station
 year = args.year
 
 fconfig = args.config
@@ -64,6 +62,10 @@ if rank == 0:
     print(f"Network:            {network}", flush=True)
     print(f"Year:               {year}", flush=True)
     print(f"#Station:           {len(jobs['station'].unique())}", flush=True)
+    print(
+        f"#Jobs:              {len(jobs[['station', 'rank']].drop_duplicates())}",
+        flush=True,
+    )
     print(f"#Cores:             {nproc}", flush=True)
     print(f"#GPU:               {len(gpus)}", flush=True)
     print(f"Submission time:    {time.strftime('%Z %x %X')}", flush=True)

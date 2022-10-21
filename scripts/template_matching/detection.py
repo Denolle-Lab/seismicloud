@@ -81,11 +81,26 @@ for idx, i in jobs.iterrows():
     t0 = time.time()
     doy = i["doy"]
     sdoy = str(doy).zfill(3)
-    
+
     # Read day-long stream
     s = obspy.core.stream.Stream()
     for sta in stations:
-        fpath = mseed_path + str(network) + '/' + str(year) + '/' + str(doy) + '/' + sta + '.' + network + '.' + str(year) + '.' + str(doy)
+        fpath = (
+            mseed_path
+            + str(network)
+            + "/"
+            + str(year)
+            + "/"
+            + str(doy)
+            + "/"
+            + sta
+            + "."
+            + network
+            + "."
+            + str(year)
+            + "."
+            + str(doy)
+        )
         if os.path.exists(fpath):
             stream = obspy.core.stream.read(fpath)
             s += stream
@@ -93,20 +108,26 @@ for idx, i in jobs.iterrows():
             continue
 
     if len(s) > 0:
-        
+
         # Catch for short streams due to data gaps
-        if len(s[0])/s[0].stats.sampling_rate < config['templates']['process_len']:
-            print('Data is too short for day ' + str(doy) + ', skipping detection')
+        if len(s[0]) / s[0].stats.sampling_rate < config["templates"]["process_len"]:
+            print("Data is too short for day " + str(doy) + ", skipping detection")
             continue
-            
+
         else:
-            #try:
+            # try:
             picks = []
-            s.resample(config['templates']['samp_rate'])
+            s.resample(config["templates"]["samp_rate"])
             s.merge()
             if len(s) == len(stations):
-                party = templates.detect(s, threshold=config['template_matching']['threshold'],threshold_type=config['template_matching']['threshold_type'],trig_int=config['template_matching']['trig_int'],parallel_process=False)
-            
+                party = templates.detect(
+                    s,
+                    threshold=config["template_matching"]["threshold"],
+                    threshold_type=config["template_matching"]["threshold_type"],
+                    trig_int=config["template_matching"]["trig_int"],
+                    parallel_process=False,
+                )
+
                 num_detects = np.sum([len(f) for f in party])
                 print(
                     f"{rank} | \t{year}.{sdoy}.{network} \t| Finish, found {num_detects} detections \t | {'%.3f' % (time.time() - t0)} sec",
@@ -116,18 +137,14 @@ for idx, i in jobs.iterrows():
                 # Save day-long party if there were detections
                 if num_detects > 0:
                     save_name = f"{detections_path}/{network}_{year}_{doy}"
-                    party.write(save_name+ '.xml', format='quakeml',overwrite=True)
+                    party.write(save_name + ".xml", format="quakeml", overwrite=True)
 
                 gc.collect()
 
-            
             else:
-                print('Data missing for some stations')
+                print("Data missing for some stations")
 
-
-           
-
-            #except:
+            # except:
             #    print(
             #        f"{rank} | \t{year}.{sdoy}.{network} \t| Error",
             #        flush=True,

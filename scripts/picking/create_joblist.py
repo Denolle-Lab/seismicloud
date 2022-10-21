@@ -12,6 +12,7 @@ import os
 import json
 import warnings
 import argparse
+import math
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
 sys.path.append("/home/niyiyu/Research/PNSN-catalog/seisbench/")
@@ -79,7 +80,7 @@ for n in nets:
         df = pd.DataFrame(df, columns=["station", "network", "year", "doy", "fpath"])
         df = df.sort_values(by=["station", "doy"])
         df.reset_index(drop=True, inplace=True)
-        njobs = int(len(df) / nproc)
+        njobs = math.ceil(len(df) / nproc)
         df["rank"] = df.index.map(lambda x: int(x / njobs))
 
         df.to_csv("/".join([jobs_path, f"{n}_{y}_joblist.csv"]), index=False)

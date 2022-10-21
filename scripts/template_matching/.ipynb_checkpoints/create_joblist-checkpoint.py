@@ -27,9 +27,7 @@ rank = comm.Get_rank()
 size = comm.Get_size()
 
 ## prepare arg parser
-parser = argparse.ArgumentParser(
-    description="Template matching from continuous data"
-)
+parser = argparse.ArgumentParser(description="Template matching from continuous data")
 parser.add_argument("-c", "--config", required=True)
 args = parser.parse_args()
 
@@ -49,12 +47,14 @@ os.makedirs(jobs_path, exist_ok=True)
 logs_path = config["log"]["logs_path"]
 os.makedirs(logs_path, exist_ok=True)
 
-templates_path = config["workflow"]["templates_path"] # should already exist, is a file
+templates_path = config["workflow"]["templates_path"]  # should already exist, is a file
 
 detections_path = config["workflow"]["detections_path"]
 os.makedirs(detections_path, exist_ok=True)
 
-starting_cat_path = config["workflow"]["starting_cat_path"] # should already exist, is a file
+starting_cat_path = config["workflow"][
+    "starting_cat_path"
+]  # should already exist, is a file
 
 stations = config["workflow"]["stations"]
 network = config["workflow"]["network"]
@@ -78,10 +78,8 @@ for n in nets:
         doys = os.listdir("/".join([mseed_path, n, y]))
         for d in doys:
             # stas = os.listdir("/".join([mseed_path, n, y, d]))
-        #    for s in stas:
-                df.append(
-                    [n, y, d, "/".join([mseed_path, n, y, d])]
-                )
+            #    for s in stas:
+            df.append([n, y, d, "/".join([mseed_path, n, y, d])])
 
         df = pd.DataFrame(df, columns=["network", "year", "doy", "fpath"])
         df = df.sort_values(by=["doy"])
@@ -89,4 +87,6 @@ for n in nets:
         njobs = int(len(df) / nproc)
         df["rank"] = df.index.map(lambda x: int(x / njobs))
 
-        df.to_csv("/".join([jobs_path, f"{n}_{y}_templatematching_joblist.csv"]), index=False)
+        df.to_csv(
+            "/".join([jobs_path, f"{n}_{y}_templatematching_joblist.csv"]), index=False
+        )
