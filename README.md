@@ -27,3 +27,10 @@ TODO
 ```
 docker run -it --rm ghcr.io/denolle-lab/seismicloud:latest python --version
 ```
+
+
+### Build Docker image:
+Note: this currently happens automatically with GitHub Actions with every commit to the 'main' branch
+```
+docker buildx build . -t seismicloud:latest
+```

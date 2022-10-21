@@ -10,7 +10,7 @@ ENV SHELL=/bin/bash \
     # NOTE: this is needed to build on non-GPU machine
     CONDA_OVERRIDE_CUDA="11.2"
 
-COPY --chown=$MAMBA_USER:$MAMBA_USER --link environment.yml* /tmp/env.yml
+COPY --link environment.yml* /tmp/env.yml
 
 RUN --mount=type=cache,target=/opt/conda/pkgs <<eot
     micromamba install -y -n base -f /tmp/env.yml
