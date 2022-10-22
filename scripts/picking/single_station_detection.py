@@ -72,9 +72,9 @@ print(f"--------------{network}.{station}.{year}-----------------", flush=True)
 print(f"{rank} | \tmaster PID {pid}", flush=True)
 print(f"{rank} | \tPID {mypid}", flush=True)
 
-model_pnw = sbm.EQTransformer.from_pretrained(config["model"]['picking']["pretrained"])
+model_pnw = sbm.EQTransformer.from_pretrained(config["model"]["picking"]["pretrained"])
 model_pnw.to(torch.device("cuda"))
-model_pnw.default_args = config["model"]['picking']["default_args"]
+model_pnw.default_args = config["model"]["picking"]["default_args"]
 print(
     f"{rank} | \tloaded model ({config['model']['picking']['pretrained'].upper()}) to GPU:{gpuid}",
     flush=True,
@@ -94,17 +94,17 @@ for idx, i in jobs.iterrows():
     sdoy = str(doy).zfill(3)
     ss = []
     picks = []
-    if config['model']['picking']['hourly_detection']:
+    if config["model"]["picking"]["hourly_detection"]:
         for h in range(24):
             stime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:00:00.000000")
             etime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:59:59.999999")
-            ss += [obspy.read(fpath, starttime = stime, endtime = etime)]
+            ss += [obspy.read(fpath, starttime=stime, endtime=etime)]
     else:
         ss = [obspy.read(fpath)]
 
     for ih, s in enumerate(ss):
         if len(s) > 0:
-            if len(s.get_gaps()) > config["model"]['picking']["max_gap"]:
+            if len(s.get_gaps()) > config["model"]["picking"]["max_gap"]:
                 print(
                     f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: too many gaps",
                     flush=True,
@@ -112,7 +112,9 @@ for idx, i in jobs.iterrows():
             else:
                 if verbose > 1:
                     print(
-                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t|", s, flush=True
+                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t|",
+                        s,
+                        flush=True,
                     )
                 elif verbose > 0:
                     current_time = time.strftime("%Z %x %X")
@@ -123,11 +125,18 @@ for idx, i in jobs.iterrows():
                 s.resample(100)
                 s.detrend()
                 s.normalize()
-                s.filter("highpass", freq = 2)
-                p, _ = model_pnw.classify(
-                    s, strict=False, **config["model"]['picking']["detection_args"]
-                )
-                picks += p
+                s.filter("highpass", freq=2)
+                try:
+                    p, _ = model_pnw.classify(
+                        s, strict=False, **config["model"]["picking"]["detection_args"]
+                    )
+                    picks += p
+                except:
+                    print(
+                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: got error.",
+                        flush=True,
+                    )
+                    pass
 
         else:
             if verbose > 0:
@@ -147,7 +156,7 @@ for idx, i in jobs.iterrows():
             print(
                 f"{rank} | \tdump picks to {picks_path}/{network}/{year}/{sdoy}/{station}.{network}.{year}.{sdoy}"
             )
-    
+
     gc.collect()
     print(
         f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Finish, found {len(picks)} picks \t | {'%.3f' % (time.time() - t0)} sec",
