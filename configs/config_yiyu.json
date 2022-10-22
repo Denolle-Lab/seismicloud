@@ -1,7 +1,7 @@
 {
     "workflow": {
-        "interpreter": "/home/niyiyu/anaconda3/envs/seisml/bin/python",
-        "mseed_path": "/fd1/yiyu_data/Endeavour/data/",
+        "interpreter": "/opt/conda/bin/python3",
+        "mseed_path": "/tmp/data",
         "jobs_path": "jobs/",
         "picks_path": "data/picks/"  
     },

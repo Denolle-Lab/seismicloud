@@ -1,7 +1,7 @@
 {
     "workflow": {
-        "interpreter": "/home/zkrauss/mambaforge/envs/alaska-ml/bin/python",
-        "mseed_path": "/fd1/yiyu_data/Endeavour/data/",
+        "interpreter": "/opt/conda/bin/python3",
+        "mseed_path": "/tmp/data",
         "templates_path": "data/templates/sep2017_templates.tgz",
         "detections_path": "data/detections/",
         "jobs_path": "jobs/",
