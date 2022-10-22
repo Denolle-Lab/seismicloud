@@ -1,7 +1,7 @@
 {
     "workflow": {
         "interpreter": "/opt/conda/bin/python3",
-        "mseed_path": "/tmp/data",
+        "mseed_path": "/tmp/data/data",
         "templates_path": "data/templates/sep2017_templates.tgz",
         "detections_path": "data/detections/",
         "jobs_path": "jobs/",
