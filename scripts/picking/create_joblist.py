@@ -19,8 +19,6 @@ sys.path.append("/home/niyiyu/Research/PNSN-catalog/seisbench/")
 
 ## import user defined packages
 import pandas as pd
-from tqdm import tqdm
-
 
 ## intialize MPI
 comm = MPI.COMM_WORLD

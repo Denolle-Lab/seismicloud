@@ -4,7 +4,7 @@
         "mseed_path": "/tmp/data/data",
         "jobs_path": "jobs/",
         "picks_path": "data/picks/",
-        "catalog_path": "data/catalog/"
+        "catalog_path": "data/catalogs/"
     },
     "log": {
             "verbose": 0, 

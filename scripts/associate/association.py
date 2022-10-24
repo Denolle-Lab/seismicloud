@@ -7,10 +7,10 @@
 ###########################################
 
 import os
-import sys
 import time
 import json
 import pickle
+import obspy
 import argparse
 
 import numpy as np
@@ -30,6 +30,7 @@ with open(fconfig, "r") as f:
 verbose = config["log"]["verbose"]
 association_config = config['model']['association']
 picks_path = config["workflow"]["picks_path"]
+catalog_path = config["workflow"]["catalog_path"]
 
 # check https://github.com/AI4EPS/GaMMA/blob/master/docs/example_seisbench.ipynb for more documentation
 from pyproj import CRS, Transformer
@@ -52,8 +53,9 @@ association_config["bfgs_bounds"] = (
     (None, None),  # t
 )
 
-cs = []
+
 for year in os.listdir(picks_path):
+    cs = []
     for doy in os.listdir("/".join([picks_path, year])):
         pick_df = []
         for net in os.listdir("/".join([picks_path, year, doy])):
@@ -79,4 +81,11 @@ for year in os.listdir(picks_path):
                     cs += c
                 else:
                     pass
-    catalogs = pd.DataFrame(cs)
+    df_cats = pd.DataFrame(cs)
+    df_cats.sort_values("time", inplace = True)
+    cat = obspy.core.event.catalog.Catalog()
+    for ide, e in df_cats.iterrows():
+        event = obspy.core.event.event.Event()
+        event.origins.append(obspy.core.event.origin.Origin(time = utc(e['time'])))
+        cat.append(event)
+    cat.write(f"{catalog_path}/{year}.xml", format = "QUAKEML")
