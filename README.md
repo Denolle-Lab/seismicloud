@@ -16,7 +16,7 @@ For template matching.
 1. Setting up data archive and configure file.
 2. Create job list.
     ```
-    python scripts/create_joblist.py --config configs/myconfig.json
+    python scripts/picking/create_joblist.py --config configs/config_yiyu.json
     ```
 3. Do ML phase picking.
     ```
