@@ -1,0 +1,62 @@
+{
+    "workflow": {
+        "interpreter": "/opt/conda/bin/python3",
+        "mseed_path": "/tmp/data/data",
+        "templates_path": "data/templates/sep2017_templates.tgz",
+        "detections_path": "data/detections/",
+        "jobs_path": "jobs/",
+        "picks_path": "picks/",
+        "starting_cat_path": "data/endquakes_2017.xml",
+        "stations": ["KEMF","NCHR","ENWF","KEMO"],
+        "network": "NV"
+    },
+    "log": {
+            "verbose": 0, 
+            "appendlog": false,
+            "logs_path": "logs/"
+    },
+    "model": {
+        "pretrained": "pnw",
+        "max_gap": 10,
+        "default_args": {
+            "overlap": 1000, 
+            "blinding": [1000, 1000]
+        },
+        "detection_args":{
+            "P_threshold": 0.0,
+            "S_threshold": 0.0
+        }
+    },
+    "environment": {
+        "NPROC": 9,
+        "CUDA_VISIBLE_DEVICES": [0,1,2,3],
+        "OPENBLAS_NUM_THREADS": "1"
+    },
+    "templates": {
+        "lowcut": 8.0,
+        "highcut": 35.0,
+        "filt_order": 4,
+        "data_pad": 20.0,
+        "samp_rate": 200.0,
+        "length": 0.5,
+        "prepick": 0.05,
+        "process_len": 86400,
+        "min_snr": 0.1,
+        "swin": "all"
+    },
+    "starting_catalog": {
+        "min_lat": 47.9,
+        "max_lat": 48.05,
+        "min_lon": -129.15,
+        "max_lon": -129.05,
+        "min_time": "obspy.UTCDateTime(2017,6,1,1,30,0)",
+        "max_time": "obspy.UTCDateTime(2017,7,1,1,30,0)",
+        "min_magnitude": 1.2,
+        "max_magnitude": "NaN"
+    },
+    "template_matching": {
+        "threshold": 0.5,
+        "threshold_type": "av_chan_corr",
+        "trig_int": 1
+    }          
+}
