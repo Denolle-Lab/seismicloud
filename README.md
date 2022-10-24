@@ -7,22 +7,24 @@ Workflow for template matching and ML picking with cloud capabilities
 ## Usage
 
 ### Template Matching
-TODO 
+For template matching.
+    ```
+    mpirun -np 9 python scripts/template_matching/distributed_detection.py -c configs/config_zoe.json -n NV -y 2017
+    ```
 
 ### Machine Learninig Event Detection
 1. Setting up data archive and configure file.
 2. Create job list.
     ```
-    python scripts/create_joblist.py --config configs/myconfig.json
+    python scripts/picking/create_joblist.py --config configs/config_yiyu.json
     ```
-3. Submit jobs.
-   For ML phase picking:
+3. Do ML phase picking.
     ```
-    mpirun -np 4 python scripts/picking/network_detection.py -c configs/myconfig.json -n NV -y 2017
+    mpirun -np 10 python scripts/picking/network_detection.py -c configs/config_yiyu.json -n NV -y 2017
     ```
-   For template matching:
+4. Associate detected phase to events.
     ```
-    mpirun -np 9 python scripts/template_matching/distributed_detection.py -c configs/myconfig_zoe.json -n NV -y 2017
+    python scripts/associate/association.py -c configs/config_yiyu.json --year 2017
     ```
 
 ### Run with Docker

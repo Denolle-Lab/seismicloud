@@ -2,6 +2,7 @@ name: seismicloud
 channels:
   - conda-forge
 dependencies:
+  - git
   - mpi4py
   - obspy
   - pandas
@@ -11,3 +12,5 @@ dependencies:
   - tqdm
   - pip:
     - seisbench
+    - git+https://github.com/wayneweiqiang/GaMMA.git
+    - pyproj
