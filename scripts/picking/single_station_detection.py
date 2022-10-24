@@ -58,7 +58,6 @@ from obspy.core.utcdatetime import UTCDateTime as utc
 import numpy as np
 import pandas as pd
 
-sys.path.append("/home/niyiyu/Research/PNSN-catalog/seisbench/")
 os.environ["CUDA_VISIBLE_DEVICES"] = str(gpuid)
 import seisbench
 import seisbench.models as sbm
@@ -146,15 +145,15 @@ for idx, i in jobs.iterrows():
                 )
 
     if len(picks) > 0:
-        os.makedirs(f"{picks_path}/{network}/{year}/{sdoy}", exist_ok=True)
+        os.makedirs(f"{picks_path}/{year}/{sdoy}/{network}", exist_ok=True)
         with open(
-            f"{picks_path}/{network}/{year}/{sdoy}/{station}.{network}.{year}.{sdoy}",
+            f"{picks_path}/{year}/{sdoy}/{network}/{station}.{network}.{year}.{sdoy}",
             "wb",
         ) as f:
             pickle.dump(picks, f)
         if verbose > 1:
             print(
-                f"{rank} | \tdump picks to {picks_path}/{network}/{year}/{sdoy}/{station}.{network}.{year}.{sdoy}"
+                f"{rank} | \tdump picks to {picks_path}/{year}/{sdoy}/{network}/{station}.{network}.{year}.{sdoy}"
             )
 
     gc.collect()

@@ -1,0 +1,82 @@
+#
+#   deploy phase association from continuous mSEED phase picking
+#
+#   Yiyu Ni
+#   niyiyu@uw.edu
+#   Oct. 24th, 2022
+###########################################
+
+import os
+import sys
+import time
+import json
+import pickle
+import argparse
+
+import numpy as np
+import pandas as pd
+import seisbench
+from gamma.utils import association
+from obspy.core.utcdatetime import UTCDateTime as utc
+
+parser = argparse.ArgumentParser(description="Phase association from PNW continuous phase detection.")
+
+args = parser.parse_args()
+
+## load configure file
+fconfig = args.config
+with open(fconfig, "r") as f:
+    config = json.load(f)
+verbose = config["log"]["verbose"]
+association_config = config['model']['association']
+picks_path = config["workflow"]["picks_path"]
+
+# check https://github.com/AI4EPS/GaMMA/blob/master/docs/example_seisbench.ipynb for more documentation
+from pyproj import CRS, Transformer
+wgs84 = CRS.from_epsg(4326)
+local_crs = CRS.from_epsg(9155)
+transformer = Transformer.from_crs(wgs84, local_crs)
+
+f_station = association_config['stations']
+station_df = pd.read_csv(f_station)
+station_df.fillna('', inplace=True)
+station_df["id"] = station_df.apply(lambda x: '.'.join([x['network'], x['station'], x['location']]), axis = 1)
+station_df["x(km)"] = station_df.apply(lambda x: transformer.transform(x["latitude"], x["longitude"])[0] / 1e3, axis=1)
+station_df["y(km)"] = station_df.apply(lambda x: transformer.transform(x["latitude"], x["longitude"])[1] / 1e3, axis=1)
+station_df["z(km)"] = station_df["elevation"] / 1e3
+
+association_config["bfgs_bounds"] = (
+    (association_config["x(km)"][0] - 1, association_config["x(km)"][1] + 1),  # x
+    (association_config["y(km)"][0] - 1, association_config["y(km)"][1] + 1),  # y
+    (-10, association_config["z(km)"][1] + 1),  # x
+    (None, None),  # t
+)
+
+cs = []
+for year in os.listdir(picks_path):
+    for doy in os.listdir("/".join([picks_path, year])):
+        pick_df = []
+        for net in os.listdir("/".join([picks_path, year, doy])):
+            for sta in os.listdir("/".join([picks_path, year, doy, net])):
+                with open("/".join([picks_path, year, doy, net, sta]), 'rb') as f:
+                    picks = pickle.load(f)
+                if len(picks) >= 1:
+                    for p in picks:
+                        pick_df.append({
+                            "id": p.trace_id,
+                            "timestamp": p.peak_time.datetime,
+                            "prob": p.peak_value,
+                            "type": p.phase.lower(),
+                            "sod": p.peak_time.timestamp - utc(f"{year}{doy}").timestamp
+                        })
+        pick_df = pd.DataFrame(pick_df)
+
+        if len(pick_df)>0:
+            for h in range(24):
+                pick_df_hour = pick_df[(pick_df['sod'] > h*60*60) & (pick_df['sod'] < (h+1)*60*60)]
+                if len(pick_df_hour) > 1:
+                    c, assignments = association(pick_df_hour, station_df, association_config, method=association_config["method"])
+                    cs += c
+                else:
+                    pass
+    catalogs = pd.DataFrame(cs)

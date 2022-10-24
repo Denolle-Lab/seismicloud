@@ -12,3 +12,4 @@ dependencies:
   - pip:
     - seisbench
     - git+https://github.com/wayneweiqiang/GaMMA.git
+    - pyproj

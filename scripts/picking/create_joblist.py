@@ -53,6 +53,9 @@ os.makedirs(logs_path, exist_ok=True)
 picks_path = config["workflow"]["picks_path"]
 os.makedirs(picks_path, exist_ok=True)
 
+catalog_path = config["workflow"]["catalog_path"]
+os.makedirs(catalog_path, exist_ok=True)
+
 nproc = config["environment"]["NPROC"]
 gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
 
