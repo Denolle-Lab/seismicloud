@@ -1,3 +1,11 @@
+#
+#   clean up past results and logs
+#
+#   Yiyu Ni
+#   niyiyu@uw.edu
+#   Oct. 24th, 2022
+###########################################
+
 import os
 import json
 import argparse

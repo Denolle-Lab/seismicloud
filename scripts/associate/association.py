@@ -6,6 +6,7 @@
 #   Oct. 24th, 2022
 ###########################################
 
+import sys
 import os
 import json
 import pickle
@@ -21,7 +22,7 @@ from obspy.core.utcdatetime import UTCDateTime as utc
 parser = argparse.ArgumentParser(
     description="Phase association from PNW continuous phase detection."
 )
-parser.add_argument("-y", "--year", type=int, required=True)
+parser.add_argument("-y", "--year", required=True)
 parser.add_argument("-c", "--config", required=True)
 
 args = parser.parse_args()
@@ -32,9 +33,16 @@ year = args.year
 with open(fconfig, "r") as f:
     config = json.load(f)
 verbose = config["log"]["verbose"]
+logs_path = config["log"]["logs_path"]
 association_config = config["model"]["association"]
 picks_path = config["workflow"]["picks_path"]
 catalog_path = config["workflow"]["catalog_path"]
+
+if config["log"]["appendlog"]:
+    logs = open(f"{logs_path}/associate.log", "a")
+else:
+    logs = open(f"{logs_path}/associate.log", "w")
+sys.stderr = logs
 
 # check https://github.com/AI4EPS/GaMMA/blob/master/docs/example_seisbench.ipynb for more documentation
 from pyproj import CRS, Transformer
@@ -92,15 +100,16 @@ for doy in os.listdir("/".join([picks_path, year])):
                 (pick_df["sod"] > h * 60 * 60) & (pick_df["sod"] < (h + 1) * 60 * 60)
             ]
             if len(pick_df_hour) > 1:
-                c, assignments = association(
-                    pick_df_hour,
-                    station_df,
-                    association_config,
-                    method=association_config["method"],
-                )
-                cs += c
-            else:
-                pass
+                try:
+                    c, assignments = association(
+                        pick_df_hour,
+                        station_df,
+                        association_config,
+                        method=association_config["method"],
+                    )
+                    cs += c
+                except:
+                    pass
 df_cats = pd.DataFrame(cs)
 df_cats.sort_values("time", inplace=True)
 cat = obspy.core.event.catalog.Catalog()
