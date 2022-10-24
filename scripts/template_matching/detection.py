@@ -106,6 +106,11 @@ for idx, i in jobs.iterrows():
             s += stream
         else:
             continue
+            
+    print("Data pulled in")
+    s.resample(config["templates"]["samp_rate"])
+    s.merge()
+    print("Data merged")
 
     if len(s) > 0:
 
@@ -117,9 +122,9 @@ for idx, i in jobs.iterrows():
         else:
             # try:
             picks = []
-            s.resample(config["templates"]["samp_rate"])
-            s.merge()
-            if len(s) == len(stations):
+            #s.resample(config["templates"]["samp_rate"])
+            #s.merge()
+            if len(s) == 3 * len(stations):
                 party = templates.detect(
                     s,
                     threshold=config["template_matching"]["threshold"],
