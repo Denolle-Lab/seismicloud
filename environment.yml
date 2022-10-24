@@ -11,3 +11,5 @@ dependencies:
   - tqdm
   - pip:
     - seisbench
+    - git+https://github.com/wayneweiqiang/GaMMA.git
+    - pyproj
