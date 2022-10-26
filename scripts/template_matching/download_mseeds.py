@@ -1,3 +1,6 @@
+import datetime
+import json
+import argparse
 import obspy
 import eqcorrscan
 import numpy as np
@@ -41,8 +44,8 @@ channels = [value for value in channels if value != channelToRemove]
 channel = ",".join((np.unique(channels)).tolist())
 
 # Loop over days and download each (unprocessed) into a directory
-path = 'endeavour2/NV/2017/'
-t1 = obspy.UTCDateTime(2017,6,1)
+path = 'endeavour/NV/2017/'
+t1 = obspy.UTCDateTime(2017,6,8)
 t2 = obspy.UTCDateTime(2017,7,1)
 
 client = obspy.clients.fdsn.client.Client('IRIS')
@@ -64,7 +67,10 @@ for t in time_bins:
             
         pathname = path + str(t1.julday) + '/' + station + '.NV.2017.' + str(t1.julday)
         #pathname = path + t1.strftime("%Y%m%d")+'.mseed'
-
-        st = client.get_waveforms(network,station,'',channel,t1,t2)
-
-        st.write(pathname,format='MSEED')
+        try:
+            st = client.get_waveforms(network,station,'',channel,t1,t2)
+            st.resample(200)
+            st.write(pathname,format='MSEED')
+            print('Written!')
+        except:
+            print('Did not work for ' + str(t1.julday))

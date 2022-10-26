@@ -45,6 +45,7 @@ verbose = config["log"]["verbose"]
 jobs_path = config["workflow"]["jobs_path"]
 logs_path = config["log"]["logs_path"]
 nproc = config["environment"]["NPROC"]
+os.environ["OPENBLAS_NUM_THREADS"] = config["environment"]["OPENBLAS_NUM_THREADS"]
 
 jobs = pd.read_csv(f"{jobs_path}{network}_{year}_templatematching_joblist.csv")
 

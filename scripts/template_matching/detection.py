@@ -50,6 +50,9 @@ detections_path = config["workflow"]["detections_path"]
 mseed_path = config["workflow"]["mseed_path"]
 stations = config["workflow"]["stations"]
 os.environ["OPENBLAS_NUM_THREADS"] = config["environment"]["OPENBLAS_NUM_THREADS"]
+os.environ["MKL_NUM_THREADS"] = '1'
+os.environ["NUMEXPR_NUM_THREADS"] = '1'
+os.environ["OMP_NUM_THREADS"] = '1'
 
 import obspy
 import numpy as np
@@ -71,92 +74,84 @@ print(
     flush=True,
 )
 
-jobs = pd.read_csv(f"{jobs_path}{network}_{year}_templatematching_joblist.csv")
-jobs = jobs[jobs["rank"] == rank].reset_index(drop=True)
-jobs = jobs.sort_values("doy")
-jobs = jobs.reset_index(drop=True)
-print(f"{rank} | \ttotal {len(jobs)} days of data", flush=True)
-
-for idx, i in jobs.iterrows():
-    t0 = time.time()
-    doy = i["doy"]
-    sdoy = str(doy).zfill(3)
+t0 = time.time()
+doy = day
+sdoy = str(doy).zfill(3)
 
     # Read day-long stream
-    s = obspy.core.stream.Stream()
-    for sta in stations:
-        fpath = (
-            mseed_path
-            + str(network)
-            + "/"
-            + str(year)
-            + "/"
-            + str(doy)
-            + "/"
-            + sta
-            + "."
-            + network
-            + "."
-            + str(year)
-            + "."
-            + str(doy)
+s = obspy.core.stream.Stream()
+for sta in stations:
+    fpath = (
+        mseed_path
+        + str(network)
+        + "/"
+        + str(year)
+        + "/"
+        + str(day)
+        + "/"
+        + sta
+        + "."
+        + network
+        + "."
+        + str(year)
+        + "."
+        + str(day)
         )
-        if os.path.exists(fpath):
-            stream = obspy.core.stream.read(fpath)
-            s += stream
-        else:
-            continue
+    if os.path.exists(fpath):
+        stream = obspy.core.stream.read(fpath)
+        s += stream
+    else:
+        continue
             
-    print("Data pulled in")
-    s.resample(config["templates"]["samp_rate"])
-    s.merge()
-    print("Data merged")
+print("Data pulled in")
+s.merge()
+print("Data merged")
 
-    if len(s) > 0:
+if len(s) > 0:
 
-        # Catch for short streams due to data gaps
-        if len(s[0]) / s[0].stats.sampling_rate < config["templates"]["process_len"]:
-            print("Data is too short for day " + str(doy) + ", skipping detection")
-            continue
+    # Catch for short streams due to data gaps
+    if len(s[0]) / s[0].stats.sampling_rate < config["templates"]["process_len"]:
+        print("Data is too short for day " + str(day) + ", skipping detection")
+        
 
-        else:
-            # try:
-            picks = []
-            #s.resample(config["templates"]["samp_rate"])
-            #s.merge()
-            if len(s) == 3 * len(stations):
-                party = templates.detect(
+    else:
+        # try:
+        picks = []
+        #s.resample(config["templates"]["samp_rate"])
+        #s.merge()
+        if len(s) == 3 * len(stations):
+            party = templates.detect(
                     s,
                     threshold=config["template_matching"]["threshold"],
                     threshold_type=config["template_matching"]["threshold_type"],
                     trig_int=config["template_matching"]["trig_int"],
-                    parallel_process=False,
+                    parallel_process=False,ignore_bad_data=True
                 )
 
-                num_detects = np.sum([len(f) for f in party])
-                print(
+            num_detects = np.sum([len(f) for f in party])
+            print(
                     f"{rank} | \t{year}.{sdoy}.{network} \t| Finish, found {num_detects} detections \t | {'%.3f' % (time.time() - t0)} sec",
                     flush=True,
                 )
 
                 # Save day-long party if there were detections
-                if num_detects > 0:
-                    save_name = f"{detections_path}/{network}_{year}_{doy}"
-                    party.write(save_name + ".xml", format="quakeml", overwrite=True)
+               # if num_detects > 0:
+            save_name = f"{detections_path}/{network}_{year}_{doy}"
+            party.write(save_name + ".xml", format="quakeml", overwrite=True)
 
-                gc.collect()
+            gc.collect()
 
-            else:
-                print("Data missing for some stations")
+        else:
+            print("Data missing for some stations")
 
             # except:
             #    print(
             #        f"{rank} | \t{year}.{sdoy}.{network} \t| Error",
             #        flush=True,
             #    )
-    else:
-        if verbose > 0:
-            print(
+else:
+    if verbose > 0:
+        print(
                 f"{rank} | \t{year}.{sdoy}.{network} \t| Skip: no data",
                 flush=True,
             )

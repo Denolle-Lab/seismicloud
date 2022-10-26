@@ -1,7 +1,7 @@
 {
     "workflow": {
-        "interpreter": "/home/zkrauss/mambaforge/envs/alaska-ml/bin/python",
-        "mseed_path": "/data/wsd01/Endeavor/data/",
+        "interpreter": "/home/zkrauss/mambaforge/envs/seismicloud/bin/python",
+        "mseed_path": "endeavour/",
         "templates_path": "data/templates/june2017_templates.tgz",
         "detections_path": "data/detections/",
         "jobs_path": "jobs/",
@@ -49,9 +49,9 @@
         "max_lat": 48.05,
         "min_lon": -129.15,
         "max_lon": -129.05,
-        "min_time": "2017,9,1,1,30,0",
-        "max_time": "2017,10,1,1,30,0",
-        "min_magnitude": 1,
+        "min_time": "2017,6,1,0,0,0",
+        "max_time": "2017,7,1,0,0,0",
+        "min_magnitude": 1.2,
         "max_magnitude": "NaN"
     },
     "template_matching": {
