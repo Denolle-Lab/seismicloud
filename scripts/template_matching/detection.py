@@ -104,8 +104,6 @@ for sta in stations:
         continue
             
 print("Data pulled in")
-s.merge()
-print("Data merged")
 
 if len(s) > 0:
 
@@ -115,7 +113,7 @@ if len(s) > 0:
     if len(stream) > len(stream_check):
         print("Data is too short for day " + str(day) + ", running detections with process length of 1 hour")
     
-        if len(s) == 3 * len(stations):
+        if len(s) >= 3 * len(stations):
             temp_templates = templates.copy()
             for tt in temp_templates:
                 tt.process_length = 3600.0
@@ -148,7 +146,7 @@ if len(s) > 0:
         picks = []
         #s.resample(config["templates"]["samp_rate"])
         #s.merge()
-        if len(s) == 3 * len(stations):
+        if len(s) >= 3 * len(stations):
             
             for tt in templates:
                 tt.process_length = 3600.0

@@ -1,7 +1,7 @@
 {
     "workflow": {
-        "interpreter": "/home/zkrauss/mambaforge/envs/seismicloud/bin/python",
-        "mseed_path": "endeavour/",
+        "interpreter": "/home/zkrauss/mambaforge/envs/alaska-ml/bin/python",
+        "mseed_path": "/data/wsd01/endeavour/",
         "templates_path": "data/templates/june2017_templates.tgz",
         "detections_path": "data/detections/",
         "jobs_path": "jobs/",
