@@ -20,3 +20,5 @@ eot
 
 # Copy all repository files
 COPY --link --chown=1000:1000 ./ /tmp
+
+# do we need to add command in this docker image?
