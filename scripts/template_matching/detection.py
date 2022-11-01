@@ -83,6 +83,7 @@ s = obspy.core.stream.Stream()
 for sta in stations:
     fpath = (
         mseed_path
+        + "/"
         + str(network)
         + "/"
         + str(year)

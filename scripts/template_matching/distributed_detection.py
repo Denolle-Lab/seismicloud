@@ -36,7 +36,7 @@ rank = comm.Get_rank()
 size = comm.Get_size()
 pid = os.getpid()
 
-## load configure file
+## load configure file:
 fconfig = args.config
 with open(fconfig, "r") as f:
     config = json.load(f)
