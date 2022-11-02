@@ -13,11 +13,16 @@ import pickle
 import obspy
 import argparse
 
+from obspy.core.event.base import WaveformStreamID
+from obspy.core.event.origin import Origin, Pick
+from obspy.core.event.event import Event
+from obspy.core.event.catalog import Catalog
+from obspy.core.utcdatetime import UTCDateTime as utc
+
 import numpy as np
 import pandas as pd
 import seisbench
 from gamma.utils import association
-from obspy.core.utcdatetime import UTCDateTime as utc
 
 parser = argparse.ArgumentParser(
     description="Phase association from PNW continuous phase detection."
@@ -107,14 +112,28 @@ for doy in os.listdir("/".join([picks_path, year])):
                         association_config,
                         method=association_config["method"],
                     )
+                    for i in c:
+                        i["picks"] = []
+                    for i in assignments:
+                        c[i[1]]["picks"].append(dict(pick_df_hour.loc[i[0]]))
                     cs += c
                 except:
                     pass
-df_cats = pd.DataFrame(cs)
-df_cats.sort_values("time", inplace=True)
-cat = obspy.core.event.catalog.Catalog()
-for ide, e in df_cats.iterrows():
-    event = obspy.core.event.event.Event()
-    event.origins.append(obspy.core.event.origin.Origin(time=utc(e["time"])))
+
+cat = Catalog()
+for e in cs:
+    event = Event()
+    event.origins.append(Origin(time=utc(e["time"])))
+    for p in e["picks"]:
+        net, sta, loc = p["id"].split(".")
+        pick = Pick(
+            time=utc(p["timestamp"]),
+            waveform_id=WaveformStreamID(
+                network_code=net, station_code=sta, location_code=loc
+            ),
+            phase_hint=p["type"].upper(),
+        )
+        event.picks.append(pick)
+
     cat.append(event)
 cat.write(f"{catalog_path}/{year}.xml", format="QUAKEML")
