@@ -15,7 +15,6 @@ import argparse
 import math
 
 warnings.simplefilter(action="ignore", category=FutureWarning)
-sys.path.append("/home/niyiyu/Research/PNSN-catalog/seisbench/")
 
 ## import user defined packages
 import pandas as pd
@@ -85,3 +84,6 @@ for n in nets:
         df["rank"] = df.index.map(lambda x: int(x / njobs))
 
         df.to_csv("/".join([jobs_path, f"{n}_{y}_joblist.csv"]), index=False)
+
+# warm-up the model
+model_pnw = sbm.EQTransformer.from_pretrained(config["model"]["picking"]["pretrained"])

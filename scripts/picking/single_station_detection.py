@@ -94,11 +94,13 @@ for idx, i in jobs.iterrows():
     ss = []
     picks = []
     if config["model"]["picking"]["hourly_detection"]:
+        # append hour-long stream
         for h in range(24):
             stime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:00:00.000000")
             etime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:59:59.999999")
             ss += [obspy.read(fpath, starttime=stime, endtime=etime)]
     else:
+        # add day-long stream
         ss = [obspy.read(fpath)]
 
     for ih, s in enumerate(ss):
