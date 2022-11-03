@@ -60,9 +60,9 @@ import pandas as pd
 
 if gpuid >= 0:
     os.environ["CUDA_VISIBLE_DEVICES"] = str(gpuid)
+    import torch
 import seisbench
 import seisbench.models as sbm
-import torch
 
 seisbench.logger.setLevel(logging.ERROR)
 logs = open(f"{logs_path}/{rank}.log", "a")
