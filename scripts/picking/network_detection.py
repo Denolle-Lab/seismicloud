@@ -47,6 +47,11 @@ picks_path = config["workflow"]["picks_path"]
 nproc = config["environment"]["NPROC"]
 gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
 
+if len(gpus) == 0:
+    gpu = False
+else:
+    gpu = True
+
 jobs = pd.read_csv(f"{jobs_path}/{network}_{year}_joblist.csv")
 
 
@@ -78,15 +83,25 @@ comm.Barrier()
 jobs = jobs[jobs["rank"] == rank]
 
 for station in jobs["station"].unique():
-    gpuid = rank % len(gpus)
-    current_time = time.strftime("%Z %x %X")
-    os.system(
-        f"echo 'master | \tsubmit {network}.{station}.{year} to C{rank}|G{gpuid} \t| {current_time}' >> {logs_path}/master.log"
-    )
-    os.system(
-        f"{config['workflow']['interpreter']} /tmp/scripts/picking/single_station_detection.py"
-        + f" -n {network} -s {station} -y {year} -r {rank} --gpuid {gpuid} -v {verbose} -c {fconfig} --pid {pid} "
-    )
+    if gpu:
+        gpuid = rank % len(gpus)
+        current_time = time.strftime("%Z %x %X")
+        os.system(
+            f"echo 'master | \tsubmit {network}.{station}.{year} to C{rank}|G{gpuid} \t| {current_time}' >> {logs_path}/master.log"
+        )
+        os.system(
+            f"{config['workflow']['interpreter']} /tmp/scripts/picking/single_station_detection.py"
+            + f" -n {network} -s {station} -y {year} -r {rank} --gpuid {gpuid} -v {verbose} -c {fconfig} --pid {pid} "
+        )
+    else:
+        current_time = time.strftime("%Z %x %X")
+        os.system(
+            f"echo 'master | \tsubmit {network}.{station}.{year} to C{rank} \t| {current_time}' >> {logs_path}/master.log"
+        )
+        os.system(
+            f"{config['workflow']['interpreter']} /tmp/scripts/picking/single_station_detection.py"
+            + f" -n {network} -s {station} -y {year} -r {rank} --gpuid {-1} -v {verbose} -c {fconfig} --pid {pid} "
+        )
 
 comm.Barrier()
 if rank == 0:

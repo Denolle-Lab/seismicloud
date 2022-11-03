@@ -26,7 +26,7 @@ parser.add_argument("-n", "--network", required=True)
 parser.add_argument("-s", "--station", required=True)
 parser.add_argument("-c", "--config", required=True)
 # parser.add_argument('-c', '--channel', required=True)
-parser.add_argument("-g", "--gpuid", default=0, type=int)
+parser.add_argument("-g", "--gpuid", default=-1, type=int)
 parser.add_argument("-y", "--year", required=True, type=int)
 parser.add_argument("-r", "--rank", default=0, type=int)
 parser.add_argument("-v", "--verbose", default=0, type=int)
@@ -72,12 +72,19 @@ print(f"{rank} | \tmaster PID {pid}", flush=True)
 print(f"{rank} | \tPID {mypid}", flush=True)
 
 model_pnw = sbm.EQTransformer.from_pretrained(config["model"]["picking"]["pretrained"])
-model_pnw.to(torch.device("cuda"))
+if gpuid >= 0:
+    model_pnw.to(torch.device("cuda"))
+    print(
+        f"{rank} | \tloaded model ({config['model']['picking']['pretrained'].upper()}) to GPU:{gpuid}",
+        flush=True,
+    )
+else:
+    print(
+        f"{rank} | \tloaded model ({config['model']['picking']['pretrained'].upper()}) to CPU",
+        flush=True,
+    )
 model_pnw.default_args = config["model"]["picking"]["default_args"]
-print(
-    f"{rank} | \tloaded model ({config['model']['picking']['pretrained'].upper()}) to GPU:{gpuid}",
-    flush=True,
-)
+
 
 jobs = pd.read_csv(f"{jobs_path}/{network}_{year}_joblist.csv")
 jobs = jobs[jobs["station"] == station].reset_index(drop=True)
