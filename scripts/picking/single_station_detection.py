@@ -58,7 +58,8 @@ from obspy.core.utcdatetime import UTCDateTime as utc
 import numpy as np
 import pandas as pd
 
-os.environ["CUDA_VISIBLE_DEVICES"] = str(gpuid)
+if gpuid >= 0:
+    os.environ["CUDA_VISIBLE_DEVICES"] = str(gpuid)
 import seisbench
 import seisbench.models as sbm
 import torch
