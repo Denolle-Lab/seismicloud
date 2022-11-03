@@ -78,7 +78,7 @@ for day in jobs["doy"].unique():
         f"echo 'master | \tsubmit {network}.{day}.{year} to C{rank} \t| {current_time}' >> {logs_path}master.log"
     )
     os.system(
-        f"{config['workflow']['interpreter']} scripts/template_matching/detection.py"
+        f"{config['workflow']['interpreter']} /tmp/scripts/template_matching/detection.py"
         + f" -n {network} -d {day} -y {year} -r {rank} -v {verbose} -c {fconfig} --pid {pid} "
     )
 

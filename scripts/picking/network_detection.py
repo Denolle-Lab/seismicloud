@@ -84,7 +84,7 @@ for station in jobs["station"].unique():
         f"echo 'master | \tsubmit {network}.{station}.{year} to C{rank}|G{gpuid} \t| {current_time}' >> {logs_path}/master.log"
     )
     os.system(
-        f"{config['workflow']['interpreter']} scripts/picking/single_station_detection.py"
+        f"{config['workflow']['interpreter']} /tmp/scripts/picking/single_station_detection.py"
         + f" -n {network} -s {station} -y {year} -r {rank} --gpuid {gpuid} -v {verbose} -c {fconfig} --pid {pid} "
     )
 
