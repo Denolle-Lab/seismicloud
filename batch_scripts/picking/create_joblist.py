@@ -89,6 +89,10 @@ for n in nets:
         df["batchid"] = df.index.map(lambda x: int(x / njobs))
         batch_df = df[df["batchid"] == batchid]
         batch_df.reset_index(drop=True, inplace=True)
+
+        njobs = math.ceil(len(batch_df) / nproc)
+        batch_df["rank"] = batch_df.index.map(lambda x: int(x / njobs))
+
         batch_df.to_csv("/".join([jobs_path, f"{n}_{y}_{batchid}_joblist.csv"]), index=False)
 
 # warm-up the model
