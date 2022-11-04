@@ -32,5 +32,4 @@ jobs:
           
       - name: Test Image
         run: |
-          docker images ls
-          docker run --rm ${{ env.IMAGE_NAME }} conda list
+          docker run --rm ${{ env.IMAGE_NAME }}
