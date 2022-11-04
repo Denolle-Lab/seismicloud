@@ -6,8 +6,8 @@ FROM docker.io/mambaorg/micromamba:${MAMBA_VERSION} as app
 
 ENV SHELL=/bin/bash \
     LANG=C.UTF-8  \
-    LC_ALL=C.UTF-8 \ 
-    # uncomment below to build on non-GPU machine:
+    LC_ALL=C.UTF-8 
+    # Need this environment variable to build pytorch with CUDA on non-GPU machine:
     #CONDA_OVERRIDE_CUDA="11.2"
 
 # chown for default 'mambauser' permissions
