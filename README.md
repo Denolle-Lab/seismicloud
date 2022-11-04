@@ -16,15 +16,15 @@ For template matching.
 1. Setting up data archive and configure file.
 2. Create job list.
     ```
-    python scripts/picking/create_joblist.py --config configs/config_yiyu.json
+    python scripts/picking/create_joblist.py --config configs/config_mldetect.json
     ```
 3. Do ML phase picking.
     ```
-    mpirun -np 10 python scripts/picking/network_detection.py -c configs/config_yiyu.json -n NV -y 2017
+    mpirun -np 10 python scripts/picking/network_detection.py -c configs/config_mldetect.json -n NV -y 2017
     ```
 4. Associate detected phase to events.
     ```
-    python scripts/associate/association.py -c configs/config_yiyu.json --year 2017
+    python scripts/associate/association.py -c configs/config_mldetect.json --year 2017
     ```
 
 ### Run with Docker

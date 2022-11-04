@@ -8,7 +8,7 @@ dependencies:
   - pandas
   - pip
   - python=3.9
-  # - pytorch>=1.12.0=*cuda112*
+  - pytorch-cpu>=1.12.0
   - tqdm
   - eqcorrscan
   - pip:
