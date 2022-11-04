@@ -9,19 +9,18 @@
 ###########################################
 
 from mpi4py import MPI
-
 import os
 import sys
 import time
 import json
 import argparse
-
 import pandas as pd
 
 parser = argparse.ArgumentParser(description="Template matching in continuous data")
 parser.add_argument("-n", "--network", required=True)
 parser.add_argument("-y", "--year", type=int, required=True)
 parser.add_argument("-c", "--config", required=True)
+parser.add_argument("-b","--batchnode",required=True) # Which node in the batch pool we are working in
 parser.add_argument("--appendlog", default=False, type=int)
 
 args = parser.parse_args()
@@ -44,13 +43,9 @@ verbose = config["log"]["verbose"]
 
 jobs_path = config["workflow"]["jobs_path"]
 logs_path = config["log"]["logs_path"]
-nproc = config["environment"]["NPROC"]
 os.environ["OPENBLAS_NUM_THREADS"] = config["environment"]["OPENBLAS_NUM_THREADS"]
 
-jobs = pd.read_csv(f"{jobs_path}{network}_{year}_templatematching_joblist.csv")
-
-
-if rank == 0:
+if batchnode == 0:
     if config["log"]["appendlog"]:
         logs = open(f"{logs_path}master.log", "a")
     else:
@@ -66,20 +61,34 @@ if rank == 0:
     print(f"Verbose:            {verbose}", flush=True)
     print(f"-----------------------------------", flush=True)
     t0 = time.time()
-
+    
 comm.Barrier()
 
+nproc = os.cpu_count()
+
+
+##################################################################
+####### Reconfigure jobs list to only contain ranks = batchnode ##
+## Then add a new column with reset ranks, specific to the node ##
+##################################################################
+
+jobs = pd.read_csv(f"{jobs_path}{network}_{year}_templatematching_joblist.csv")
+jobs = jobs[jobs["rank"] == batchnode]
+n_new_ranks = int(len(jobs)/nproc)
+jobs["rank"] = df.index.map(lambda x: int(x / n_new_ranks))
+
+
+
 jobs = jobs[jobs["rank"] == rank]
-print(jobs)
 
 for day in jobs["doy"].unique():
     current_time = time.strftime("%Z %x %X")
     os.system(
-        f"echo 'master | \tsubmit {network}.{day}.{year} to C{rank} \t| {current_time}' >> {logs_path}master.log"
+        f"echo 'master | \tsubmit {network}.{day}.{year} to C{rank} \t| {current_time}' >> {logs_path}{batchnode}.log"
     )
     os.system(
-        f"{config['workflow']['interpreter']} /tmp/scripts/template_matching/detection.py"
-        + f" -n {network} -d {day} -y {year} -r {rank} -v {verbose} -c {fconfig} --pid {pid} "
+        f"{config['workflow']['interpreter']} /tmp/batch_scripts/template_matching/detection.py"
+        + f" -n {network} -d {day} -y {year} -r {rank} -v {verbose} -c {fconfig} -b {batchnode} --pid {pid} "
     )
 
 comm.Barrier()

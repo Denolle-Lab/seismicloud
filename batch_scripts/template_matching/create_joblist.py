@@ -21,14 +21,10 @@ import pandas as pd
 from tqdm import tqdm
 
 
-## intialize MPI
-comm = MPI.COMM_WORLD
-rank = comm.Get_rank()
-size = comm.Get_size()
-
 ## prepare arg parser
 parser = argparse.ArgumentParser(description="Template matching from continuous data")
 parser.add_argument("-c", "--config", required=True)
+parser.add_argument("-b","--batchnodes",required=True)
 args = parser.parse_args()
 
 
@@ -59,8 +55,7 @@ starting_cat_path = config["workflow"][
 stations = config["workflow"]["stations"]
 network = config["workflow"]["network"]
 
-nproc = config["environment"]["NPROC"]
-gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
+nproc = args.batchnodes
 
 
 ## assuming a data archive

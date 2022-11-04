@@ -20,22 +20,20 @@ import warnings
 warnings.filterwarnings(action="ignore")
 
 parser = argparse.ArgumentParser(description="Template matching in continuous data.")
-parser.add_argument("-n", "--network", required=True)
-parser.add_argument("-d", "--day", required=True)
 parser.add_argument("-c", "--config", required=True)
-parser.add_argument("-y", "--year", required=True, type=int)
-parser.add_argument("-r", "--rank", default=0, type=int)
+parser.add_argument("-r", "--rank", required=True, type=int)
+parser.add_argument("-y","--year", required=True)
+parser.add_argument("-d","--day", required=True)
+parser.add_argument("-b","--batchnode", required=True)
 parser.add_argument("-v", "--verbose", default=0, type=int)
-parser.add_argument("-p", "--pid", default=0, type=int)
 args = parser.parse_args()
 
-year = args.year
-network = args.network
-day = args.day
+
 rank = args.rank
+year = args.year
+day = args.day
+batchnode = args.batchnode
 verbose = args.verbose
-pid = args.pid
-mypid = os.getpid()
 
 ## load configure file
 fconfig = args.config
@@ -49,6 +47,7 @@ templates_path = config["workflow"]["templates_path"]
 detections_path = config["workflow"]["detections_path"]
 mseed_path = config["workflow"]["mseed_path"]
 stations = config["workflow"]["stations"]
+network = config["workflow"]["network"]
 os.environ["OPENBLAS_NUM_THREADS"] = config["environment"]["OPENBLAS_NUM_THREADS"]
 os.environ["MKL_NUM_THREADS"] = "1"
 os.environ["NUMEXPR_NUM_THREADS"] = "1"
@@ -60,12 +59,20 @@ import pandas as pd
 import eqcorrscan
 
 
-logs = open(f"{logs_path}/{rank}.log", "a")
+logs = open(f"{logs_path}{batchnode}.log", "a")
 sys.stdout = logs
 
-print(f"--------------{network}.{year}-----------------", flush=True)
-print(f"{rank} | \tmaster PID {pid}", flush=True)
-print(f"{rank} | \tPID {mypid}", flush=True)
+
+doy = day
+sdoy = str(doy).zfill(3)
+
+
+
+
+
+
+print(f"--------------{year}.{sdoy}.{network}-----------------", flush=True)
+
 
 templates = eqcorrscan.core.match_filter.tribe.Tribe().read(templates_path)
 
@@ -73,10 +80,8 @@ print(
     f"{rank} | \tloaded templates ({templates_path})",
     flush=True,
 )
-
 t0 = time.time()
-doy = day
-sdoy = str(doy).zfill(3)
+
 
 # Read day-long stream
 s = obspy.core.stream.Stream()
