@@ -1,5 +1,4 @@
 {
-
     "workflow": {
         "interpreter": "/opt/conda/bin/python3",
         "mseed_path": "/tmp/data/data/endeavour",
@@ -7,10 +6,10 @@
         "detections_path": "/tmp/data/data/outputs/detections/",
         "jobs_path": "/tmp/data/data/outputs/jobs/",
         "starting_cat_path": "/tmp/data/endquakes_2017.xml",
-		"picks_path": "/tmp/data/data/outputs/picking/",
+        "picks_path": "/tmp/data/data/outputs/picking/",
         "stations": ["KEMF","NCHR","ENWF","KEMO"],
         "network": "NV",
-        "year": "2017",
+        "year": "2017"
     },
     "log": {
             "verbose": 0, 
