@@ -30,11 +30,14 @@ parser = argparse.ArgumentParser(
     description="Phase detection on continuous mSEED data archive"
 )
 parser.add_argument("-c", "--config", required=True)
+parser.add_argument("-b", "--batchid", required=True)
 args = parser.parse_args()
 
 
 ## load configure file
 fconfig = args.config
+batchid = args.batchid
+
 with open(fconfig, "r") as f:
     config = json.load(f)
 workflow_config = config["workflow"]
@@ -55,6 +58,7 @@ catalog_path = config["workflow"]["catalog_path"]
 os.makedirs(catalog_path, exist_ok=True)
 
 nproc = config["environment"]["NPROC"]
+ntask = config["environment"]["NTASK"]
 gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
 
 
@@ -81,10 +85,11 @@ for n in nets:
         df = pd.DataFrame(df, columns=["station", "network", "year", "doy", "fpath"])
         df = df.sort_values(by=["station", "doy"])
         df.reset_index(drop=True, inplace=True)
-        njobs = math.ceil(len(df) / nproc)
-        df["rank"] = df.index.map(lambda x: int(x / njobs))
-
-        df.to_csv("/".join([jobs_path, f"{n}_{y}_joblist.csv"]), index=False)
+        njobs = math.ceil(len(df) / ntask)
+        df["batchid"] = df.index.map(lambda x: int(x / njobs))
+        batch_df = df[df["batchid"] == batchid]
+        batch_df.reset_index(drop=True, inplace=True)
+        batch_df.to_csv("/".join([jobs_path, f"{n}_{y}_{batchid}_joblist.csv"]), index=False)
 
 # warm-up the model
 model_pnw = sbm.EQTransformer.from_pretrained(config["model"]["picking"]["pretrained"])
