@@ -21,6 +21,7 @@ parser = argparse.ArgumentParser(description="Picking on PNW continuous data.")
 parser.add_argument("-n", "--network", required=True)
 parser.add_argument("-y", "--year", type=int, required=True)
 parser.add_argument("-c", "--config", required=True)
+parser.add_argument("-b", "--batchid", type=int, required=True)
 parser.add_argument("--appendlog", default=False, type=int)
 
 args = parser.parse_args()
@@ -28,6 +29,7 @@ network = args.network
 year = args.year
 
 fconfig = args.config
+batchid = args.batchid
 appendlog = args.appendlog
 
 comm = MPI.COMM_WORLD
@@ -52,20 +54,21 @@ if len(gpus) == 0:
 else:
     gpu = True
 
-jobs = pd.read_csv(f"{jobs_path}/{network}_{year}_joblist.csv")
+jobs = pd.read_csv(f"{jobs_path}/{network}_{year}_{batchid}_joblist.csv")
 
 
 if rank == 0:
     if config["log"]["appendlog"]:
-        logs = open(f"{logs_path}/master.log", "a")
+        logs = open(f"{logs_path}/master_{batchid}.log", "a")
     else:
         os.system(f"rm {logs_path}/*")
-        logs = open(f"{logs_path}/master.log", "w")
+        logs = open(f"{logs_path}/master_{batchid}.log", "w")
     sys.stdout = logs
 
     print(f"Job description", flush=True)
     print(f"Network:            {network}", flush=True)
     print(f"Year:               {year}", flush=True)
+    print(f"Task ID:            {batchid}", flush=True)
     print(f"#Station:           {len(jobs['station'].unique())}", flush=True)
     print(
         f"#Jobs:              {len(jobs[['station', 'rank']].drop_duplicates())}",
@@ -87,27 +90,27 @@ for station in jobs["station"].unique():
         gpuid = rank % len(gpus)
         current_time = time.strftime("%Z %x %X")
         os.system(
-            f"echo 'master | \tsubmit {network}.{station}.{year} to C{rank}|G{gpuid} \t| {current_time}' >> {logs_path}/master.log"
+            f"echo 'master | \tsubmit {network}.{station}.{year} to C{rank}|G{gpuid} \t| {current_time}' >> {logs_path}/master_{batchid}.log"
         )
         os.system(
-            f"{config['workflow']['interpreter']} /tmp/scripts/picking/single_station_detection.py"
-            + f" -n {network} -s {station} -y {year} -r {rank} --gpuid {gpuid} -v {verbose} -c {fconfig} --pid {pid} "
+            f"{config['workflow']['interpreter']} /tmp/batch_scripts/picking/single_station_detection.py"
+            + f" -n {network} -s {station} -y {year} -r {rank} --gpuid {gpuid} -v {verbose} -c {fconfig} --pid {pid} -b {batchid}"
         )
     else:
         current_time = time.strftime("%Z %x %X")
         os.system(
-            f"echo 'master | \tsubmit {network}.{station}.{year} to C{rank} \t| {current_time}' >> {logs_path}/master.log"
+            f"echo 'master | \tsubmit {network}.{station}.{year} to C{rank} \t| {current_time}' >> {logs_path}/master_{batchid}.log"
         )
         os.system(
-            f"{config['workflow']['interpreter']} /tmp/scripts/picking/single_station_detection.py"
-            + f" -n {network} -s {station} -y {year} -r {rank} --gpuid {-1} -v {verbose} -c {fconfig} --pid {pid} "
+            f"{config['workflow']['interpreter']} /tmp/batch_scripts/picking/single_station_detection.py"
+            + f" -n {network} -s {station} -y {year} -r {rank} --gpuid {-1} -v {verbose} -c {fconfig} --pid {pid} -b {batchid}"
         )
 
 comm.Barrier()
 if rank == 0:
-    os.system(f"echo '-----------------------------------' >> {logs_path}/master.log")
-    os.system(f"echo 'End of detection' >> {logs_path}/master.log")
+    os.system(f"echo '-----------------------------------' >> {logs_path}/master_{batchid}.log")
+    os.system(f"echo 'End of detection' >> {logs_path}/master_{batchid}.log")
     os.system(
-        f"echo 'Run time:           {'%.3f' % (time.time() - t0)} seconds' >> {logs_path}/master.log"
+        f"echo 'Run time:           {'%.3f' % (time.time() - t0)} seconds' >> {logs_path}/master_{batchid}.log"
     )
     logs.close()

@@ -30,7 +30,7 @@ parser = argparse.ArgumentParser(
     description="Phase detection on continuous mSEED data archive"
 )
 parser.add_argument("-c", "--config", required=True)
-parser.add_argument("-b", "--batchid", required=True)
+parser.add_argument("-b", "--batchid", type=int, required=True)
 args = parser.parse_args()
 
 

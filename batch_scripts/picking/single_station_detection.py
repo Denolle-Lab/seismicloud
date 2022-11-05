@@ -25,7 +25,7 @@ parser = argparse.ArgumentParser(description="Picking on PNW continuous data.")
 parser.add_argument("-n", "--network", required=True)
 parser.add_argument("-s", "--station", required=True)
 parser.add_argument("-c", "--config", required=True)
-# parser.add_argument('-c', '--channel', required=True)
+parser.add_argument('-b', '--batchid', type=int, required=True)
 parser.add_argument("-g", "--gpuid", default=-1, type=int)
 parser.add_argument("-y", "--year", required=True, type=int)
 parser.add_argument("-r", "--rank", default=0, type=int)
@@ -36,7 +36,7 @@ args = parser.parse_args()
 year = args.year
 network = args.network
 station = args.station
-# channel = args.channel
+batchid = args.batchid
 rank = args.rank
 verbose = args.verbose
 pid = args.pid
@@ -65,7 +65,7 @@ import seisbench
 import seisbench.models as sbm
 
 seisbench.logger.setLevel(logging.ERROR)
-logs = open(f"{logs_path}/{rank}.log", "a")
+logs = open(f"{logs_path}/{batchid}_{rank}.log", "a")
 sys.stdout = logs
 
 print(f"--------------{network}.{station}.{year}-----------------", flush=True)
