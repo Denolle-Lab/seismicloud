@@ -87,7 +87,7 @@ else:
 model_pnw.default_args = config["model"]["picking"]["default_args"]
 
 
-jobs = pd.read_csv(f"{jobs_path}/{network}_{year}_joblist.csv")
+jobs = pd.read_csv(f"{jobs_path}/{network}_{year}_{batchid}_joblist.csv")
 jobs = jobs[jobs["station"] == station].reset_index(drop=True)
 jobs = jobs[jobs["rank"] == rank].reset_index(drop=True)
 jobs = jobs.sort_values("doy")
