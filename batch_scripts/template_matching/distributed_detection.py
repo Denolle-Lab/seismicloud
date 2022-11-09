@@ -15,17 +15,19 @@ import time
 import json
 import argparse
 import pandas as pd
+import numpy as np
 
 parser = argparse.ArgumentParser(description="Template matching in continuous data")
 parser.add_argument("-n", "--network", required=True)
 parser.add_argument("-y", "--year", type=int, required=True)
 parser.add_argument("-c", "--config", required=True)
-parser.add_argument("-b","--batchnode",required=True) # Which node in the batch pool we are working in
+parser.add_argument("-b","--batchnode",type=int,required=True) # Which node in the batch pool we are working in
 parser.add_argument("--appendlog", default=False, type=int)
 
 args = parser.parse_args()
 network = args.network
 year = args.year
+batchnode = args.batchnode
 
 fconfig = args.config
 appendlog = args.appendlog
@@ -45,7 +47,9 @@ jobs_path = config["workflow"]["jobs_path"]
 logs_path = config["log"]["logs_path"]
 os.environ["OPENBLAS_NUM_THREADS"] = config["environment"]["OPENBLAS_NUM_THREADS"]
 
-if batchnode == 0:
+nproc = os.cpu_count()
+
+if rank == 0:
     if config["log"]["appendlog"]:
         logs = open(f"{logs_path}master.log", "a")
     else:
@@ -53,18 +57,17 @@ if batchnode == 0:
         logs = open(f"{logs_path}master.log", "w")
     sys.stdout = logs
 
-    print(f"Job description", flush=True)
-    print(f"Network:            {network}", flush=True)
-    print(f"Year:               {year}", flush=True)
-    print(f"#Cores:             {nproc}", flush=True)
-    print(f"Submission time:    {time.strftime('%Z %x %X')}", flush=True)
-    print(f"Verbose:            {verbose}", flush=True)
-    print(f"-----------------------------------", flush=True)
+    os.system(f"echo 'Job description' >> {logs_path}master.log")
+    os.system(f"echo 'Network:            {network}' >> {logs_path}master.log")
+    os.system(f"echo 'Year:               {year}' >> {logs_path}master.log")
+    os.system(f"echo 'Cores:             {nproc}' >> {logs_path}master.log")
+    os.system(f"echo 'Submission time:    {time.strftime('%Z %x %X')}' >> {logs_path}master.log")
+    os.system(f"echo 'Verbose:            {verbose}' >> {logs_path}master.log")
+    os.system(f"echo '-----------------------------------' >> {logs_path}master.log")
     t0 = time.time()
     
 comm.Barrier()
 
-nproc = os.cpu_count()
 
 
 ##################################################################
@@ -72,10 +75,10 @@ nproc = os.cpu_count()
 ## Then add a new column with reset ranks, specific to the node ##
 ##################################################################
 
-jobs = pd.read_csv(f"{jobs_path}{network}_{year}_templatematching_joblist.csv")
+jobs = pd.read_csv(f"{jobs_path}{network}_{year}_templatematching_batchlist.csv")
 jobs = jobs[jobs["rank"] == batchnode]
-n_new_ranks = int(len(jobs)/nproc)
-jobs["rank"] = df.index.map(lambda x: int(x / n_new_ranks))
+n_new_ranks = int(np.ceil(len(jobs)/nproc))
+jobs["rank"] = jobs.index.map(lambda x: int(x / n_new_ranks))
 
 
 
@@ -88,7 +91,7 @@ for day in jobs["doy"].unique():
     )
     os.system(
         f"{config['workflow']['interpreter']} /tmp/batch_scripts/template_matching/detection.py"
-        + f" -n {network} -d {day} -y {year} -r {rank} -v {verbose} -c {fconfig} -b {batchnode} --pid {pid} "
+        + f" -d {day} -y {year} -r {rank} -v {verbose} -c {fconfig} -b {batchnode} "
     )
 
 comm.Barrier()

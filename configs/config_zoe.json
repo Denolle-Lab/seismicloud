@@ -8,7 +8,8 @@
         "picks_path": "picks/",
         "starting_cat_path": "data/endquakes_2017.xml",
         "stations": ["KEMF","NCHR","ENWF","KEMO"],
-        "network": "NV"
+        "network": "NV",
+        "year":2017
     },
     "log": {
             "verbose": 0, 

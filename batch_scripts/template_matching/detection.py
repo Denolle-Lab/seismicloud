@@ -59,8 +59,6 @@ import pandas as pd
 import eqcorrscan
 
 
-logs = open(f"{logs_path}{batchnode}.log", "a")
-sys.stdout = logs
 
 
 doy = day
@@ -71,15 +69,13 @@ sdoy = str(doy).zfill(3)
 
 
 
-print(f"--------------{year}.{sdoy}.{network}-----------------", flush=True)
+os.system(f"echo '--------------{year}.{sdoy}.{network}-----------------' >> {logs_path}{batchnode}.log")
 
 
 templates = eqcorrscan.core.match_filter.tribe.Tribe().read(templates_path)
 
-print(
-    f"{rank} | \tloaded templates ({templates_path})",
-    flush=True,
-)
+
+os.system(f"echo '{rank} | \tloaded templates ({templates_path})' >> {logs_path}{batchnode}.log")
 t0 = time.time()
 
 
@@ -109,7 +105,7 @@ for sta in stations:
     else:
         continue
 
-print("Data pulled in")
+os.system(f"echo 'Data pulled in' >> {logs_path}{batchnode}.log")
 
 if len(s) > 0:
 
@@ -122,11 +118,6 @@ if len(s) > 0:
         >= (config["templates"]["process_len"] * 0.8)
     ]
     if len(stream) > len(stream_check):
-        print(
-            "Data is too short for day "
-            + str(day)
-            + ", running detections with process length of 1 hour"
-        )
 
         if len(s) >= 3 * len(stations):
             temp_templates = templates.copy()
@@ -142,10 +133,8 @@ if len(s) > 0:
             )
 
             num_detects = np.sum([len(f) for f in party])
-            print(
-                f"{rank} | \t{year}.{sdoy}.{network} \t| Finish, found {num_detects} detections \t | {'%.3f' % (time.time() - t0)} sec",
-                flush=True,
-            )
+            os.system(
+                f"echo '{rank} | \t{year}.{sdoy}.{network} \t| Finish, found {num_detects} detections \t | {'%.3f' % (time.time() - t0)} sec' >> {logs_path}{batchnode}.log")
 
             # Save day-long party if there were detections
             # if num_detects > 0:
@@ -155,7 +144,7 @@ if len(s) > 0:
             gc.collect()
 
         else:
-            print("Data missing for some stations")
+            os.system(f"echo 'Data missing for some stations' >> {logs_path}{batchnode}.log")
 
     else:
         # try:
@@ -177,10 +166,8 @@ if len(s) > 0:
             )
 
             num_detects = np.sum([len(f) for f in party])
-            print(
-                f"{rank} | \t{year}.{sdoy}.{network} \t| Finish, found {num_detects} detections \t | {'%.3f' % (time.time() - t0)} sec",
-                flush=True,
-            )
+            os.system(
+                f"echo '{rank} | \t{year}.{sdoy}.{network} \t| Finish, found {num_detects} detections \t | {'%.3f' % (time.time() - t0)} sec' >> {logs_path}{batchnode}.log")
 
             # Save day-long party if there were detections
             # if num_detects > 0:
@@ -190,19 +177,11 @@ if len(s) > 0:
             gc.collect()
 
         else:
-            print("Data missing for some stations")
+            os.system(f"echo 'Data missing for some stations' >> {logs_path}{batchnode}.log")
 
-            # except:
-            #    print(
-            #        f"{rank} | \t{year}.{sdoy}.{network} \t| Error",
-            #        flush=True,
-            #    )
-else:
-    if verbose > 0:
-        print(
-            f"{rank} | \t{year}.{sdoy}.{network} \t| Skip: no data",
-            flush=True,
-        )
 
-print(f"--------------{network}.{year}-----------------", flush=True)
-logs.close()
+
+if verbose > 0:
+    os.system(f"echo '{rank} | \t{year}.{sdoy}.{network} \t| Skip: no data' >> {logs_path}{batchnode}.log")
+
+os.system(f"echo '--------------{network}.{year}-----------------' >> {logs_path}{batchnode}.log")

@@ -9,7 +9,7 @@
         "picks_path": "/tmp/data/data/outputs/picking/",
         "stations": ["KEMF","NCHR","ENWF","KEMO"],
         "network": "NV",
-        "year": "2017"
+        "year": 2017
     },
     "log": {
             "verbose": 0, 

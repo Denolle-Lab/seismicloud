@@ -24,7 +24,7 @@ from tqdm import tqdm
 ## prepare arg parser
 parser = argparse.ArgumentParser(description="Template matching from continuous data")
 parser.add_argument("-c", "--config", required=True)
-parser.add_argument("-b","--batchnodes",required=True)
+parser.add_argument("-b","--batchnodes",type=int,required=True)
 args = parser.parse_args()
 
 
@@ -83,5 +83,5 @@ for n in nets:
         df["rank"] = df.index.map(lambda x: int(x / njobs))
 
         df.to_csv(
-            "/".join([jobs_path, f"{n}_{y}_templatematching_joblist.csv"]), index=False
+            "/".join([jobs_path, f"{n}_{y}_templatematching_batchlist.csv"]), index=False
         )
