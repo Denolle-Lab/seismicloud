@@ -25,7 +25,7 @@ parser = argparse.ArgumentParser(description="Picking on PNW continuous data.")
 parser.add_argument("-n", "--network", required=True)
 parser.add_argument("-s", "--station", required=True)
 parser.add_argument("-c", "--config", required=True)
-# parser.add_argument('-c', '--channel', required=True)
+parser.add_argument("-b", "--batchid", type=int, required=True)
 parser.add_argument("-g", "--gpuid", default=-1, type=int)
 parser.add_argument("-y", "--year", required=True, type=int)
 parser.add_argument("-r", "--rank", default=0, type=int)
@@ -36,7 +36,7 @@ args = parser.parse_args()
 year = args.year
 network = args.network
 station = args.station
-# channel = args.channel
+batchid = args.batchid
 rank = args.rank
 verbose = args.verbose
 pid = args.pid
@@ -65,34 +65,35 @@ import seisbench
 import seisbench.models as sbm
 
 seisbench.logger.setLevel(logging.ERROR)
-logs = open(f"{logs_path}/{rank}.log", "a")
-sys.stdout = logs
 
-print(f"--------------{network}.{station}.{year}-----------------", flush=True)
-print(f"{rank} | \tmaster PID {pid}", flush=True)
-print(f"{rank} | \tPID {mypid}", flush=True)
+os.system(
+    f"echo '--------------{network}.{station}.{year}-----------------' >> {logs_path}/{batchid}_{rank}.log"
+)
+os.system(f"echo '{rank} | \tmaster PID {pid}' >> {logs_path}/{batchid}_{rank}.log")
+os.system(f"echo '{rank} | \tPID {mypid}' >> {logs_path}/{batchid}_{rank}.log")
 
 model_pnw = sbm.EQTransformer.from_pretrained(config["model"]["picking"]["pretrained"])
 if gpuid >= 0:
     model_pnw.to(torch.device("cuda"))
-    print(
-        f"{rank} | \tloaded model ({config['model']['picking']['pretrained'].upper()}) to GPU:{gpuid}",
-        flush=True,
+    os.system(
+        f"echo '{rank} | \tloaded model ({config['model']['picking']['pretrained'].upper()}) to GPU:{gpuid}' >> {logs_path}/{batchid}_{rank}.log"
     )
 else:
-    print(
-        f"{rank} | \tloaded model ({config['model']['picking']['pretrained'].upper()}) to CPU",
-        flush=True,
+    os.system(
+        f"echo '{rank} | \tloaded model ({config['model']['picking']['pretrained'].upper()}) to CPU' >> {logs_path}/{batchid}_{rank}.log"
     )
+
 model_pnw.default_args = config["model"]["picking"]["default_args"]
 
 
-jobs = pd.read_csv(f"{jobs_path}/{network}_{year}_joblist.csv")
+jobs = pd.read_csv(f"{jobs_path}/{network}_{year}_{batchid}_joblist.csv")
 jobs = jobs[jobs["station"] == station].reset_index(drop=True)
 jobs = jobs[jobs["rank"] == rank].reset_index(drop=True)
 jobs = jobs.sort_values("doy")
 jobs = jobs.reset_index(drop=True)
-print(f"{rank} | \ttotal {len(jobs)} days of data", flush=True)
+os.system(
+    f"echo '{rank} | \ttotal {len(jobs)} days of data' >> {logs_path}/{batchid}_{rank}.log"
+)
 
 for idx, i in jobs.iterrows():
     t0 = time.time()
@@ -114,23 +115,15 @@ for idx, i in jobs.iterrows():
     for ih, s in enumerate(ss):
         if len(s) > 0:
             if len(s.get_gaps()) > config["model"]["picking"]["max_gap"]:
-                print(
-                    f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: too many gaps",
-                    flush=True,
+                os.system(
+                    f"echo '{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: too many gaps' >> {logs_path}/{batchid}_{rank}.log"
                 )
             else:
-                if verbose > 1:
-                    print(
-                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t|",
-                        s,
-                        flush=True,
-                    )
-                elif verbose > 0:
-                    current_time = time.strftime("%Z %x %X")
-                    print(
-                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| {current_time}",
-                        flush=True,
-                    )
+                current_time = time.strftime("%Z %x %X")
+                os.system(
+                    f"echo '{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| {current_time}' >> {logs_path}/{batchid}_{rank}.log"
+                )
+
                 s.resample(100)
                 s.detrend()
                 s.normalize()
@@ -141,17 +134,15 @@ for idx, i in jobs.iterrows():
                     )
                     picks += p
                 except:
-                    print(
-                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: got error.",
-                        flush=True,
+                    os.system(
+                        f"echo '{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: got error.' >> {logs_path}/{batchid}_{rank}.log"
                     )
                     pass
 
         else:
             if verbose > 0:
-                print(
-                    f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Skip: no data",
-                    flush=True,
+                os.system(
+                    f"echo '{rank} | \t{year}.{sdoy}.{network}.{station} \t| Skip: no data' >> {logs_path}/{batchid}_{rank}.log"
                 )
 
     if len(picks) > 0:
@@ -162,17 +153,17 @@ for idx, i in jobs.iterrows():
         ) as f:
             pickle.dump(picks, f)
         if verbose > 1:
-            print(
-                f"{rank} | \tdump picks to {picks_path}/{year}/{sdoy}/{network}/{station}.{network}.{year}.{sdoy}"
+            os.system(
+                f"echo '{rank} | \tdump picks to {picks_path}/{year}/{sdoy}/{network}/{station}.{network}.{year}.{sdoy}' >> {logs_path}/{batchid}_{rank}.log"
             )
 
     gc.collect()
-    print(
-        f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Finish, found {len(picks)} picks \t | {'%.3f' % (time.time() - t0)} sec",
-        flush=True,
+    os.system(
+        f"echo '{rank} | \t{year}.{sdoy}.{network}.{station} \t| Finish, found {len(picks)} picks \t | {'%.3f' % (time.time() - t0)} sec' >> {logs_path}/{batchid}_{rank}.log"
     )
 
     del picks, s
 
-print(f"--------------{network}.{station}.{year}-----------------", flush=True)
-logs.close()
+os.system(
+    f"echo '--------------{network}.{station}.{year}-----------------' >> {logs_path}/{batchid}_{rank}.log"
+)
