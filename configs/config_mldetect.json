@@ -1,15 +1,15 @@
 {
     "workflow": {
         "interpreter": "/opt/conda/bin/python3",
-        "mseed_path": "/tmp/data/data",
-        "jobs_path": "jobs/",
-        "picks_path": "data/picks/",
-        "catalog_path": "data/catalogs/"
+        "mseed_path": "/tmp/data/data/endeavour",
+        "jobs_path": "/tmp/data/data/outputs/mldetect/jobs/",
+        "picks_path": "/tmp/data/data/outputs/mldetect/picks/",
+        "catalog_path": "/tmp/data/data/outputs/mldetect/catalogs/"
     },
     "log": {
             "verbose": 0, 
             "appendlog": false,
-            "logs_path": "logs/"
+            "logs_path": "/tmp/data/data/outputs/mldetect/logs/"
     },
     "model": {
         "picking":{
@@ -26,7 +26,7 @@
             }
         },
         "association":{
-            "stations": "data/stations.csv",
+            "stations": "/tmp/data/stations.csv",
             "dims": ["x(km)", "y(km)", "z(km)"],
             "use_dbscan": false,
             "use_amplitude": false,

@@ -26,7 +26,7 @@
             }
         },
         "association":{
-            "stations": "data/stations.csv",
+            "stations": "/tmp/data/stations.csv",
             "dims": ["x(km)", "y(km)", "z(km)"],
             "use_dbscan": false,
             "use_amplitude": false,
