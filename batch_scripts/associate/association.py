@@ -6,6 +6,8 @@
 #   Oct. 24th, 2022
 ###########################################
 
+from mpi4py import MPI
+
 import sys
 import os
 import json
@@ -29,12 +31,20 @@ parser = argparse.ArgumentParser(
 )
 parser.add_argument("-y", "--year", required=True)
 parser.add_argument("-c", "--config", required=True)
+parser.add_argument("-b", "--batchid", type=int, required=True)
 
 args = parser.parse_args()
+
+
+comm = MPI.COMM_WORLD
+rank = comm.Get_rank()
+size = comm.Get_size()
 
 ## load configure file
 fconfig = args.config
 year = args.year
+batchid = args.batchid
+
 with open(fconfig, "r") as f:
     config = json.load(f)
 verbose = config["log"]["verbose"]
@@ -42,6 +52,8 @@ logs_path = config["log"]["logs_path"]
 association_config = config["model"]["association"]
 picks_path = config["workflow"]["picks_path"]
 catalog_path = config["workflow"]["catalog_path"]
+
+ntask = config["environment"]["NTASK"]
 
 if config["log"]["appendlog"]:
     logs = open(f"{logs_path}/associate.log", "a")
@@ -79,46 +91,49 @@ association_config["bfgs_bounds"] = (
 
 
 cs = []
-for doy in os.listdir("/".join([picks_path, year])):
-    pick_df = []
-    for net in os.listdir("/".join([picks_path, year, doy])):
-        for sta in os.listdir("/".join([picks_path, year, doy, net])):
-            with open("/".join([picks_path, year, doy, net, sta]), "rb") as f:
-                picks = pickle.load(f)
-            if len(picks) >= 1:
-                for p in picks:
-                    pick_df.append(
-                        {
-                            "id": p.trace_id,
-                            "timestamp": p.peak_time.datetime,
-                            "prob": p.peak_value,
-                            "type": p.phase.lower(),
-                            "sod": p.peak_time.timestamp
-                            - utc(f"{year}{doy}").timestamp,
-                        }
-                    )
-    pick_df = pd.DataFrame(pick_df)
+doys = os.listdir("/".join([picks_path, year]))
+batchdoys = np.array_split(doys, ntask)[batchid]
+for doy in batchdoys:
+    if int(doy) % size == rank:
+        pick_df = []
+        for net in os.listdir("/".join([picks_path, year, doy])):
+            for sta in os.listdir("/".join([picks_path, year, doy, net])):
+                with open("/".join([picks_path, year, doy, net, sta]), "rb") as f:
+                    picks = pickle.load(f)
+                if len(picks) >= 1:
+                    for p in picks:
+                        pick_df.append(
+                            {
+                                "id": p.trace_id,
+                                "timestamp": p.peak_time.datetime,
+                                "prob": p.peak_value,
+                                "type": p.phase.lower(),
+                                "sod": p.peak_time.timestamp
+                                - utc(f"{year}{doy}").timestamp,
+                            }
+                        )
+        pick_df = pd.DataFrame(pick_df)
 
-    if len(pick_df) > 0:
-        for h in range(24):
-            pick_df_hour = pick_df[
-                (pick_df["sod"] > h * 60 * 60) & (pick_df["sod"] < (h + 1) * 60 * 60)
-            ]
-            if len(pick_df_hour) > 1:
-                try:
-                    c, assignments = association(
-                        pick_df_hour,
-                        station_df,
-                        association_config,
-                        method=association_config["method"],
-                    )
-                    for i in c:
-                        i["picks"] = []
-                    for i in assignments:
-                        c[i[1]]["picks"].append(dict(pick_df_hour.loc[i[0]]))
-                    cs += c
-                except:
-                    pass
+        if len(pick_df) > 0:
+            for h in range(24):
+                pick_df_hour = pick_df[
+                    (pick_df["sod"] > h * 60 * 60) & (pick_df["sod"] < (h + 1) * 60 * 60)
+                ]
+                if len(pick_df_hour) > 1:
+                    try:
+                        c, assignments = association(
+                            pick_df_hour,
+                            station_df,
+                            association_config,
+                            method=association_config["method"],
+                        )
+                        for i in c:
+                            i["picks"] = []
+                        for i in assignments:
+                            c[i[1]]["picks"].append(dict(pick_df_hour.loc[i[0]]))
+                        cs += c
+                    except:
+                        pass
 
 cat = Catalog()
 for e in cs:
@@ -136,4 +151,4 @@ for e in cs:
         event.picks.append(pick)
 
     cat.append(event)
-cat.write(f"{catalog_path}/{year}.xml", format="QUAKEML")
+cat.write(f"{catalog_path}/{year}_{batchid}_{rank}.xml", format="QUAKEML")
