@@ -49,7 +49,7 @@ os.environ["OPENBLAS_NUM_THREADS"] = config["environment"]["OPENBLAS_NUM_THREADS
 
 nproc = os.cpu_count()
 
-if batchnode == 0:
+if rank == 0:
     if config["log"]["appendlog"]:
         logs = open(f"{logs_path}master_{batchnode}.log", "a")
     else:
