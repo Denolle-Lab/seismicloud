@@ -69,13 +69,13 @@ sdoy = str(doy).zfill(3)
 
 
 
-os.system(f"echo '--------------{year}.{sdoy}.{network}-----------------' >> {logs_path}{batchnode}.log")
+os.system(f"echo '--------------{year}.{sdoy}.{network}-----------------' >> {logs_path}{batchnode}_{rank}.log")
 
 
 templates = eqcorrscan.core.match_filter.tribe.Tribe().read(templates_path)
 
 
-os.system(f"echo '{rank} | \tloaded templates ({templates_path})' >> {logs_path}{batchnode}.log")
+os.system(f"echo '{rank} | \tloaded templates ({templates_path})' >> {logs_path}{batchnode}_{rank}.log")
 t0 = time.time()
 
 
@@ -105,7 +105,7 @@ for sta in stations:
     else:
         continue
 
-os.system(f"echo 'Data pulled in' >> {logs_path}{batchnode}.log")
+os.system(f"echo 'Data pulled in' >> {logs_path}{batchnode}_{rank}.log")
 
 if len(s) > 0:
 
@@ -134,7 +134,7 @@ if len(s) > 0:
 
             num_detects = np.sum([len(f) for f in party])
             os.system(
-                f"echo '{rank} | \t{year}.{sdoy}.{network} \t| Finish, found {num_detects} detections \t | {'%.3f' % (time.time() - t0)} sec' >> {logs_path}{batchnode}.log")
+                f"echo '{rank} | \t{year}.{sdoy}.{network} \t| Finish, found {num_detects} detections \t | {'%.3f' % (time.time() - t0)} sec' >> {logs_path}{batchnode}_{rank}.log")
 
             # Save day-long party if there were detections
             # if num_detects > 0:
@@ -144,7 +144,7 @@ if len(s) > 0:
             gc.collect()
 
         else:
-            os.system(f"echo 'Data missing for some stations' >> {logs_path}{batchnode}.log")
+            os.system(f"echo 'Data missing for some stations' >> {logs_path}{batchnode}_{rank}.log")
 
     else:
         # try:
@@ -167,7 +167,7 @@ if len(s) > 0:
 
             num_detects = np.sum([len(f) for f in party])
             os.system(
-                f"echo '{rank} | \t{year}.{sdoy}.{network} \t| Finish, found {num_detects} detections \t | {'%.3f' % (time.time() - t0)} sec' >> {logs_path}{batchnode}.log")
+                f"echo '{rank} | \t{year}.{sdoy}.{network} \t| Finish, found {num_detects} detections \t | {'%.3f' % (time.time() - t0)} sec' >> {logs_path}{batchnode}_{rank}.log")
 
             # Save day-long party if there were detections
             # if num_detects > 0:
@@ -177,11 +177,11 @@ if len(s) > 0:
             gc.collect()
 
         else:
-            os.system(f"echo 'Data missing for some stations' >> {logs_path}{batchnode}.log")
+            os.system(f"echo 'Data missing for some stations' >> {logs_path}{batchnode}_{rank}.log.log")
 
 
 
 if verbose > 0:
-    os.system(f"echo '{rank} | \t{year}.{sdoy}.{network} \t| Skip: no data' >> {logs_path}{batchnode}.log")
+    os.system(f"echo '{rank} | \t{year}.{sdoy}.{network} \t| Skip: no data' >> {logs_path}{batchnode}_{rank}.log")
 
-os.system(f"echo '--------------{network}.{year}-----------------' >> {logs_path}{batchnode}.log")
+os.system(f"echo '--------------{network}.{year}-----------------' >> {logs_path}{batchnode}_{rank}.log")

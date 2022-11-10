@@ -12,7 +12,7 @@
         "year": 2017
     },
     "log": {
-            "verbose": 0, 
+            "verbose": 1, 
             "appendlog": false,
             "logs_path": "/tmp/data/data/outputs/logs/"
     },

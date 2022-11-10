@@ -19,6 +19,7 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 ## import user defined packages
 import pandas as pd
 from tqdm import tqdm
+import numpy as np
 
 
 ## prepare arg parser
@@ -79,7 +80,7 @@ for n in nets:
         df = pd.DataFrame(df, columns=["network", "year", "doy", "fpath"])
         df = df.sort_values(by=["doy"])
         df.reset_index(drop=True, inplace=True)
-        njobs = int(len(df) / nproc)
+        njobs = np.ceil(len(df) / nproc)
         df["rank"] = df.index.map(lambda x: int(x / njobs))
 
         df.to_csv(
