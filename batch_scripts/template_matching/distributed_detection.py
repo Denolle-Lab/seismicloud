@@ -50,13 +50,6 @@ os.environ["OPENBLAS_NUM_THREADS"] = config["environment"]["OPENBLAS_NUM_THREADS
 nproc = os.cpu_count()
 
 if rank == 0:
-    if config["log"]["appendlog"]:
-        logs = open(f"{logs_path}master_{batchnode}.log", "a")
-    else:
-        os.system(f"rm {logs_path}*")
-        logs = open(f"{logs_path}master_{batchnode}.log", "w")
-    sys.stdout = logs
-
     os.system(f"echo 'Job description' >> {logs_path}master_{batchnode}.log")
     os.system(f"echo 'Network:            {network}' >> {logs_path}master_{batchnode}.log")
     os.system(f"echo 'Year:               {year}' >> {logs_path}master_{batchnode}.log")
@@ -101,4 +94,4 @@ if rank == 0:
     os.system(
         f"echo 'Run time:           {'%.3f' % (time.time() - t0)} seconds' >> {logs_path}master_{batchnode}.log"
     )
-    logs.close()
+

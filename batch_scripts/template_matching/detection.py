@@ -177,7 +177,7 @@ if len(s) > 0:
             gc.collect()
 
         else:
-            os.system(f"echo 'Data missing for some stations' >> {logs_path}{batchnode}_{rank}.log.log")
+            os.system(f"echo 'Data missing for some stations' >> {logs_path}{batchnode}_{rank}.log")
 
 
 
