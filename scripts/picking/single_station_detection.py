@@ -101,78 +101,84 @@ for idx, i in jobs.iterrows():
     sdoy = str(doy).zfill(3)
     ss = []
     picks = []
-    if config["model"]["picking"]["hourly_detection"]:
-        # append hour-long stream
-        for h in range(24):
-            stime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:00:00.000000")
-            etime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:59:59.999999")
-            ss += [obspy.read(fpath, starttime=stime, endtime=etime)]
-    else:
-        # add day-long stream
-        ss = [obspy.read(fpath)]
-
-    for ih, s in enumerate(ss):
-        if len(s) > 0:
-            if len(s.get_gaps()) > config["model"]["picking"]["max_gap"]:
-                print(
-                    f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: too many gaps",
-                    flush=True,
-                )
-            else:
-                if verbose > 1:
-                    print(
-                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t|",
-                        s,
-                        flush=True,
-                    )
-                elif verbose > 0:
-                    current_time = time.strftime("%Z %x %X")
-                    print(
-                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| {current_time}",
-                        flush=True,
-                    )
-                s.resample(100)
-                s.detrend()
-                s.normalize()
-                s.filter("highpass", freq=2)
+    if not os.path.exists(f"{picks_path}/{year}/{sdoy}/{network}/{station}.{network}.{year}.{sdoy}"):  
+        if config["model"]["picking"]["hourly_detection"]:
+            # append hour-long stream
+            for h in range(24):
                 try:
-                    p, _ = model_pnw.classify(
-                        s, strict=False, **config["model"]["picking"]["detection_args"]
-                    )
-                    picks += p
+                    stime = utc(f"{year}-{sdoy}T{str(h).zfill(2)}:00:00.000000")
+                    etime = utc(f"{year}-{sdoy}T{str(h).zfill(2)}:59:59.999999")
                 except:
+                    print(f"{year}{sdoy}T{str(h).zfill(2)}:00:00.000000")
+                ss += [obspy.read(fpath, starttime=stime, endtime=etime)]
+        else:
+            # add day-long stream
+            ss = [obspy.read(fpath)]
+
+        for ih, s in enumerate(ss):
+            if len(s) > 0:
+                if len(s.get_gaps()) > config["model"]["picking"]["max_gap"]:
                     print(
-                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: got error.",
+                        f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: too many gaps",
                         flush=True,
                     )
-                    pass
+                else:
+                    if verbose > 1:
+                        print(
+                            f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t|",
+                            s,
+                            flush=True,
+                        )
+                    elif verbose > 0:
+                        current_time = time.strftime("%Z %x %X")
+                        print(
+                            f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| {current_time}",
+                            flush=True,
+                        )
+                    s.resample(100)
+                    s.detrend()
 
-        else:
-            if verbose > 0:
+                    # seisbench.annotate performs normalization and filtering
+                    # s.normalize()
+                    # s.filter("highpass", freq=1)
+                    try:
+                        p, _ = model_pnw.classify(
+                            s, strict=False, **config["model"]["picking"]["detection_args"]
+                        )
+                        picks += p
+                    except:
+                        print(
+                            f"{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| Skip: got error.",
+                            flush=True,
+                        )
+                        pass
+
+            else:
+                if verbose > 0:
+                    print(
+                        f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Skip: no data",
+                        flush=True,
+                    )
+
+        if len(picks) > 0:
+            os.makedirs(f"{picks_path}/{year}/{sdoy}/{network}", exist_ok=True)
+            with open(
+                f"{picks_path}/{year}/{sdoy}/{network}/{station}.{network}.{year}.{sdoy}",
+                "wb",
+            ) as f:
+                pickle.dump(picks, f)
+            if verbose > 1:
                 print(
-                    f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Skip: no data",
-                    flush=True,
+                    f"{rank} | \tdump picks to {picks_path}/{year}/{sdoy}/{network}/{station}.{network}.{year}.{sdoy}"
                 )
 
-    if len(picks) > 0:
-        os.makedirs(f"{picks_path}/{year}/{sdoy}/{network}", exist_ok=True)
-        with open(
-            f"{picks_path}/{year}/{sdoy}/{network}/{station}.{network}.{year}.{sdoy}",
-            "wb",
-        ) as f:
-            pickle.dump(picks, f)
-        if verbose > 1:
-            print(
-                f"{rank} | \tdump picks to {picks_path}/{year}/{sdoy}/{network}/{station}.{network}.{year}.{sdoy}"
-            )
+        gc.collect()
+        print(
+            f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Finish, found {len(picks)} picks \t | {'%.3f' % (time.time() - t0)} sec",
+            flush=True,
+        )
 
-    gc.collect()
-    print(
-        f"{rank} | \t{year}.{sdoy}.{network}.{station} \t| Finish, found {len(picks)} picks \t | {'%.3f' % (time.time() - t0)} sec",
-        flush=True,
-    )
-
-    del picks, s
+        del picks, s
 
 print(f"--------------{network}.{station}.{year}-----------------", flush=True)
 logs.close()
