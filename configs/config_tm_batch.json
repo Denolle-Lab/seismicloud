@@ -2,7 +2,7 @@
     "workflow": {
         "interpreter": "/opt/conda/bin/python3",
         "mseed_path": "/tmp/data/data/endeavour",
-        "templates_path": "/tmp/data/templates/june2017_templates.tgz",
+        "templates_path": "/tmp/data/templates/agusubset_templates.tgz",
         "detections_path": "/tmp/data/data/outputs/detections/",
         "jobs_path": "/tmp/data/data/outputs/jobs/",
         "starting_cat_path": "/tmp/data/endquakes_2017.xml",
