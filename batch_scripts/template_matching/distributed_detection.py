@@ -70,6 +70,7 @@ comm.Barrier()
 
 jobs = pd.read_csv(f"{jobs_path}{network}_{year}_templatematching_batchlist.csv")
 jobs = jobs[jobs["rank"] == batchnode]
+jobs = jobs.reset_index()
 n_new_ranks = int(np.ceil(len(jobs)/nproc))
 njobs = len(jobs) // nproc
 over = len(jobs)%nproc
