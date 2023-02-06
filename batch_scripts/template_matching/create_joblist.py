@@ -88,6 +88,8 @@ for n in nets:
             starting_list = np.repeat(x,njobs)
             final_list = np.append(starting_list,[i for i in range(over)])
         else:
+            x = np.arange(nproc)
+            starting_list = np.repeat(x,njobs)
             final_list = starting_list
         df["rank"] = df.index.map(lambda x: final_list[x])
 

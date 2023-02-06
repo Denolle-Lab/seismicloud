@@ -78,6 +78,8 @@ if over > 0:
     starting_list = np.repeat(x,njobs)
     final_list = np.append(starting_list,[i for i in range(over)])
 else:
+    x = np.arange(nproc)
+    starting_list = np.repeat(x,njobs)
     final_list = starting_list
 jobs["rank"] = jobs.index.map(lambda x: final_list[x])
 
