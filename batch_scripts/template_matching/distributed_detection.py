@@ -71,9 +71,13 @@ comm.Barrier()
 jobs = pd.read_csv(f"{jobs_path}{network}_{year}_templatematching_batchlist.csv")
 jobs = jobs[jobs["rank"] == batchnode]
 n_new_ranks = int(np.ceil(len(jobs)/nproc))
-jobs["rank"] = jobs.index.map(lambda x: int(x / n_new_ranks))
-
-
+njobs = len(jobs) // nproc
+over = len(jobs)%nproc
+if over > 0:
+    x = np.arange(nproc)
+    starting_list = np.repeat(x,njobs)
+    final_list = np.append(starting_list,[i for i in range(over)])
+jobs["rank"] = jobs.index.map(lambda x: final_list[x])
 
 jobs = jobs[jobs["rank"] == rank]
 

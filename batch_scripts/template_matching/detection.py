@@ -71,11 +71,17 @@ sdoy = str(doy).zfill(3)
 
 os.system(f"echo '--------------{year}.{sdoy}.{network}-----------------' >> {logs_path}{batchnode}_{rank}.log")
 
+current_directory = os.getcwd()
+os.system(f"echo 'Current directory is {current_directory}' >> {logs_path}{batchnode}_{rank}.log")
+os.system(f"echo 'Template path is {templates_path}' >> {logs_path}{batchnode}_{rank}.log")
 
 templates = eqcorrscan.core.match_filter.tribe.Tribe().read(templates_path)
 
 
 os.system(f"echo '{rank} | \tloaded templates ({templates_path})' >> {logs_path}{batchnode}_{rank}.log")
+len_templates = len(templates)
+os.system(f"echo '{len_templates} templates' >> {logs_path}{batchnode}_{rank}.log")
+
 t0 = time.time()
 
 
@@ -106,9 +112,11 @@ for sta in stations:
         continue
 
 os.system(f"echo 'Data pulled in' >> {logs_path}{batchnode}_{rank}.log")
+stream_len = len(s)
+os.system(f"echo '{stream_len} traces in stream' >> {logs_path}{batchnode}_{rank}.log")
 
 if len(s) > 0:
-
+    
     # Catch for short streams due to data gaps
     # Run with smaller process length if so
     stream_check = [
@@ -123,6 +131,7 @@ if len(s) > 0:
             temp_templates = templates.copy()
             for tt in temp_templates:
                 tt.process_length = 3600.0
+            os.system(f"echo 'About to run detections, passed first if loop' >> {logs_path}{batchnode}_{rank}.log")
             party = temp_templates.detect(
                 s,
                 threshold=config["template_matching"]["threshold"],
@@ -147,6 +156,7 @@ if len(s) > 0:
             os.system(f"echo 'Data missing for some stations' >> {logs_path}{batchnode}_{rank}.log")
 
     else:
+        os.system(f"echo 'Failed first if loop' >> {logs_path}{batchnode}_{rank}.log")
         # try:
         picks = []
         # s.resample(config["templates"]["samp_rate"])
@@ -155,7 +165,7 @@ if len(s) > 0:
 
             for tt in templates:
                 tt.process_length = 3600.0
-
+            os.system(f"echo 'About to run detection' >> {logs_path}{batchnode}_{rank}.log")
             party = templates.detect(
                 s,
                 threshold=config["template_matching"]["threshold"],
@@ -178,10 +188,7 @@ if len(s) > 0:
 
         else:
             os.system(f"echo 'Data missing for some stations' >> {logs_path}{batchnode}_{rank}.log")
-
-
-
-if verbose > 0:
+else:
     os.system(f"echo '{rank} | \t{year}.{sdoy}.{network} \t| Skip: no data' >> {logs_path}{batchnode}_{rank}.log")
 
 os.system(f"echo '--------------{network}.{year}-----------------' >> {logs_path}{batchnode}_{rank}.log")

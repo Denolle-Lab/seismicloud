@@ -80,8 +80,14 @@ for n in nets:
         df = pd.DataFrame(df, columns=["network", "year", "doy", "fpath"])
         df = df.sort_values(by=["doy"])
         df.reset_index(drop=True, inplace=True)
-        njobs = np.ceil(len(df) / nproc)
-        df["rank"] = df.index.map(lambda x: int(x / njobs))
+        njobs = int(np.ceil(len(df)/nproc))
+        njobs = len(df) // nproc
+        over = len(df)%nproc
+        if over > 0:
+            x = np.arange(nproc)
+            starting_list = np.repeat(x,njobs)
+            final_list = np.append(starting_list,[i for i in range(over)])
+        df["rank"] = df.index.map(lambda x: final_list[x])
 
         df.to_csv(
             "/".join([jobs_path, f"{n}_{y}_templatematching_batchlist.csv"]), index=False
