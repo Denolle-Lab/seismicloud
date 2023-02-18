@@ -13,7 +13,7 @@
     },
     "model": {
         "picking":{
-            "hourly_detection": false,
+            "hourly_detection": true,
             "pretrained": "original",
             "max_gap": 20,
             "default_args": {
@@ -48,7 +48,7 @@
     },
     "environment": {
         "NTASK": 4,
-        "NPROC": 8,
+        "NPROC": 4,
         "CUDA_VISIBLE_DEVICES": [],
         "OPENBLAS_NUM_THREADS": "1"
     }

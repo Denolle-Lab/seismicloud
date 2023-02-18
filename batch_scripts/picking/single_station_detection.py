@@ -107,10 +107,10 @@ for idx, i in jobs.iterrows():
         for h in range(24):
             stime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:00:00.000000")
             etime = utc(f"{year}{sdoy}T{str(h).zfill(2)}:59:59.999999")
-            ss += [obspy.read(fpath, starttime=stime, endtime=etime)]
+            ss += [obspy.read(fpath, starttime=stime, endtime=etime).resample(100)]
     else:
         # add day-long stream
-        ss = [obspy.read(fpath)]
+        ss = [obspy.read(fpath).resample(100)]
 
     for ih, s in enumerate(ss):
         if len(s) > 0:
@@ -124,7 +124,6 @@ for idx, i in jobs.iterrows():
                     f"echo '{rank} | \t{year}.{sdoy}.{network}.{station}.{ih} \t| {current_time}' >> {logs_path}/{batchid}_{rank}.log"
                 )
 
-                s.resample(100)
                 s.detrend()
                 s.normalize()
                 s.filter("highpass", freq=2)

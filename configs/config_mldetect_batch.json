@@ -2,18 +2,18 @@
     "workflow": {
         "interpreter": "/opt/conda/bin/python3",
         "mseed_path": "/tmp/data/data/endeavour",
-        "jobs_path": "/tmp/data/data/outputs/mldetect/jobs/",
-        "picks_path": "/tmp/data/data/outputs/mldetect/picks/",
-        "catalog_path": "/tmp/data/data/outputs/mldetect/catalogs/"
+        "jobs_path": "/tmp/data/data/ml_output/jobs/",
+        "picks_path": "/tmp/data/data/ml_output/picks/",
+        "catalog_path": "/tmp/data/data/ml_output/catalogs/"
     },
     "log": {
             "verbose": 0,
             "appendlog": false,
-            "logs_path": "/tmp/data/data/outputs/mldetect/logs/"
+            "logs_path": "/tmp/data/data/ml_output/logs/"
     },
     "model": {
         "picking":{
-            "hourly_detection": false,
+            "hourly_detection": true,
             "pretrained": "original",
             "max_gap": 20,
             "default_args": {

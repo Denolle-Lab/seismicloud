@@ -47,7 +47,7 @@
         }
     },
     "environment": {
-        "NTASK": 32,
+        "NTASK": 128,
         "NPROC": 4,
         "CUDA_VISIBLE_DEVICES": [],
         "OPENBLAS_NUM_THREADS": "1"
