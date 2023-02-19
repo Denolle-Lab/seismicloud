@@ -89,7 +89,7 @@ for n in nets:
         # njobs = math.ceil(len(df) / ntask)
         # df["batchid"] = df.index.map(lambda x: int(x / njobs))
         
-        split = np.array_split(np.arange(len(df)), nproc)
+        split = np.array_split(np.arange(len(df)), ntask)
         batch_df = df.loc[split[batchid]]
         batch_df['batchid'] = batchid
         batch_df.reset_index(drop=True, inplace=True)
