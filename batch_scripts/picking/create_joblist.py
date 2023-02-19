@@ -18,6 +18,7 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 ## import user defined packages
 import pandas as pd
+import numpy as np
 import seisbench.models as sbm
 
 ## intialize MPI
