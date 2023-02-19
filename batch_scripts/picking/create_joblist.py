@@ -72,7 +72,7 @@ gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
 nets = os.listdir(mseed_path)
 for n in nets:
     years = os.listdir("/".join([mseed_path, n]))
-    for y in ["2016"]:
+    for y in years:
         df = []
         doys = os.listdir("/".join([mseed_path, n, y]))
         for d in doys:
@@ -89,9 +89,9 @@ for n in nets:
         # njobs = math.ceil(len(df) / ntask)
         # df["batchid"] = df.index.map(lambda x: int(x / njobs))
         
-        split = np.array_split(np.arange(len(df)), size)
-        batch_df = df.loc[split[rank]]
-        batch_df['batchid'] = rank
+        split = np.array_split(np.arange(len(df)), nproc)
+        batch_df = df.loc[split[batchid]]
+        batch_df['batchid'] = batchid
         batch_df.reset_index(drop=True, inplace=True)
 
         njobs = math.ceil(len(batch_df) / nproc)
