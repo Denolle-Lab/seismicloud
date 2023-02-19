@@ -102,6 +102,8 @@ for idx, i in jobs.iterrows():
     sdoy = str(doy).zfill(3)
     ss = []
     picks = []
+
+    # move the resampling immediately after obspy.read to reduce the memory needed
     if config["model"]["picking"]["hourly_detection"]:
         # append hour-long stream
         for h in range(24):
@@ -156,12 +158,13 @@ for idx, i in jobs.iterrows():
                 f"echo '{rank} | \tdump picks to {picks_path}/{year}/{sdoy}/{network}/{station}.{network}.{year}.{sdoy}' >> {logs_path}/{batchid}_{rank}.log"
             )
 
-    gc.collect()
     os.system(
         f"echo '{rank} | \t{year}.{sdoy}.{network}.{station} \t| Finish, found {len(picks)} picks \t | {'%.3f' % (time.time() - t0)} sec' >> {logs_path}/{batchid}_{rank}.log"
     )
 
-    del picks, s
+    # important for long-running picking
+    del picks, ss, s
+    gc.collect()
 
 os.system(
     f"echo '--------------{network}.{station}.{year}-----------------' >> {logs_path}/{batchid}_{rank}.log"

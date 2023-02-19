@@ -56,9 +56,9 @@ catalog_path = config["workflow"]["catalog_path"]
 ntask = config["environment"]["NTASK"]
 
 if config["log"]["appendlog"]:
-    logs = open(f"{logs_path}/associate.log", "a")
+    logs = open(f"{logs_path}/associate_{batchid}_{rank}.log", "a")
 else:
-    logs = open(f"{logs_path}/associate.log", "w")
+    logs = open(f"{logs_path}/associate_{batchid}_{rank}.log", "w")
 sys.stderr = logs
 
 # check https://github.com/AI4EPS/GaMMA/blob/master/docs/example_seisbench.ipynb for more documentation
