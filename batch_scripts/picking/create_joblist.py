@@ -33,7 +33,6 @@ parser.add_argument("-c", "--config", required=True)
 parser.add_argument("-b", "--batchid", type=int, required=True)
 args = parser.parse_args()
 
-
 ## load configure file
 fconfig = args.config
 batchid = args.batchid
@@ -72,7 +71,7 @@ gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
 nets = os.listdir(mseed_path)
 for n in nets:
     years = os.listdir("/".join([mseed_path, n]))
-    for y in years:
+    for y in ["2016"]:
         df = []
         doys = os.listdir("/".join([mseed_path, n, y]))
         for d in doys:
@@ -85,9 +84,13 @@ for n in nets:
         df = pd.DataFrame(df, columns=["station", "network", "year", "doy", "fpath"])
         df = df.sort_values(by=["station", "doy"])
         df.reset_index(drop=True, inplace=True)
-        njobs = math.ceil(len(df) / ntask)
-        df["batchid"] = df.index.map(lambda x: int(x / njobs))
-        batch_df = df[df["batchid"] == batchid]
+
+        # njobs = math.ceil(len(df) / ntask)
+        # df["batchid"] = df.index.map(lambda x: int(x / njobs))
+        
+        split = np.array_split(np.arange(len(df)), size)
+        batch_df = df.loc[split[rank]]
+        batch_df['batchid'] = rank
         batch_df.reset_index(drop=True, inplace=True)
 
         njobs = math.ceil(len(batch_df) / nproc)
@@ -98,4 +101,5 @@ for n in nets:
         )
 
 # warm-up the model
-model_pnw = sbm.EQTransformer.from_pretrained(config["model"]["picking"]["pretrained"])
+if rank == 0:
+    model_pnw = sbm.EQTransformer.from_pretrained(config["model"]["picking"]["pretrained"])
