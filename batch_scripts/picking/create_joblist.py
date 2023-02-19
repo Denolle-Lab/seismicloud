@@ -68,39 +68,40 @@ gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
 ##     |- DOY
 ##        |- STA.NET.YYYY.DOY
 
-## create job list based on the data archive
-nets = os.listdir(mseed_path)
-for n in nets:
-    years = os.listdir("/".join([mseed_path, n]))
-    for y in years:
-        df = []
-        doys = os.listdir("/".join([mseed_path, n, y]))
-        for d in doys:
-            stas = os.listdir("/".join([mseed_path, n, y, d]))
-            for s in stas:
-                df.append(
-                    [s.split(".")[0], n, y, d, "/".join([mseed_path, n, y, d, s])]
-                )
-
-        df = pd.DataFrame(df, columns=["station", "network", "year", "doy", "fpath"])
-        df = df.sort_values(by=["station", "doy"])
-        df.reset_index(drop=True, inplace=True)
-
-        # njobs = math.ceil(len(df) / ntask)
-        # df["batchid"] = df.index.map(lambda x: int(x / njobs))
-        
-        split = np.array_split(np.arange(len(df)), ntask)
-        batch_df = df.loc[split[batchid]]
-        batch_df['batchid'] = batchid
-        batch_df.reset_index(drop=True, inplace=True)
-
-        njobs = math.ceil(len(batch_df) / nproc)
-        batch_df["rank"] = batch_df.index.map(lambda x: int(x / njobs))
-
-        batch_df.to_csv(
-            "/".join([jobs_path, f"{n}_{y}_{batchid}_joblist.csv"]), index=False
-        )
-
-# warm-up the model
+# only one process to reduce request
 if rank == 0:
+    ## create job list based on the data archive
+    nets = os.listdir(mseed_path)
+    for n in nets:
+        years = os.listdir("/".join([mseed_path, n]))
+        for y in years:
+            df = []
+            doys = os.listdir("/".join([mseed_path, n, y]))
+            for d in doys:
+                stas = os.listdir("/".join([mseed_path, n, y, d]))
+                for s in stas:
+                    df.append(
+                        [s.split(".")[0], n, y, d, "/".join([mseed_path, n, y, d, s])]
+                    )
+
+            df = pd.DataFrame(df, columns=["station", "network", "year", "doy", "fpath"])
+            df = df.sort_values(by=["station", "doy"])
+            df.reset_index(drop=True, inplace=True)
+
+            # njobs = math.ceil(len(df) / ntask)
+            # df["batchid"] = df.index.map(lambda x: int(x / njobs))
+            
+            split = np.array_split(np.arange(len(df)), ntask)
+            batch_df = df.loc[split[batchid]]
+            batch_df['batchid'] = batchid
+            batch_df.reset_index(drop=True, inplace=True)
+
+            njobs = math.ceil(len(batch_df) / nproc)
+            batch_df["rank"] = batch_df.index.map(lambda x: int(x / njobs))
+
+            batch_df.to_csv(
+                "/".join([jobs_path, f"{n}_{y}_{batchid}_joblist.csv"]), index=False
+            )
+
+    # warm-up the model
     model_pnw = sbm.EQTransformer.from_pretrained(config["model"]["picking"]["pretrained"])
