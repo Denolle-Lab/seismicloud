@@ -30,7 +30,11 @@ parser = argparse.ArgumentParser(
     description="Phase detection on continuous mSEED data archive"
 )
 parser.add_argument("-c", "--config", required=True)
+parser.add_argument("-p","--nproc",required=True,type=int)
 args = parser.parse_args()
+
+
+nproc = args.nproc
 
 
 ## load configure file
@@ -54,7 +58,7 @@ os.makedirs(picks_path, exist_ok=True)
 catalog_path = config["workflow"]["catalog_path"]
 os.makedirs(catalog_path, exist_ok=True)
 
-nproc = config["environment"]["NPROC"]
+
 gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
 
 

@@ -29,7 +29,13 @@ size = comm.Get_size()
 ## prepare arg parser
 parser = argparse.ArgumentParser(description="Template matching from continuous data")
 parser.add_argument("-c", "--config", required=True)
+parser.add_argument("-p","--nproc",required=True,type=int)
 args = parser.parse_args()
+
+
+nproc = args.nproc
+fconfig = args.config
+appendlog = args.appendlog
 
 
 ## load configure file
@@ -58,10 +64,6 @@ starting_cat_path = config["workflow"][
 
 stations = config["workflow"]["stations"]
 network = config["workflow"]["network"]
-
-nproc = config["environment"]["NPROC"]
-gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
-
 
 ## assuming a data archive
 ## NET
