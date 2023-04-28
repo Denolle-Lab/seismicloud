@@ -41,7 +41,7 @@ verbose = config["log"]["verbose"]
 logs_path = config["log"]["logs_path"]
 association_config = config["model"]["association"]
 picks_path = config["workflow"]["picks_path"]
-catalog_path = config["workflow"]["catalog_path"]
+catalog_path = association_config["catalog_path"]
 
 if config["log"]["appendlog"]:
     logs = open(f"{logs_path}/associate.log", "a")
