@@ -22,10 +22,10 @@ We therefore suggest that users copy the scripts from this repository into their
 - jobs/
 - logs/
 
-For running on local (not cloud):
+   For running on local (not cloud):
 - scripts/
 
-For running on Azure cloud batch Pools:
+   For running on Azure cloud batch Pools:
 - batch_scripts/
 
 2. We also include tutorials in Jupyter Notebook format to demonstrate the running of the workflow:
@@ -34,47 +34,35 @@ For running on Azure cloud batch Pools:
 - tutorials/NotebookS3:
 - tutorials/NotebookS4:
 
-3. The file that describes both the python environment and is used by Docker to create a container image of the repository is docker.yml 
+3. The python environment needed to run the scripts is described in docker.yml. We note that the mpi4py package requires a local installation of MPI.
+4. The file to build the container image with Docker is Dockerfile.
 
+#### Building the Docker image:
+Note: this currently happens automatically with GitHub Actions with every commit to the 'main' branch.
+```
+docker buildx build . -t seismicloud:latest
+```
+?? Can we add a link here to help people get the github action going??
 
+## Local code execution
+The code can either be run locally in the python environment if the repository is cloned locally, as demonstrated in tutorials/, or can be run through the Docker container image.
 
+<img width="463" alt="image" src="https://github.com/Denolle-Lab/seismicloud/assets/62721445/ff093479-49f1-447d-950b-24e715bbcd99">
 
-### Template Matching
-For template matching.
-    ```
-    mpirun -np 9 python scripts/template_matching/distributed_detection.py -c configs/config_zoe.json -n NV -y 2017
-    ```
+1. Create a config file in json format with your local specifications and pathnames, and if necessary, download waveforms and make templates. See tutorials/NotebookS1 for full documentation, and configs/test_config.json as an example.
+2. Run earthquake detection in parallel using either template matching or EQTransformer. See tutorials/NotebookS2.
+3. Outprocess detections to yield a final earthquake catalog in QuakeML format. See tutorials/NotebookS2.
+    
 
-### Machine Learninig Event Detection
-1. Setting up data archive and configure file.
-2. Create job list.
-    ```
-    python scripts/picking/create_joblist.py --config configs/config_mldetect.json
-    ```
-3. Do ML phase picking.
-    ```
-    mpirun -np 10 python scripts/picking/network_detection.py -c configs/config_mldetect.json -n NV -y 2017
-    ```
-4. Associate detected phase to events.
-    ```
-    python scripts/associate/association.py -c configs/config_mldetect.json --year 2017
-    ```
-
-### Run with Docker
+#### Run with Docker
+The same commands demonstrated in tutorials/NotebookS2 can be run from within the Docker container image built by Github actions (as long as the local computer has Docker installed) by appending several statements to a python command. The commands to pull the image and then an example of how to run a script within them are seen below:
+?? How to pull properly??
 ```
 docker run -it --rm ghcr.io/denolle-lab/seismicloud:latest python --version
 docker run -it --rm ghcr.io/denolle-lab/seismicloud:latest python /tmp/scripts/picking/create_joblist.py -c /tmp/configs/myconfig.json
 ```
 
+## Run on Azure
 
-### Build Docker image:
-Note: this currently happens automatically with GitHub Actions with every commit to the 'main' branch
-```
-docker buildx build . -t seismicloud:latest
-```
-
-
-
-### Run on Azure
 
 
