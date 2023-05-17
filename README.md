@@ -8,9 +8,9 @@ This GitHub accompanies the Krauss et al., 2023 manuscript: "Seismology in the c
 
 ## Usage
 
-This repository is set up to be automatically built as a container image following the included Dockerfile, docker.yml.
+This repository is set up to be automatically built as a Docker container image following the included Dockerfile.
 
-Although anyone could run commands through the Docker image built from this repository following the commands below, the config files (json format) in this repository are written with specific file path configurations to run on the author's local and cloud infrastructure. 
+Although anyone could run the Docker image built from this repository following the commands below, the config files (json format) in this repository are written with specific file path configurations to run on the author's local and cloud infrastructure. 
 
 We therefore suggest that users copy the scripts from this repository into their own new repository, modify the config files, and initiate a Github action on that repository to form their own Docker image in which to run the codes.
 
@@ -29,10 +29,10 @@ We therefore suggest that users copy the scripts from this repository into their
 - batch_scripts/
 
 2. We also include tutorials in Jupyter Notebook format to demonstrate the running of the workflow:
-- tutorials/NotebookS1: 
-- tutorials/NotebookS2:
-- tutorials/NotebookS3:
-- tutorials/NotebookS4:
+- tutorials/NotebookS1: demonstrates the set-up of the config file, how to download waveform data, and create templates.
+- tutorials/NotebookS2: demonstrates how to locally run earthquake detection through both template matching and EQTransformer in parallel.
+- tutorials/NotebookS3: demonstrates how to post-process the detections from both template matching and EQTransformer into QuakeML files.
+- tutorials/NotebookS4: demonstrates how to connect to a pre-built Azure Batch Pool and send tasks to run earthquake detection through both template matching and EQTransformer. 
 
 3. The python environment needed to run the scripts is described in docker.yml. We note that the mpi4py package requires a local installation of MPI.
 4. The file to build the container image with Docker is Dockerfile.
@@ -63,6 +63,12 @@ docker run -it --rm ghcr.io/denolle-lab/seismicloud:latest python /tmp/scripts/p
 ```
 
 ## Run on Azure
+<img width="492" alt="image" src="https://github.com/Denolle-Lab/seismicloud/assets/62721445/34216750-b0cc-4f31-839a-57819f970641">
 
+The user will need to first initiate an Azure account (see tutorials/TutorialS1), an Azure storage container with waveform data (see tutorials/TutorialS2), and an Azure Batch Pool (see tutorials/TutorialS3) through the Azure desktop portal.
+
+The user will also need a Docker image structured in the same way as this repository, with a config file that properly points the scripts to the waveform data, which will be mounted to the Azure Batch Pool as a tmp/ directory. See configs/config_batch_test.json as an example.
+
+Once the above is accomplished, the user can send tasks to the Batch Pool following tutorials/TutorialS4.
 
 
