@@ -1,10 +1,43 @@
 # seismicloud
 [![build-and-push](https://github.com/Denolle-Lab/seismicloud/actions/workflows/docker.yml/badge.svg)](https://github.com/Denolle-Lab/seismicloud/actions/workflows/docker.yml)
 
-Workflow for template matching and ML picking with cloud capabilities
+Workflow for template matching and ML picking with cloud capabilities.
+
+This GitHub accompanies the Krauss et al., 2023 manuscript: "Seismology in the cloud for template matching and machine-learning earthquake detection" (in prep).
 
 
 ## Usage
+
+This repository is set up to be automatically built as a container image following the included Dockerfile, docker.yml.
+
+Although anyone could run commands through the Docker image built from this repository following the commands below, the config files (json format) in this repository are written with specific file path configurations to run on the author's local and cloud infrastructure. 
+
+We therefore suggest that users copy the scripts from this repository into their own new repository, modify the config files, and initiate a Github action on that repository to form their own Docker image in which to run the codes.
+
+## Contents
+
+1. The folders that pertain to the running of the workflow are the following:
+- configs/
+- data/
+- jobs/
+- logs/
+
+For running on local (not cloud):
+- scripts/
+
+For running on Azure cloud batch Pools:
+- batch_scripts/
+
+2. We also include tutorials in Jupyter Notebook format to demonstrate the running of the workflow:
+- tutorials/NotebookS1: 
+- tutorials/NotebookS2:
+- tutorials/NotebookS3:
+- tutorials/NotebookS4:
+
+3. The file that describes both the python environment and is used by Docker to create a container image of the repository is docker.yml 
+
+
+
 
 ### Template Matching
 For template matching.
@@ -40,10 +73,8 @@ Note: this currently happens automatically with GitHub Actions with every commit
 docker buildx build . -t seismicloud:latest
 ```
 
-### Run on AWS
 
-TODO
 
 ### Run on Azure
 
-TODO
+
