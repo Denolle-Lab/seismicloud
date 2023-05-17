@@ -28,14 +28,19 @@ We therefore suggest that users copy the scripts from this repository into their
    For running on Azure cloud batch Pools:
 - batch_scripts/
 
-2. We also include tutorials in Jupyter Notebook format to demonstrate the running of the workflow:
-- tutorials/NotebookS1: demonstrates the set-up of the config file, how to download waveform data, and create templates.
-- tutorials/NotebookS2: demonstrates how to locally run earthquake detection through both template matching and EQTransformer in parallel.
-- tutorials/NotebookS3: demonstrates how to post-process the detections from both template matching and EQTransformer into QuakeML files.
-- tutorials/NotebookS4: demonstrates how to connect to a pre-built Azure Batch Pool and send tasks to run earthquake detection through both template matching and EQTransformer. 
+2. We include tutorials in Jupyter Notebook format to demonstrate the running of the workflow:
+- tutorials/NotebookS1.ipynb: set-up of the config file, how to download waveform data, and create templates.
+- tutorials/NotebookS2.ipynb: how to locally run earthquake detection through both template matching and EQTransformer in parallel.
+- tutorials/NotebookS3.ipynb: how to post-process the detections from both template matching and EQTransformer into QuakeML files.
+- tutorials/NotebookS4.ipynb: how to connect to a pre-built Azure Batch Pool and send tasks to run earthquake detection through both template matching and EQTransformer. 
 
-3. The python environment needed to run the scripts is described in docker.yml. We note that the mpi4py package requires a local installation of MPI.
-4. The file to build the container image with Docker is Dockerfile.
+3. We include tutorials in PDF format to demonstrate how to construct cloud resources through the Azure desktop portal:
+- tutorials/TutorialS1.pdf: getting set-up on the cloud
+- tutorials/TutorialS2.pdf: creating and writing to a Blob storage container
+- tutorials/TutorialS3.pdf: creating a Batch Pool of virtual machines/nodes
+
+4. The python environment needed to run the scripts is described in docker.yml. We note that the mpi4py package requires a local installation of MPI.
+5. The file to build the container image with Docker is Dockerfile.
 
 #### Building the Docker image:
 Note: this currently happens automatically with GitHub Actions with every commit to the 'main' branch.
