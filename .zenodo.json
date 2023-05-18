@@ -19,17 +19,5 @@
             "name": "Scott Henderson"
         }
     ], 
-    "access_right": "open", 
-    "related_identifiers": [
-        {
-            "scheme": "url", 
-            "identifier": "https://github.com/Denolle-Lab/seismicloud/tree/v1.0.1", 
-            "relation": "isSupplementTo"
-        }, 
-        {
-            "scheme": "doi", 
-            "identifier": "10.5281/zenodo.7948850", 
-            "relation": "isVersionOf"
-        }
-    ]
+    "access_right": "open"
 }
