@@ -1,0 +1,35 @@
+{
+    "description": "Initial release for Zenodo DOI registration\n<p><strong>Full Changelog</strong>: <a href=\"https://github.com/Denolle-Lab/seismicloud/commits/v1.0.0\">https://github.com/Denolle-Lab/seismicloud/commits/v1.0.0</a></p>", 
+    "license": "other-open", 
+    "title": "Denolle-Lab/seismicloud: Initial release", 
+    "version": "v1.0.1", 
+    "upload_type": "software", 
+    "publication_date": "2023-05-18", 
+    "creators": [
+        {
+            "affiliation": "University of Washington", 
+            "name": "Zoe Krauss"
+        }, 
+        {
+            "affiliation": "University of Washington", 
+            "name": "Yiyu Ni"
+        }, 
+        {
+            "affiliation": "University of Washington, eScience Institute", 
+            "name": "Scott Henderson"
+        }
+    ], 
+    "access_right": "open", 
+    "related_identifiers": [
+        {
+            "scheme": "url", 
+            "identifier": "https://github.com/Denolle-Lab/seismicloud/tree/v1.0.0", 
+            "relation": "isSupplementTo"
+        }, 
+        {
+            "scheme": "doi", 
+            "identifier": "10.5281/zenodo.7948849", 
+            "relation": "isVersionOf"
+        }
+    ]
+}
