@@ -43,11 +43,16 @@ We therefore suggest that users copy the scripts from this repository into their
 5. The file to build the container image with Docker is Dockerfile.
 
 #### Building the Docker image:
-Note: this currently happens automatically with GitHub Actions with every commit to the 'main' branch.
-```
-docker buildx build . -t seismicloud:latest
-```
-?? Can we add a link here to help people get the github action going??
+For this repository, this currently happens automatically with GitHub Actions with every commit to the 'main' branch.
+This is because we have set up the build of a Docker image through GitHub continuous integration. The script that builds and pushes the Docker image on each commit can be found in .github/workflows/docker.yml. The progress of the build for each commit can be viewed on the "Actions" page of the repository.
+
+The name of the Docker image built from this repository is ghcr.io/denolle-lab/seismicloud:latest
+
+Alternatively, a Docker image built using an older commit is named by the commit ID: ghcr.io/denolle-lab/seismicloud:86679bd
+
+For guidance on activating this same workflow on another repository, see:
+https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
+
 
 ## Local code execution
 The code can either be run locally in the python environment if the repository is cloned locally, as demonstrated in tutorials/, or can be run through the Docker container image.
@@ -60,12 +65,16 @@ The code can either be run locally in the python environment if the repository i
     
 
 #### Run with Docker
-The same commands demonstrated in tutorials/NotebookS2 can be run from within the Docker container image built by Github actions (as long as the local computer has Docker installed) by appending several statements to a python command. The commands to pull the image and then an example of how to run a script within them are seen below:
-?? How to pull properly??
+The same commands demonstrated in tutorials/NotebookS2 can be run from within the Docker container image built by Github actions. 
+
+On a computer with Docker installed, the following command can be run to open an interactive bash shell *inside* the Docker image.
+Since our workflow set-up requires a local directory of waveforms that is not within the Docker image/stored on the GitHub, you must mount the local directory to the Docker image on start-up. This is done by passing the -v argument, which mounts a volume. In the example below, you can access the /localdirectory/waveformdata directory from within the Docker image using the pathname /tmp/data/data. 
 ```
-docker run -it --rm ghcr.io/denolle-lab/seismicloud:latest python --version
-docker run -it --rm ghcr.io/denolle-lab/seismicloud:latest python /tmp/scripts/picking/create_joblist.py -c /tmp/configs/myconfig.json
+docker run -it --rm -v /localdirectory/waveformdata:/tmp/data/data ghcr.io/denolle-lab/seismicloud:latest
 ```
+The -it argument specifies to create an interactive bash shell in the container, and the --rm argument automatically removes the container when it exits.
+
+From within the container, you can then proceed to run the same commands demonstrated in tutorials/NotebookS2. Make sure you have a config file that points the scripts to the mounted volume correctly! 
 
 ## Run on Azure
 <img width="492" alt="image" src="https://github.com/Denolle-Lab/seismicloud/assets/62721445/34216750-b0cc-4f31-839a-57819f970641">
