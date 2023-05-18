@@ -1,34 +1,27 @@
 {
     "workflow": {
-        "interpreter": "/Users/zoekrauss/anaconda3/envs/alaska-ml/bin/python",
-        "mseed_path": "/Users/zoekrauss/seismicloud/waveforms/",
-        "templates_path": "data/templates/test_templates.tgz",
-        "detections_path": "data/detections/",
-        "jobs_path": "jobs/",
-        "picks_path": "data/picks/",
-        "starting_cat_path": "data/catalogs/endquakes_2017.xml",
+        "interpreter": "/home/zkrauss/mambaforge/envs/alaska-ml/bin/python",
+        "mseed_path": "/tmp/data/data/endeavour",
+        "templates_path": "/tmp/data/templates/agusubset_templates.tgz",
+        "detections_path": "/tmp/data/data/outputs/detections/",
+        "jobs_path": "/tmp/data/data/outputs/jobs/",
+        "picks_path": "/tmp/data/endquakes_2017.xml",
+        "starting_cat_path": "/tmp/data/data/outputs/picking/",
         "stations": [
-            "ENHR",
-            "ENWF",
             "KEMF",
-            "KEMO",
-            "NCHR"
+            "NCHR",
+            "ENWF",
+            "KEMO"
         ],
-        "network": [
-            "NV",
-            "NV",
-            "NV",
-            "NV",
-            "NV"
-        ]
+        "network": "NV"
     },
     "log": {
-        "verbose": 0,
-        "appendlog": false,
-        "logs_path": "logs/"
+            "verbose": 1, 
+            "appendlog": false,
+            "logs_path": "/tmp/data/data/outputs/logs/"
     },
     "mseed_download": {
-        "mseed_path": "/Users/zoekrauss/seismicloud/waveforms/",
+        "mseed_path": "/Users/Zoe/seismicloud/waveforms/",
         "stations": [
             "KEMF",
             "NCHR",
@@ -87,8 +80,7 @@
             }
         },
         "association": {
-            "stations": "/Users/zoekrauss/seismicloud/data/stations.csv",
-            "catalog_path": "/Users/Zoe/seismicloud/data/catalogs/",
+            "stations": "/tmp/data/stations.csv",
             "dims": [
                 "x(km)",
                 "y(km)",
