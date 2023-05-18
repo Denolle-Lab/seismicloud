@@ -23,7 +23,7 @@
     "related_identifiers": [
         {
             "scheme": "url", 
-            "identifier": "https://github.com/Denolle-Lab/seismicloud/tree/v1.0.0", 
+            "identifier": "https://github.com/Denolle-Lab/seismicloud/tree/v1.0.1", 
             "relation": "isSupplementTo"
         }, 
         {
