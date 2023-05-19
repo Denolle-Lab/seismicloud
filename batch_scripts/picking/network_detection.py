@@ -1,7 +1,13 @@
 #
-#   deploy continuous phase detection on continuous mSEED data archive
-#   launch detection for each station
+#   Follows scripts/picking/network_detection.py with some edits to run on cloud
 #
+#   Extra input argument --batchid refers to the node in the Pool that this script is running on
+#   Parallelization across the CPUs on this specific node is then done via MPI
+
+
+#   Before iterating over jobs, job list is reconfigured to only contain jobs specific to this node number
+
+
 #   Yiyu Ni
 #   niyiyu@uw.edu
 #   Oct. 5th, 2022
@@ -87,6 +93,7 @@ if rank == 0:
 
 comm.Barrier()
 
+# Filter job list!!!
 jobs = jobs[jobs["rank"] == rank]
 
 for station in jobs["station"].unique():

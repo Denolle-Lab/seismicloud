@@ -1,8 +1,12 @@
 #
-#   deploy continuous phase detection on continuous mSEED data archive
+#   Follows scripts/template_matching/create_joblist.py, with edits
+
+#   input argument --batchnodes is number of virtual machines/nodes in the Pool, NOT the number of vCPUs on each node
 #
+# Creates a job list where the rank of each job corresponds to the node in the Pool 
+
 #   Zoe Krauss, edited from Yiyu Ni
-#   niyiyu@uw.edu
+#   zkrauss@uw.edu
 #   Oct. 5th, 2022
 ###########################################
 
@@ -49,9 +53,6 @@ templates_path = config["workflow"]["templates_path"]  # should already exist, i
 detections_path = config["workflow"]["detections_path"]
 os.makedirs(detections_path, exist_ok=True)
 
-starting_cat_path = config["workflow"][
-    "starting_cat_path"
-]  # should already exist, is a file
 
 stations = config["workflow"]["stations"]
 network = config["workflow"]["network"]
@@ -80,6 +81,9 @@ for n in nets:
         df = pd.DataFrame(df, columns=["network", "year", "doy", "fpath"])
         df = df.sort_values(by=["doy"])
         df.reset_index(drop=True, inplace=True)
+        
+        # Distribute jobs amongst nodes
+        # If they do not distribute evenly, distribute the extra one at a time
         njobs = int(np.ceil(len(df)/nproc))
         njobs = len(df) // nproc
         over = len(df)%nproc

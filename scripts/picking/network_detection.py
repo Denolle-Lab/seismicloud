@@ -1,6 +1,21 @@
 #
-#   deploy continuous phase detection on continuous mSEED data archive
-#   launch detection for each station
+#   Deploy continuous phase detection on continuous mSEED data archive
+#   Phase detection is done using EQTransformer via SeisBench. 
+#   Launch detection for each station for each day of the year.
+#   
+#   Parallelization is done using MPI, and follows the joblist created by create_joblist.py
+#
+
+#   This script is designed to be run with an MPI command. The nproc specified in the MPI command must match the joblist. There are three required inputs arguments that must be passed with the call to the script:
+
+#   -n,--network: which network of stations to run detection for; this must agree with the data archive, the config file and the job list; string
+#   -y,--year: which year to run detection for; this must agree with the data archive, the config file and the job list; integer
+#   -c, --config: path to config file; string
+
+# This script checks which of the CPUs it is running on, filters the job list to only include jobs assigned to that CPU, and then iterates over those jobs to complete them.
+# The actual detection is performed by a call to the script single_station_detection.py
+
+# Status of the running script is written to logs, with a master log from the CPU with rank 0 and a sublog for each individual CPU
 #
 #   Yiyu Ni
 #   niyiyu@uw.edu
@@ -44,7 +59,6 @@ verbose = config["log"]["verbose"]
 jobs_path = config["workflow"]["jobs_path"]
 logs_path = config["log"]["logs_path"]
 picks_path = config["workflow"]["picks_path"]
-nproc = config["environment"]["NPROC"]
 gpus = config["environment"]["CUDA_VISIBLE_DEVICES"]
 
 if len(gpus) == 0:
@@ -53,6 +67,9 @@ else:
     gpu = True
 
 jobs = pd.read_csv(f"{jobs_path}/{network}_{year}_joblist.csv")
+
+# Get number of processors from job list
+nproc = len(jobs['rank'].unique())
 
 
 if rank == 0:

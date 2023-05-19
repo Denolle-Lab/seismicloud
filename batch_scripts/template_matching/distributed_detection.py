@@ -1,10 +1,14 @@
 #
-#   deploy continuous phase detection on continuous mSEED data archive
-#   launch detection for each station
+#   Follows scripts/template_matching/distributed_detection.py with some edits to run on cloud
 #
+
+#   Extra input argument --batchnode refers to the node in the Pool that this script is running on
+#   Parallelization across the CPUs on this specific node is then done via MPI
+
+#   Before iterating over jobs, job list is reconfigured to only contain jobs specific to this node number
+
 #   Zoe Krauss, edited from Yiyu Ni
-#   Basically just replaced the "station" argument with "day"
-#   niyiyu@uw.edu
+#   zkrauss@uw.edu
 #   Oct. 5th, 2022
 ###########################################
 

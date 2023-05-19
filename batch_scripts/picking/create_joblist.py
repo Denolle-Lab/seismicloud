@@ -1,6 +1,12 @@
 #
-#   deploy continuous phase detection on continuous mSEED data archive
+
+#   Follows scripts/picking/create_joblist.py, with edits
+
+#   Parallelization across the CPUs on this specific node is then done via MPI
 #
+
+#   Creates a job list where the rank of each job corresponds to the node in the Pool 
+
 #   Yiyu Ni
 #   niyiyu@uw.edu
 #   Oct. 5th, 2022

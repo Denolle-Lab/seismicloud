@@ -1,6 +1,15 @@
 #
-#   deploy continuous phase detection on continuous mSEED data archive
-#   detection based on the job passed by the network_detection.py
+#
+#   Perform machine learning picking on one day of continuous data for one station
+
+#   This script is called to by network_detection.py
+
+#   Uses SeisBench to perform picking
+
+
+#   Input arguments network, year, day, station and config guide the code which waveform miniseed datafile to perform detection on 
+#   Input arguments rank, verbose, and pid help with writing to logs to keep track of processes
+#
 #
 #   Yiyu Ni
 #   niyiyu@uw.edu
@@ -36,7 +45,6 @@ args = parser.parse_args()
 year = args.year
 network = args.network
 station = args.station
-# channel = args.channel
 rank = args.rank
 verbose = args.verbose
 pid = args.pid

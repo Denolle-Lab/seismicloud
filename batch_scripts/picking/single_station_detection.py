@@ -1,6 +1,6 @@
+#   Follows scripts/picking/single_station_detection.py with some edits to run on cloud
 #
-#   deploy continuous phase detection on continuous mSEED data archive
-#   detection based on the job passed by the network_detection.py
+#   Functionality is the same as scripts/picking/single_station_detection.py but batchid information is also saved to the logs
 #
 #   Yiyu Ni
 #   niyiyu@uw.edu

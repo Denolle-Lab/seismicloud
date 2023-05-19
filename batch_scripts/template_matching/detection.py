@@ -1,5 +1,7 @@
 #
-#   Perform template matching on continuous data
+#   Follows scripts/template_matching/detection.py with some edits to run on cloud
+
+#   Functionality is the same as scripts/template_matching/detection.py but batchnode information is also saved to the logs
 #
 #   Zoe Krauss
 #   Oct. 5th, 2022

@@ -8,6 +8,9 @@
 # input = complete file path to where individual .xml files of daily detections are stored
 # output = file name of where the summary earthquake catalog should be written to, in QuakeML format
 # threshold = time in seconds to call two detections, made by different templates, duplicates
+
+# Zoe Krauss
+# zkrauss@uw.edu
 ##########################################
 
 

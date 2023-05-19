@@ -1,6 +1,16 @@
-"""
-Saves templates to the templates_path specified in the config file
-"""
+############################################
+# Saves templates to the templates_path specified in the config file
+# Builds them from a starting catalog in QuakeML format following the specifications in the config file
+# Templates are in EqCorrscan Tribe format
+
+
+# One required input argument:
+#    -c, --config: path to config file; string
+
+# Zoe Krauss
+# zkrauss@uw.edu
+############################################
+
 
 
 import obspy

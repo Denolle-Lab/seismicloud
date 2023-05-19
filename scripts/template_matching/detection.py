@@ -1,7 +1,16 @@
 #
-#   Perform template matching on continuous data
+#   Perform template matching on one day of continuous data
+
+#   This script is called to by distributed_detection.py
+
+#   Uses EqCorrscan to perform picking
+
+
+#   Input arguments network, year, day, and config guide the code which waveform miniseed datafile to perform detection on 
+#   Input arguments rank, verbose, and pid help with writing to logs to keep track of processes
 #
 #   Zoe Krauss
+#   zkrauss@uw.edu
 #   Oct. 5th, 2022
 ###########################################
 
@@ -19,6 +28,7 @@ import warnings
 
 warnings.filterwarnings(action="ignore")
 
+# Parse input arguments
 parser = argparse.ArgumentParser(description="Template matching in continuous data.")
 parser.add_argument("-n", "--network", required=True)
 parser.add_argument("-d", "--day", required=True)
@@ -49,6 +59,9 @@ templates_path = config["workflow"]["templates_path"]
 detections_path = config["workflow"]["detections_path"]
 mseed_path = config["workflow"]["mseed_path"]
 stations = config["workflow"]["stations"]
+
+
+# Avoid extra multithreading (this sometimes happens with numpy, which is inside eqcorrscan)
 os.environ["OPENBLAS_NUM_THREADS"] = config["environment"]["OPENBLAS_NUM_THREADS"]
 os.environ["MKL_NUM_THREADS"] = "1"
 os.environ["NUMEXPR_NUM_THREADS"] = "1"
@@ -63,22 +76,28 @@ import eqcorrscan
 logs = open(f"{logs_path}/{rank}.log", "a")
 sys.stdout = logs
 
+
+# Start writing to sublogs
 print(f"--------------{network}.{year}-----------------", flush=True)
 print(f"{rank} | \tmaster PID {pid}", flush=True)
 print(f"{rank} | \tPID {mypid}", flush=True)
 
+# Read in templates
 templates = eqcorrscan.core.match_filter.tribe.Tribe().read(templates_path)
 
+# Log that templates were run in
 print(
     f"{rank} | \tloaded templates ({templates_path})",
     flush=True,
 )
 
+
+# Get timestamp for runtime info
 t0 = time.time()
+
+# Read day-long stream according to input arguments
 doy = day
 sdoy = str(doy).zfill(3)
-
-# Read day-long stream
 s = obspy.core.stream.Stream()
 for sta in stations:
     fpath = (
@@ -104,8 +123,7 @@ for sta in stations:
     else:
         continue
 
-print("Data pulled in")
-
+# Perform checks that ensure stream does not have too big of breaks
 if len(s) > 0:
 
     # Catch for short streams due to data gaps
@@ -116,6 +134,8 @@ if len(s) > 0:
         if len(ss) / ss.stats.sampling_rate
         >= (config["templates"]["process_len"] * 0.8)
     ]
+    
+    # If stream has many breaks, can run with a shorter process length inside eqcorrscan to make sure we use the data that is available
     if len(stream) > len(stream_check):
         print(
             "Data is too short for day "
@@ -125,8 +145,10 @@ if len(s) > 0:
 
         if len(s) >= 3 * len(stations):
             temp_templates = templates.copy()
+            # Change process length of templates
             for tt in temp_templates:
                 tt.process_length = 3600.0
+            # Perform detection
             party = temp_templates.detect(
                 s,
                 threshold=config["template_matching"]["threshold"],
@@ -135,7 +157,8 @@ if len(s) > 0:
                 parallel_process=False,
                 ignore_bad_data=True,
             )
-
+            
+            # Write results to log
             num_detects = np.sum([len(f) for f in party])
             print(
                 f"{rank} | \t{year}.{sdoy}.{network} \t| Finish, found {num_detects} detections \t | {'%.3f' % (time.time() - t0)} sec",
@@ -152,11 +175,9 @@ if len(s) > 0:
         else:
             print("Data missing for some stations")
 
+    # If stream has no breaks and therefore is the expected length, perform detection as normal
     else:
-        # try:
         picks = []
-        # s.resample(config["templates"]["samp_rate"])
-        # s.merge()
         if len(s) >= 3 * len(stations):
 
             for tt in templates:
@@ -187,11 +208,8 @@ if len(s) > 0:
         else:
             print("Data missing for some stations")
 
-            # except:
-            #    print(
-            #        f"{rank} | \t{year}.{sdoy}.{network} \t| Error",
-            #        flush=True,
-            #    )
+
+# Finish up with some logs!
 else:
     if verbose > 0:
         print(
