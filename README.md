@@ -40,7 +40,7 @@ We therefore suggest that users copy the scripts from this repository into their
 - tutorials/TutorialS3.pdf: creating a Batch Pool of virtual machines/nodes
 
 4. The python environment needed to run the scripts is described in docker.yml. We note that the mpi4py package requires a local installation of MPI.
-5. The file to build the container image with Docker is Dockerfile.
+5. The data and code used to make Figures 4-6 in the manuscript can be found in /figures.
 
 #### Building the Docker image:
 For this repository, this currently happens automatically with GitHub Actions with every commit to the 'main' branch.
