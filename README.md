@@ -3,7 +3,7 @@
 
 Workflow for template matching and ML picking with cloud capabilities.
 
-This GitHub accompanies the Krauss et al., 2023 manuscript: "Seismology in the cloud for template matching and machine-learning earthquake detection" (in prep).
+This GitHub accompanies the Krauss et al., 2023 manuscript: "Seismology in the cloud for template matching and machine-learning earthquake detection" (in review).
 
 
 ## Usage
