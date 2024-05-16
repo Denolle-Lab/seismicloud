@@ -69,9 +69,16 @@ The same commands demonstrated in tutorials/NotebookS2 can be run from within th
 
 On a computer with Docker installed, the following command can be run to open an interactive bash shell *inside* the Docker image.
 Since our workflow set-up requires a local directory of waveforms that is not within the Docker image/stored on the GitHub, you must mount the local directory to the Docker image on start-up. This is done by passing the -v argument, which mounts a volume. In the example below, you can access the /localdirectory/waveformdata directory from within the Docker image using the pathname /tmp/data/data. 
+
 ```
 docker run -it --rm -v /localdirectory/waveformdata:/tmp/data/data ghcr.io/denolle-lab/seismicloud:latest
 ```
+
+To launch docker with jupyter lab, use the command below. Port 8888 forwarding to 80 (http) is enabled. Token is specified as `scoped` when logging into the lab. Change `/localdirectory/waveformdata` accordingly to match where your data is.
+```
+docker run --rm -p 80:8888 -v /localdirectory/waveformdata:/tmp/data/data ghcr.io/denolle-lab/seismicloud:latest jupyter lab --no-browser --ip=0.0.0.0  --IdentityProvider.token=scoped
+```
+
 The -it argument specifies to create an interactive bash shell in the container, and the --rm argument automatically removes the container when it exits.
 
 From within the container, you can then proceed to run the same commands demonstrated in tutorials/NotebookS2. Make sure you have a config file that points the scripts to the mounted volume correctly! 
